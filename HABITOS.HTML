@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plan Maestro 6 Meses | Hábitos, Finanzas, Productividad y 5S</title>
+  <style>
+    :root{
+      --radius-xl:30px; --radius-lg:22px; --radius-md:15px;
+      --font:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --good:#16a34a; --warn:#d97706; --bad:#dc2626; --info:#0284c7;
+      --accent:#2563eb; --accent-2:#7c3aed; --gold:#f59e0b;
+      --shadow-soft:0 24px 70px rgba(2,6,23,.22); --shadow-mini:0 8px 24px rgba(2,6,23,.12);
+    }
+    html[data-theme="dark"]{
+      --bg:#070b14; --surface:rgba(15,23,42,.84); --surface-solid:#101827; --surface-2:rgba(30,41,59,.70);
+      --text:#f8fafc; --muted:#94a3b8; --muted-2:#cbd5e1; --line:rgba(255,255,255,.11); --input:rgba(2,6,23,.74);
+      --hero-grad:radial-gradient(circle at 15% 0%, rgba(37,99,235,.25), transparent 36rem), radial-gradient(circle at 85% 8%, rgba(124,58,237,.22), transparent 36rem), radial-gradient(circle at 50% 100%, rgba(22,163,74,.10), transparent 42rem), linear-gradient(135deg,#070b14 0%,#0f172a 55%,#111827 100%);
+      --chip:rgba(37,99,235,.13); --chip-text:#bfdbfe; --status:rgba(255,255,255,.06);
+    }
+    html[data-theme="light"]{
+      --bg:#f5f7fb; --surface:rgba(255,255,255,.90); --surface-solid:#fff; --surface-2:rgba(248,250,252,.96);
+      --text:#0f172a; --muted:#64748b; --muted-2:#334155; --line:rgba(15,23,42,.12); --input:#fff;
+      --hero-grad:radial-gradient(circle at 12% 0%, rgba(37,99,235,.13), transparent 36rem), radial-gradient(circle at 86% 0%, rgba(124,58,237,.10), transparent 36rem), linear-gradient(135deg,#f8fafc 0%,#eef2ff 62%,#f5f3ff 100%);
+      --chip:rgba(37,99,235,.08); --chip-text:#1d4ed8; --status:rgba(15,23,42,.045); --shadow-soft:0 22px 60px rgba(15,23,42,.10); --shadow-mini:0 8px 22px rgba(15,23,42,.08);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0; min-height:100vh; color:var(--text); font-family:var(--font); background:var(--hero-grad);}
+    button,input,select,textarea{font-family:inherit}
+    button{border:0; border-radius:999px; padding:11px 15px; font-weight:850; cursor:pointer; color:#fff; background:linear-gradient(135deg,var(--accent),var(--accent-2)); box-shadow:var(--shadow-mini); transition:.18s ease; display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:42px;}
+    button:hover{transform:translateY(-1px)}
+    button.secondary{background:var(--surface-2); color:var(--text); border:1px solid var(--line); box-shadow:none}
+    button.ghost{background:transparent; color:var(--text); border:1px solid var(--line); box-shadow:none}
+    button.danger{background:rgba(220,38,38,.10); color:#fecaca; border:1px solid rgba(220,38,38,.30); box-shadow:none}
+    html[data-theme="light"] button.danger{color:#991b1b}
+    input[type="number"],input[type="text"],input[type="time"],input[type="date"],select,textarea{width:100%; color:var(--text); background:var(--input); border:1px solid var(--line); border-radius:14px; padding:11px 12px; outline:none; min-height:42px; transition:.18s ease;}
+    textarea{min-height:104px; resize:vertical; line-height:1.45}
+    input:focus,select:focus,textarea:focus{border-color:rgba(37,99,235,.72); box-shadow:0 0 0 4px rgba(37,99,235,.12)}
+    input[type="checkbox"]{accent-color:var(--good); cursor:pointer}
+    .app{max-width:1280px; margin:0 auto; padding:22px 18px 48px}
+    .topbar{display:flex; justify-content:space-between; align-items:center; gap:14px; margin-bottom:14px; position:sticky; top:0; z-index:20; padding:10px 0; backdrop-filter:blur(14px)}
+    .brand{display:flex; align-items:center; gap:11px; font-weight:950; letter-spacing:-.02em}
+    .logo{width:42px; height:42px; border-radius:15px; display:grid; place-items:center; background:linear-gradient(135deg,var(--accent),var(--accent-2)); box-shadow:var(--shadow-mini)}
+    .top-actions{display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
+    .hero{background:var(--surface); border:1px solid var(--line); box-shadow:var(--shadow-soft); border-radius:var(--radius-xl); padding:28px; overflow:hidden; position:relative; backdrop-filter:blur(16px)}
+    .hero-grid{display:grid; grid-template-columns:1.2fr .8fr; gap:18px; align-items:stretch}
+    @media(max-width:940px){.hero-grid{grid-template-columns:1fr}.topbar{position:static}.top-actions{justify-content:flex-start}.topbar{align-items:flex-start; flex-direction:column}}
+    h1{margin:0 0 10px; font-size:clamp(2rem,5vw,4.15rem); line-height:.98; letter-spacing:-.06em}
+    h2,h3{letter-spacing:-.025em}.subtitle{max-width:810px; color:var(--muted); margin:0; line-height:1.57; font-size:1rem}
+    .hero-panel{border:1px solid var(--line); background:var(--status); border-radius:22px; padding:16px; display:grid; gap:12px}
+    .save-state{display:flex; gap:10px; align-items:flex-start; padding:12px; border-radius:18px; background:var(--surface-2); border:1px solid var(--line)}
+    .dot{width:10px; height:10px; border-radius:999px; margin-top:5px; flex:0 0 auto; background:var(--good); box-shadow:0 0 0 4px rgba(22,163,74,.15)}
+    .save-state b{display:block;margin-bottom:3px}.save-state span{display:block;color:var(--muted);font-size:.86rem;line-height:1.4}
+    .chip-row{display:flex;gap:8px;flex-wrap:wrap}.chip{border:1px solid rgba(37,99,235,.18); background:var(--chip); color:var(--chip-text); font-size:.78rem; border-radius:999px; padding:7px 10px; font-weight:750}.chip.gold{border-color:rgba(245,158,11,.24); background:rgba(245,158,11,.12); color:#fde68a} html[data-theme="light"] .chip.gold{color:#92400e}
+    .tabs{display:flex;gap:8px;overflow:auto;margin:16px 0 0;padding:4px}.tab-btn{background:var(--surface); color:var(--muted-2); border:1px solid var(--line); box-shadow:none; white-space:nowrap}.tab-btn.active{color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-2)); border-color:transparent}.tab-page{display:none}.tab-page.active{display:block}
+    .grid{display:grid; grid-template-columns:repeat(12,1fr); gap:16px; margin-top:16px}.span-12{grid-column:span 12}.span-8{grid-column:span 8}.span-7{grid-column:span 7}.span-6{grid-column:span 6}.span-5{grid-column:span 5}.span-4{grid-column:span 4}.span-3{grid-column:span 3}
+    @media(max-width:980px){.span-8,.span-7,.span-6,.span-5,.span-4,.span-3{grid-column:span 12}}
+    .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-lg); box-shadow:var(--shadow-soft); padding:20px; backdrop-filter:blur(16px)}.card.compact{padding:16px}
+    .section-title{margin:0 0 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:1.08rem}.section-title small{color:var(--muted);font-weight:550;font-size:.8rem;letter-spacing:0}.section-title.wrap{align-items:flex-start;flex-direction:column;gap:5px}
+    .metrics{display:grid; grid-template-columns:repeat(5,1fr); gap:12px}@media(max-width:1050px){.metrics{grid-template-columns:repeat(3,1fr)}}@media(max-width:680px){.metrics{grid-template-columns:1fr}}
+    .metric{background:var(--surface-2); border:1px solid var(--line); border-radius:18px; padding:15px}.metric .label{color:var(--muted);font-size:.8rem;font-weight:700}.metric .value{font-size:2rem;font-weight:950;letter-spacing:-.055em;margin-top:4px}.metric .hint{color:var(--muted);font-size:.77rem;margin-top:4px;line-height:1.35}
+    .bar{height:9px;border-radius:999px;overflow:hidden;background:rgba(148,163,184,.18);margin-top:10px}.bar>div{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--good));border-radius:999px;transition:.32s ease}.bar.warn>div{background:linear-gradient(90deg,var(--warn),var(--gold))}.bar.bad>div{background:linear-gradient(90deg,var(--bad),var(--warn))}
+    .form-row{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:13px}@media(max-width:780px){.form-row{grid-template-columns:1fr}}label{display:block;color:var(--muted);font-size:.78rem;margin:0 0 6px;font-weight:700}
+    .status-box{padding:13px 14px;border-radius:18px;background:var(--status);border:1px solid var(--line);color:var(--muted-2);line-height:1.5;font-size:.9rem}.quote{margin:0;color:var(--muted-2);line-height:1.55;padding:12px 0 12px 14px;border-left:4px solid var(--accent)}.mini{font-size:.78rem;color:var(--muted);line-height:1.4}.divider{height:1px;background:var(--line);margin:14px 0}.hidden{display:none!important}.btn-row{display:flex; gap:9px; flex-wrap:wrap; align-items:center}
+    .area-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}@media(max-width:900px){.area-grid{grid-template-columns:1fr}}
+    .area-card{border:1px solid var(--line); background:var(--surface-2); border-radius:22px; padding:18px; display:grid; gap:12px; position:relative; overflow:hidden}.area-card:before{content:""; position:absolute; inset:0 0 auto 0; height:4px; background:linear-gradient(90deg,var(--accent),var(--accent-2));}.area-title{display:flex;align-items:center;gap:10px}.area-title .emoji{width:44px;height:44px}.area-title h3{margin:0;font-size:1.08rem}.area-title p{margin:3px 0 0;color:var(--muted);font-size:.82rem}
+    .smart-list{display:grid;gap:8px}.smart-item{border:1px solid var(--line);border-radius:15px;padding:10px;background:var(--status);font-size:.88rem;line-height:1.45;color:var(--muted-2)}.smart-item b{color:var(--text)}
+    .roadmap{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}@media(max-width:1050px){.roadmap{grid-template-columns:repeat(3,1fr)}}@media(max-width:640px){.roadmap{grid-template-columns:1fr}}.month{border:1px solid var(--line);background:var(--surface-2);border-radius:18px;padding:13px}.month b{display:block;margin-bottom:7px}.month ul{margin:0;padding-left:18px;color:var(--muted-2);font-size:.84rem;line-height:1.45}
+    .definition-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}@media(max-width:980px){.definition-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.definition-grid{grid-template-columns:1fr}}.definition{border:1px solid var(--line);border-radius:20px;padding:16px;background:var(--surface-2)}.definition h3{margin:0 0 8px;font-size:1rem}.definition .big{font-size:1.8rem;font-weight:950;letter-spacing:-.05em;margin:5px 0}.definition p{margin:0;color:var(--muted);line-height:1.45;font-size:.86rem}
+    .habit-list{display:grid;gap:10px}.habit{border:1px solid var(--line);background:var(--surface-2);border-radius:18px;padding:14px;display:grid;gap:12px}.habit-main{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px}@media(max-width:620px){.habit-main{grid-template-columns:auto 1fr}.habit-toggle{grid-column:1/-1;justify-content:flex-start}}.emoji{width:40px;height:40px;border-radius:14px;display:grid;place-items:center;background:var(--status);border:1px solid var(--line);font-size:1.12rem}.habit-title{font-weight:900;line-height:1.2}.habit-desc{color:var(--muted);font-size:.82rem;line-height:1.35;margin-top:3px}.habit-toggle{display:flex;align-items:center;gap:8px;font-weight:850;white-space:nowrap;cursor:pointer;color:var(--muted-2)}.habit-toggle input{width:21px;height:21px}.habit.done{border-color:rgba(22,163,74,.32);background:linear-gradient(135deg,rgba(22,163,74,.12),var(--surface-2))}.habit-fields{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding-top:2px}@media(max-width:780px){.habit-fields{grid-template-columns:1fr}}
+    .checklist{display:grid;gap:9px}.check{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);border-radius:14px;padding:10px;background:var(--status);color:var(--muted-2);line-height:1.35;font-size:.88rem}.check input{width:18px;height:18px;flex:0 0 auto;margin-top:1px}.check strong{color:var(--text)}
+    .calendar{display:grid;grid-template-columns:repeat(15,1fr);gap:7px}@media(max-width:900px){.calendar{grid-template-columns:repeat(10,1fr)}}@media(max-width:560px){.calendar{grid-template-columns:repeat(7,1fr)}}.day{aspect-ratio:1/1;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);display:grid;place-items:center;color:var(--muted);font-size:.78rem;font-weight:800;cursor:pointer;transition:.15s ease;position:relative}.day:hover{transform:translateY(-1px)}.day.today{outline:2px solid var(--accent);outline-offset:2px;color:var(--text)}.day.selected{box-shadow:inset 0 0 0 2px var(--accent);color:var(--text)}.day.good{background:rgba(22,163,74,.18);color:#86efac;border-color:rgba(22,163,74,.28)}.day.warn{background:rgba(217,119,6,.17);color:#fcd34d;border-color:rgba(217,119,6,.28)}.day.bad{background:rgba(220,38,38,.16);color:#fca5a5;border-color:rgba(220,38,38,.28)}html[data-theme="light"] .day.good{color:#166534}html[data-theme="light"] .day.warn{color:#92400e}html[data-theme="light"] .day.bad{color:#991b1b}
+    .table-wrap{overflow:auto;border-radius:18px;border:1px solid var(--line)}table{width:100%;border-collapse:collapse;min-width:900px;background:var(--surface-2)}th,td{padding:11px 10px;border-bottom:1px solid var(--line);text-align:left;font-size:.86rem}th{color:var(--chip-text);background:var(--chip);position:sticky;top:0;z-index:1}td{color:var(--muted-2)}tr:last-child td{border-bottom:0}
+    .sticky-actions{position:sticky;bottom:14px;z-index:5;margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;box-shadow:var(--shadow-soft);backdrop-filter:blur(14px)}
+    .toast{position:fixed;right:18px;bottom:18px;z-index:30;padding:12px 14px;background:var(--surface-solid);color:var(--text);border:1px solid var(--line);box-shadow:var(--shadow-soft);border-radius:16px;opacity:0;transform:translateY(8px);pointer-events:none;transition:.22s ease;max-width:360px;font-size:.9rem}.toast.show{opacity:1;transform:translateY(0)}
+    .fives-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+    @media(max-width:1120px){.fives-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:640px){.fives-grid{grid-template-columns:1fr}}
+    .fives-card{border:1px solid var(--line);background:var(--surface-2);border-radius:22px;padding:16px;display:grid;gap:10px;position:relative;overflow:hidden;min-height:260px}
+    .fives-card:before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--good),var(--accent),var(--accent-2))}
+    .fives-card .step{width:42px;height:42px;border-radius:15px;display:grid;place-items:center;background:var(--status);border:1px solid var(--line);font-weight:950;font-size:1.1rem}
+    .fives-card h3{margin:0;font-size:1rem}.fives-card p{margin:0;color:var(--muted);font-size:.84rem;line-height:1.45}
+    .fives-card ul{margin:0;padding-left:18px;color:var(--muted-2);font-size:.82rem;line-height:1.45}
+    .fives-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:10px}
+    @media(max-width:860px){.fives-flow{grid-template-columns:1fr}}
+    .fives-flow div{border:1px solid var(--line);border-radius:16px;background:var(--status);padding:12px;color:var(--muted-2);font-size:.86rem;line-height:1.4}
+    .fives-flow strong{display:block;color:var(--text);margin-bottom:4px}
+    #habitList, .habit, input, select, textarea{overflow-anchor:none}
+    .print-note{display:none}
+    @media print{body{background:#fff;color:#111827}.top-actions,.tabs,.sticky-actions,.toast,button,.no-print{display:none!important}.tab-page{display:block!important;page-break-after:always}.hero,.card{box-shadow:none;background:#fff;color:#111827;border:1px solid #d1d5db}.subtitle,.mini,label,.habit-desc,.status-box,.quote,.metric .label,.metric .hint,td{color:#475569}input,select,textarea{background:#fff;color:#111827;border:1px solid #cbd5e1}.print-note{display:block;color:#475569}.calendar{grid-template-columns:repeat(15,1fr)}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">✓</div>
+        <div>Plan Maestro 6 Meses<div class="mini" id="topDate">Cargando fecha...</div></div>
+      </div>
+      <div class="top-actions">
+        <button class="ghost" id="themeBtn" type="button">🌙 Modo oscuro</button>
+        <button class="secondary" id="exportBtn" type="button">⬇️ Respaldo JSON</button>
+        <button class="secondary" id="exportHtmlBtn" type="button">💾 Guardar HTML</button>
+        <button class="secondary" id="importBtn" type="button">⬆️ Restaurar</button>
+        <button class="secondary" type="button" onclick="window.print()">🖨️ Imprimir</button>
+        <input id="importFile" class="hidden" type="file" accept="application/json">
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <h1>De intención a evidencia.</h1>
+          <p class="subtitle">Sistema profesional para convertir tus hábitos actuales en un plan verificable de 6 meses. Conserva tu progreso anterior, mide salud, finanzas, desarrollo personal y matrimonio, y traduce cada meta en acciones concretas.</p>
+          <div class="chip-row" style="margin-top:16px">
+            <span class="chip" id="dayBadge">Día 1</span>
+            <span class="chip gold">Plan 6 meses</span>
+            <span class="chip">Autoguardado</span>
+            <span class="chip">Modo claro / oscuro</span>
+            <span class="chip">HTML con progreso</span>
+          </div>
+        </div>
+        <div class="hero-panel">
+          <div class="save-state"><div class="dot" id="saveDot"></div><div><b id="saveTitle">Progreso protegido</b><span id="saveSubtitle">Cargando estado del sistema...</span></div></div>
+          <div class="status-box"><b>Clave del sistema:</b> una meta solo cuenta cuando tiene evidencia. Cada semana debes poder responder: ¿qué hice?, ¿cuánto avancé?, ¿qué prueba tengo?</div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="tabs no-print" id="tabs">
+      <button class="tab-btn active" data-tab="dashboard" type="button">📊 Dashboard</button>
+      <button class="tab-btn" data-tab="hoja1" type="button">1️⃣ Hoja 1 · Áreas</button>
+      <button class="tab-btn" data-tab="hoja2" type="button">2️⃣ Hoja 2 · Qué conseguir</button>
+      <button class="tab-btn" data-tab="hoja3" type="button">3️⃣ Hoja 3 · Cómo hacerlo</button>
+      <button class="tab-btn" data-tab="cincoS" type="button">🧹 Método 5S</button>
+      <button class="tab-btn" data-tab="seguimiento" type="button">✅ Seguimiento diario</button>
+      <button class="tab-btn" data-tab="historial" type="button">🗂️ Historial y seguridad</button>
+    </nav>
+
+    <main>
+      <section class="tab-page active" id="tab-dashboard">
+        <div class="grid">
+          <div class="card span-12 compact"><div class="metrics">
+            <div class="metric"><div class="label">Cumplimiento del día</div><div class="value" id="dailyScore">0%</div><div class="bar" id="dailyBarBox"><div id="dailyBar"></div></div><div class="hint" id="dailyHint">Meta mínima: 80%.</div></div>
+            <div class="metric"><div class="label">Promedio acumulado</div><div class="value" id="avgScore">0%</div><div class="bar"><div id="avgBar"></div></div><div class="hint">Sobre días revisados.</div></div>
+            <div class="metric"><div class="label">Racha actual</div><div class="value" id="streak">0</div><div class="hint">Días seguidos con 80% o más.</div></div>
+            <div class="metric"><div class="label">Plan 6 meses</div><div class="value" id="goalScore">0%</div><div class="bar"><div id="goalBar"></div></div><div class="hint">Acciones estratégicas completadas.</div></div>
+            <div class="metric"><div class="label">Días revisados</div><div class="value" id="daysDone">0</div><div class="hint">Tu constancia visible.</div></div>
+          </div></div>
+          <div class="card span-7"><h2 class="section-title">Enfoque de esta semana <small id="weekLabel">Semana actual</small></h2><div class="status-box" id="diagnosticBox">Cargando diagnóstico...</div><div class="divider"></div><h2 class="section-title">Acciones críticas</h2><div id="criticalActions" class="checklist"></div></div>
+          <div class="card span-5"><h2 class="section-title">Identidad objetivo</h2><p class="quote">Soy una persona disciplinada, limpia, saludable, responsable con su dinero, detallista en su matrimonio y coherente con sus valores espirituales.</p><div class="divider"></div><div class="status-box"><b>Regla:</b> si no se puede medir o evidenciar, se convierte en una acción más pequeña.</div></div>
+          <div class="card span-12"><h2 class="section-title">Ruta visual de 6 meses <small>Enfoque mensual</small></h2><div class="roadmap" id="roadmap"></div></div>
+        </div>
+      </section>
+
+      <section class="tab-page" id="tab-hoja1">
+        <div class="grid">
+          <div class="card span-12"><h2 class="section-title wrap">Hoja 1 · Áreas y metas a 6 meses <small>Concreto, verificable y realista.</small></h2><div class="area-grid" id="areasGrid"></div></div>
+          <div class="card span-12"><h2 class="section-title">Texto complementario profesional</h2><div class="status-box">Durante los próximos seis meses trabajaré sobre cuatro áreas principales: salud, finanzas, desarrollo personal y matrimonio. Cada área tendrá una meta concreta, una forma de verificación y acciones semanales. El objetivo no es depender de motivación, sino de un sistema claro que me permita revisar evidencia real de avance: registros, pagos, citas, compras planificadas, hábitos cumplidos y mejoras visibles en mi conducta diaria.</div></div>
+        </div>
+      </section>
+
+      <section class="tab-page" id="tab-hoja2">
+        <div class="grid">
+          <div class="card span-12"><h2 class="section-title wrap">Hoja 2 · Definir qué quiero conseguir <small>Resultado final y métricas de éxito.</small></h2><div class="definition-grid" id="definitions"></div></div>
+          <div class="card span-12"><h2 class="section-title">Declaración de resultado a 6 meses</h2><p class="quote">En seis meses quiero ver una versión de mí más ordenada, saludable y responsable: con una rutina de ejercicio estable, menor consumo de azúcar, gestión real de mis deudas, documentos del vehículo al día o en proceso, mejor presentación personal y un matrimonio más intencional, menos monótono y más detallista.</p></div>
+          <div class="card span-12"><h2 class="section-title">Matriz de verificación</h2><div class="table-wrap"><table><thead><tr><th>Área</th><th>Qué quiero conseguir</th><th>Indicador</th><th>Evidencia</th><th>Frecuencia de revisión</th></tr></thead><tbody id="verificationRows"></tbody></table></div></div>
+        </div>
+      </section>
+
+      <section class="tab-page" id="tab-hoja3">
+        <div class="grid">
+          <div class="card span-8"><h2 class="section-title wrap">Hoja 3 · Cómo lo voy a hacer <small>Acciones pequeñas, medibles y claras.</small></h2><div id="actionPlan" class="checklist"></div></div>
+          <div class="card span-4"><h2 class="section-title">Reglas de ejecución</h2><div class="status-box"><b>1.</b> No negociar el mínimo diario.<br><b>2.</b> Registrar aunque el día haya salido mal.<br><b>3.</b> Toda deuda debe tener fecha, monto y siguiente paso.<br><b>4.</b> Todo detalle matrimonial debe quedar escrito.<br><b>5.</b> Cada domingo se revisa avance y se ajusta.</div><div class="divider"></div><h2 class="section-title">Revisión semanal</h2><textarea id="weeklyReview" placeholder="¿Qué funcionó esta semana? ¿Qué falló? ¿Cuál será el enfoque de la próxima semana?"></textarea><button style="margin-top:10px" id="saveWeeklyBtn" type="button">Guardar revisión semanal</button></div>
+          <div class="card span-12"><h2 class="section-title">Plan mensual resumido</h2><div class="roadmap" id="roadmap2"></div></div>
+        </div>
+      </section>
+
+      <section class="tab-page" id="tab-cincoS">
+        <div class="grid">
+          <div class="card span-12">
+            <h2 class="section-title wrap">Método 5S · Orden, limpieza y disciplina <small>Un sistema práctico para mantener tu espacio, tus hábitos y tus evidencias bajo control.</small></h2>
+            <div class="status-box"><b>Objetivo:</b> aplicar las 5S para que tu entorno apoye tus metas. No se trata solo de limpiar; se trata de eliminar lo innecesario, ordenar lo útil, mantener limpio, estandarizar la rutina y sostener la disciplina todos los días.</div>
+            <div class="fives-flow">
+              <div><strong>1. Clasificar</strong>Separar lo que sirve de lo que estorba.</div>
+              <div><strong>2. Ordenar</strong>Asignar un lugar claro a cada cosa.</div>
+              <div><strong>3. Limpiar</strong>Detectar problemas mientras limpias.</div>
+              <div><strong>4. Estandarizar</strong>Crear reglas simples y repetibles.</div>
+              <div><strong>5. Disciplina</strong>Sostener el hábito sin depender de motivación.</div>
+            </div>
+          </div>
+          <div class="card span-12"><div class="fives-grid" id="fiveSGrid"></div></div>
+          <div class="card span-7">
+            <h2 class="section-title">Checklist 5S semanal <small>Marca solo lo que tenga evidencia real</small></h2>
+            <div class="checklist" id="fiveSChecklist"></div>
+          </div>
+          <div class="card span-5">
+            <h2 class="section-title">Registro de mejora 5S</h2>
+            <label for="fiveSNotes">Notas, evidencias o mejoras realizadas</label>
+            <textarea id="fiveSNotes" placeholder="Ej: eliminé papeles viejos, organicé escritorio, limpié zapatos, dejé lista la ropa de mañana, ordené archivos del computador..."></textarea>
+            <button style="margin-top:10px" id="saveFiveSBtn" type="button">Guardar mejora 5S</button>
+            <div class="divider"></div>
+            <div class="status-box"><b>Regla de oro:</b> si una cosa no tiene lugar, se vuelve desorden. Si una tarea no tiene horario, se vuelve intención. Las 5S convierten intención en sistema.</div>
+          </div>
+          <div class="card span-12">
+            <h2 class="section-title">Aplicación de las 5S a tu plan personal</h2>
+            <div class="table-wrap"><table><thead><tr><th>5S</th><th>Aplicación personal</th><th>Ejemplo práctico</th><th>Evidencia</th></tr></thead><tbody>
+              <tr><td>Seiri · Clasificar</td><td>Eliminar distracciones y objetos que no aportan.</td><td>Sacar ropa dañada, papeles viejos, archivos repetidos o apps que consumen tiempo.</td><td>Foto antes/después o lista de lo eliminado.</td></tr>
+              <tr><td>Seiton · Ordenar</td><td>Ubicar cada elemento en un lugar definido.</td><td>Zona fija para llaves, billetera, cargador, documentos, ropa de iglesia y ropa de trabajo.</td><td>Espacio organizado y fácil de encontrar.</td></tr>
+              <tr><td>Seiso · Limpiar</td><td>Limpiar para detectar fallas.</td><td>Limpiar zapatos, escritorio, celular, computador, habitación y elementos de trabajo.</td><td>Registro o foto del espacio limpio.</td></tr>
+              <tr><td>Seiketsu · Estandarizar</td><td>Crear rutinas simples que se repitan.</td><td>Checklist nocturno: ropa lista, escritorio limpio, alarma, Biblia/libro preparado.</td><td>Checklist semanal cumplido.</td></tr>
+              <tr><td>Shitsuke · Disciplina</td><td>Repetir aunque no haya motivación.</td><td>Revisión diaria de hábitos y revisión dominical del plan.</td><td>Historial guardado en el dashboard.</td></tr>
+            </tbody></table></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tab-page" id="tab-seguimiento">
+        <div class="grid">
+          <div class="card span-7"><h2 class="section-title">Revisión diaria <small id="selectedDateLabel">Fecha</small></h2>
+            <div class="form-row"><div><label for="datePicker">Fecha</label><input id="datePicker" type="date"></div><div><label for="energy">Energía</label><select id="energy"><option value="">Seleccionar</option><option>Alta</option><option>Media</option><option>Baja</option></select></div><div><label for="mood">Estado mental/emocional</label><select id="mood"><option value="">Seleccionar</option><option>Enfocado</option><option>Tranquilo</option><option>Distraído</option><option>Cansado</option><option>Ansioso</option></select></div></div>
+            <div id="habitList" class="habit-list"></div><div class="divider"></div>
+            <div class="form-row"><div><label for="weight">Peso actual</label><input id="weight" type="number" step="0.1" placeholder="Ej: 80.0"></div><div><label for="bankAction">Banco / deuda</label><select id="bankAction"><option value="">Sin registrar</option><option>No aplica hoy</option><option>Revisé saldo/deuda</option><option>Separé dinero</option><option>Hice abono</option><option>Pagué deuda</option><option>Negocié acuerdo</option></select></div><div><label for="trafficAction">SOAT / Secretaría de Tránsito</label><select id="trafficAction"><option value="">Sin registrar</option><option>No aplica hoy</option><option>Consulté deuda/multa</option><option>Coticé o compré SOAT</option><option>Solicité información</option><option>Inicié acuerdo de pago</option><option>Ya quedó gestionado</option></select></div></div>
+            <label for="reflection">Reflexión final del día</label><textarea id="reflection" placeholder="¿Qué hice bien hoy? ¿Qué debo corregir mañana? ¿Qué evidencia tengo de avance?"></textarea>
+            <div class="sticky-actions"><button id="saveBtn" type="button">Guardar cierre del día</button><button class="secondary" id="notifyBtn" type="button">🔔 Notificación</button><button class="danger" id="clearDayBtn" type="button">Limpiar día</button></div>
+          </div>
+          <aside class="card span-5"><h2 class="section-title">Semáforo del día</h2><div class="status-box" id="dailyCoach">Marca tus hábitos para ver recomendación.</div><div class="divider"></div><h2 class="section-title">Notificación diaria</h2><label for="reviewTime">Hora de revisión</label><input id="reviewTime" type="time" value="21:30"><div class="status-box" style="margin-top:10px">La notificación funciona mejor si el archivo está abierto en el navegador. Aun así, el sistema guarda la hora para que mantengas el ritual de revisión.</div><div class="divider"></div><h2 class="section-title">Regla de evaluación</h2><div class="status-box"><b>Excelente:</b> 90%-100%<br><b>Bueno:</b> 80%-89%<br><b>Alerta:</b> 60%-79%<br><b>Corregir:</b> menos de 60%</div></aside>
+        </div>
+      </section>
+
+      <section class="tab-page" id="tab-historial">
+        <div class="grid">
+          <div class="card span-12"><h2 class="section-title">Mapa visual de 180 días <small>Haz clic en un día para revisarlo</small></h2><div id="calendar" class="calendar"></div></div>
+          <div class="card span-6"><h2 class="section-title">Resumen semanal</h2><div class="table-wrap"><table><thead><tr><th>Semana</th><th>Promedio</th><th>Días revisados</th><th>Estado</th></tr></thead><tbody id="weeklyTable"></tbody></table></div></div>
+          <div class="card span-6"><h2 class="section-title">Zona de seguridad</h2><div class="btn-row"><button class="secondary" id="exportBtn2" type="button">Descargar respaldo JSON</button><button class="secondary" id="exportHtmlBtn2" type="button">Descargar HTML con progreso</button><button class="danger" id="resetPlanBtn" type="button">Reiniciar todo el plan</button></div><p class="mini" style="margin-top:10px">Descarga un respaldo cada semana. El HTML con progreso te permite mover el sistema a otro computador sin perder los registros guardados dentro del archivo.</p></div>
+          <div class="card span-12"><h2 class="section-title">Historial de registros</h2><div class="table-wrap"><table><thead><tr><th>Fecha</th><th>%</th><th>Hábitos</th><th>Ejercicio</th><th>Azúcar</th><th>Redes</th><th>Peso</th><th>Banco</th><th>SOAT/Tránsito</th><th>Reflexión</th></tr></thead><tbody id="historyTable"></tbody></table></div></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast">Listo</div>
+  <script id="embeddedProgress" type="application/json">{
+  "exportedAt": "2026-06-09T18:56:01.779Z",
+  "app": "Plan Maestro 6 Meses | Hábitos, Finanzas y Productividad",
+  "note": "Archivo HTML offline con progreso preservado desde el dashboard original y plan profesional de 6 meses.",
+  "data": {
+    "version": 4,
+    "startDate": "2026-06-01",
+    "selectedDate": "2026-06-04",
+    "reviewTime": "21:30",
+    "theme": "dark",
+    "entries": {
+      "2026-06-01": {
+        "habits": {
+          "leer": true,
+          "ejercicio": true,
+          "biblia": true
+        },
+        "fields": {
+          "higiene.bath": "Sí"
+        },
+        "energy": "",
+        "mood": "",
+        "weight": "",
+        "bankAction": "",
+        "trafficAction": "",
+        "reflection": "",
+        "reviewedAt": "2026-06-01T13:06:04.651Z",
+        "touchedAt": "2026-06-01T13:06:04.651Z"
+      },
+      "2026-06-02": {
+        "habits": {
+          "leer": true,
+          "ejercicio": true
+        },
+        "fields": {},
+        "energy": "",
+        "mood": "",
+        "weight": "",
+        "bankAction": "",
+        "trafficAction": "",
+        "reflection": "No fue mi mejor dia, falle en muchas cosas que tenia planeadas",
+        "reviewedAt": "2026-06-01T13:06:56.008Z",
+        "touchedAt": "2026-06-01T13:06:56.008Z"
+      },
+      "2026-06-03": {
+        "habits": {},
+        "fields": {},
+        "energy": "",
+        "mood": "",
+        "weight": "",
+        "bankAction": "",
+        "trafficAction": "",
+        "reflection": "Este fue un dia muy irresponsable de mi parte no cumpli con inguna de mis obligaciones.",
+        "reviewedAt": "2026-06-01T13:07:32.284Z",
+        "touchedAt": "2026-06-01T13:07:32.284Z"
+      },
+      "2026-06-04": {
+        "habits": {},
+        "fields": {},
+        "energy": "",
+        "mood": "",
+        "weight": "",
+        "bankAction": "",
+        "trafficAction": "",
+        "reflection": "Este fue un dia muy irresponsable de mi parte no cumpli con inguna de mis obligaciones.",
+        "reviewedAt": "2026-06-01T13:07:37.940Z",
+        "touchedAt": "2026-06-01T13:08:10.902Z"
+      }
+    },
+    "milestones": {},
+    "lastSavedAt": "2026-06-01T13:08:10.902Z",
+    "checks": {},
+    "areaNotes": {},
+    "weeklyReviews": {},
+    "upgradedFrom": "Dashboard 90 Días v3",
+    "upgradedAt": "2026-06-09T18:56:01.779Z"
+  }
+}</script>
+  <script>
+const APP_KEY = "plan_maestro_habitos_6_meses_v4";
+const LEGACY_KEYS = ["dashboard_habitos_90_dias_v3_definitivo","dashboard_habitos_90_dias_v2","dashboard_habitos_90_dias_v1"];
+const DAYS_TOTAL = 180;
+const CORE_LEGACY = ["leer","musica","higiene","ejercicio","redes","detallista","biblia"];
+const trackingHabits = [
+  {id:"leer", icon:"📚", title:"Leer 10 páginas", goal:"Mínimo 10 páginas al día", area:"Desarrollo personal", fields:[{id:"pages",label:"Páginas leídas",type:"number",placeholder:"10"}], autoCheck:f=>Number(f["leer.pages"]||0)>=10},
+  {id:"biblia", icon:"🙏", title:"Lectura bíblica en la mañana", goal:"Leer, orar o meditar antes de iniciar el día", area:"Espiritualidad", fields:[{id:"bibleText",label:"Texto/capítulo leído",type:"text",placeholder:"Ej: Proverbios 3"}]},
+  {id:"ejercicio", icon:"🏋️", title:"Ejercicio 20 minutos", goal:"Mínimo 20 minutos diarios, aunque sea básico", area:"Salud", fields:[{id:"exerciseMin",label:"Minutos",type:"number",placeholder:"20"},{id:"exerciseType",label:"Tipo de ejercicio",type:"text",placeholder:"Pesas, caminata, abdomen"}], autoCheck:f=>Number(f["ejercicio.exerciseMin"]||0)>=20},
+  {id:"azucar", icon:"🥤", title:"Control de azúcar", goal:"Máximo 1 bebida dulce/postre al día", area:"Salud", fields:[{id:"sugarCount",label:"Dulces/bebidas azucaradas",type:"number",placeholder:"0"}], autoCheck:f=>f["azucar.sugarCount"]!=="" && Number(f["azucar.sugarCount"]||99)<=1},
+  {id:"higiene", icon:"🧼", title:"Higiene completa", goal:"Baño, dientes 3 veces, limpieza general", area:"Salud / Orden", fields:[{id:"bath",label:"Baño diario",type:"select",options:["","Sí","No"]},{id:"teeth",label:"Cepilladas",type:"number",placeholder:"3"},{id:"cleaning",label:"Limpieza general",type:"select",options:["","Sí","Parcial","No"]}], autoCheck:f=>f["higiene.bath"]==="Sí" && Number(f["higiene.teeth"]||0)>=3 && f["higiene.cleaning"]==="Sí"},
+  {id:"redes", icon:"📵", title:"Redes máximo 30 minutos", goal:"TikTok/redes dentro del límite", area:"Productividad", fields:[{id:"socialMin",label:"Minutos usados",type:"number",placeholder:"30"}], autoCheck:f=>f["redes.socialMin"]!=="" && Number(f["redes.socialMin"]||999)<=30},
+  {id:"musica", icon:"🎧", title:"Contenido que edifique", goal:"Evitar música/contenido que no construye", area:"Mente", fields:[{id:"musicNote",label:"¿Qué escuché o evité?",type:"text",placeholder:"Adoración, podcast, silencio"}]},
+  {id:"presentacion", icon:"👞", title:"Presentación personal", goal:"Zapatos/artículos limpios y ropa cuidada", area:"Desarrollo personal", fields:[{id:"lookNote",label:"Evidencia",type:"text",placeholder:"Zapatos limpios, ropa organizada"}]},
+  {id:"detallista", icon:"🤝", title:"Detalle consciente", goal:"Gesto pequeño de valor, especialmente en casa", area:"Matrimonio", fields:[{id:"detailAction",label:"Detalle realizado",type:"text",placeholder:"Mensaje, ayuda, invitación, llamada"}]}
+];
+const areas = [
+  {id:"salud", emoji:"💪", title:"Salud", focus:"Cuerpo activo, masa muscular y odontología", result:"En 6 meses tendré una rutina de ejercicio de mínimo 20 minutos al día, mejor control del azúcar, seguimiento de peso/medidas y tratamiento odontológico iniciado para caries.", metric:"20 minutos de ejercicio al día, 5-6 días por semana; máximo 1 dulce/bebida azucarada al día; 1 cita odontológica agendada y asistida; registro semanal de peso.", evidence:"Registro diario, foto o nota de entrenamiento, control semanal de peso, comprobante de cita odontológica y plan de tratamiento.", realistic:"No exige gimnasio perfecto: empieza con mínimo viable de 20 minutos y permite progresar por semanas.", target:"20 min/día", checks:["Medir peso inicial y tomar foto de referencia","Hacer ejercicio 20 min por 7 días seguidos","Reducir azúcar a máximo 1 consumo diario","Agendar cita odontológica","Asistir a valoración de caries","Definir rutina semanal de fuerza"]},
+  {id:"finanzas", emoji:"💰", title:"Finanzas", focus:"Ordenar deudas y crear activos", result:"En 6 meses tendré un mapa claro de deudas, acuerdo de pago iniciado, SOAT gestionado y al menos una idea de activo o ingreso adicional en prueba.", metric:"Listado de deudas con monto, tasa, fecha y estado; acuerdo con banco/tránsito iniciado; SOAT comprado o plan de compra; 1 activo o fuente extra en validación.", evidence:"Capturas, recibos, acuerdos, presupuesto mensual, registro de abonos y evidencia de avance del activo.", realistic:"Se trabaja por pasos: consultar, priorizar, negociar, pagar y luego crear una fuente adicional pequeña.", target:"1 plan de pagos", checks:["Listar todas las deudas con monto exacto","Definir cuánto puedo pagar al mes","Contactar banco para acuerdo de pago","Consultar Secretaría de Tránsito","Comprar o programar compra de SOAT","Diseñar una fuente extra de ingreso"]},
+  {id:"personal", emoji:"👔", title:"Desarrollo personal", focus:"Imagen, orden y presencia profesional", result:"En 6 meses tendré una presentación personal más seria: ropa profesional básica, ropa adecuada para la iglesia, zapatos limpios y una fragancia definida.", metric:"Comprar mínimo 2 prendas profesionales, 1 conjunto para iglesia, mantener zapatos limpios 5 días por semana y comprar/usar una fragancia.", evidence:"Fotos de outfits, lista de compras, registro de limpieza y control de presupuesto.", realistic:"No se trata de comprar mucho, sino de construir un kit básico, limpio y coherente.", target:"Kit básico", checks:["Definir estilo profesional sencillo","Limpiar zapatos/artículos 5 días en una semana","Comprar primera prenda profesional","Comprar ropa para iglesia","Elegir fragancia","Organizar clóset o espacio personal"]},
+  {id:"matrimonio", emoji:"❤️", title:"Matrimonio", focus:"Detalles, conexión y romper monotonía", result:"En 6 meses mi matrimonio tendrá más intención: mínimo un detalle semanal, una conversación de calidad por semana y una actividad diferente al mes.", metric:"1 detalle semanal registrado; 1 conversación sin celular por semana; 1 plan o salida diferente cada mes.", evidence:"Registro escrito del detalle, nota de conversación, foto o comprobante de actividad mensual.", realistic:"El detalle puede ser pequeño: mensaje, ayuda, comida, invitación, carta o tiempo de calidad.", target:"1 detalle/semana", checks:["Hacer primer detalle semanal","Planear conversación sin celular","Crear lista de ideas de citas económicas","Hacer una actividad diferente este mes","Preguntar qué le haría sentir amada/valorada","Mantener 4 semanas seguidas con detalle"]}
+];
+const roadmap = [
+  {m:"Mes 1", items:["Medir punto inicial", "Listar deudas", "Agendar odontología", "Primer detalle semanal"]},
+  {m:"Mes 2", items:["Rutina 20 min estable", "Contactar banco/tránsito", "Kit personal básico", "Primera actividad diferente"]},
+  {m:"Mes 3", items:["Ajustar alimentación", "Primer abono/acuerdo", "Ropa iglesia", "Conversación semanal"]},
+  {m:"Mes 4", items:["Progresar fuerza", "SOAT/plan SOAT", "Fragancia", "Detalle semanal constante"]},
+  {m:"Mes 5", items:["Revisión odontológica", "Probar ingreso extra", "Orden personal", "Plan mensual especial"]},
+  {m:"Mes 6", items:["Evaluar resultados", "Cerrar o ajustar deudas", "Formalizar activo", "Celebrar avance"]}
+];
+const criticalActions = [
+  {key:"critical.salud.exercise", text:"Hoy: 20 minutos de ejercicio, aunque sea en casa."},
+  {key:"critical.finanzas.debt", text:"Esta semana: consultar o actualizar el valor exacto de una deuda."},
+  {key:"critical.transito", text:"Esta semana: avanzar un paso con SOAT o Secretaría de Tránsito."},
+  {key:"critical.matrimonio", text:"Esta semana: realizar un detalle concreto y escribir cuál fue."},
+  {key:"critical.personal", text:"Esta semana: limpiar zapatos/artículos y preparar una pinta correcta."}
+];
+const fiveSItems = [
+  {id:"seiri", step:"1S", title:"Seiri · Clasificar", subtitle:"Separar lo necesario de lo innecesario", objective:"Retirar lo que ocupa espacio, distrae o no aporta a tus metas.", actions:["Eliminar papeles, objetos o archivos que ya no sirven","Separar ropa, documentos y herramientas por utilidad","Dejar visible solo lo que usas de verdad"]},
+  {id:"seiton", step:"2S", title:"Seiton · Ordenar", subtitle:"Un lugar para cada cosa", objective:"Organizar lo útil para encontrarlo rápido y evitar pérdida de tiempo.", actions:["Definir zonas fijas para llaves, billetera y cargadores","Ordenar documentos de banco, SOAT y tránsito","Preparar ropa, zapatos y elementos del día siguiente"]},
+  {id:"seiso", step:"3S", title:"Seiso · Limpiar", subtitle:"Limpiar también es inspeccionar", objective:"Mantener espacios limpios para detectar problemas antes de que crezcan.", actions:["Limpiar escritorio, habitación y elementos personales","Revisar zapatos, ropa y objetos de trabajo","Limpiar archivos digitales o descargas innecesarias"]},
+  {id:"seiketsu", step:"4S", title:"Seiketsu · Estandarizar", subtitle:"Convertir el orden en rutina", objective:"Crear reglas simples para que el orden no dependa de la memoria.", actions:["Usar una checklist nocturna de 5 minutos","Revisar cada domingo el estado del plan","Mantener horarios claros para lectura, ejercicio y revisión"]},
+  {id:"shitsuke", step:"5S", title:"Shitsuke · Disciplina", subtitle:"Sostener el sistema", objective:"Repetir las reglas aunque el día no sea perfecto.", actions:["Registrar el día incluso cuando salga mal","Corregir rápido sin abandonar el plan","Premiar la constancia con evidencia, no con excusas"]}
+];
+const fiveSChecks = [
+  {key:"5s.seiri.clasificar", text:"Clasifiqué y retiré algo que ya no aporta a mi espacio o a mis metas."},
+  {key:"5s.seiton.ordenar", text:"Ordené objetos/documentos importantes y les asigné un lugar fijo."},
+  {key:"5s.seiso.limpiar", text:"Limpié un espacio personal, laboral o digital y detecté algo por mejorar."},
+  {key:"5s.seiketsu.estandarizar", text:"Apliqué una rutina estándar: ropa lista, espacio limpio o checklist nocturno."},
+  {key:"5s.shitsuke.disciplina", text:"Sostuve el registro diario o semanal aunque no tenía motivación."}
+];
+function canStore(){try{localStorage.setItem("__t","1");localStorage.removeItem("__t");return true}catch(e){return false}} const storageAvailable=canStore(); let lastWriteOk=storageAvailable;
+function getStore(k){if(!storageAvailable)return null;try{return localStorage.getItem(k)}catch(e){return null}}
+function setStore(k,v){if(!storageAvailable){lastWriteOk=false;return false}try{localStorage.setItem(k,v);lastWriteOk=true;return true}catch(e){lastWriteOk=false;return false}}
+function safeJson(value){return JSON.stringify(value,null,2).replaceAll("<","\\u003C").replaceAll(">","\\u003E").replaceAll("&","\\u0026").replaceAll("\u2028","\\u2028").replaceAll("\u2029","\\u2029")}
+function loadEmbedded(){const n=document.getElementById("embeddedProgress"); if(!n||!n.textContent.trim())return null; try{const p=JSON.parse(n.textContent); return p.data||p}catch(e){return null}}
+function stateTime(s){const t=Date.parse(s?.lastSavedAt||s?.upgradedAt||s?.exportedAt||""); return Number.isFinite(t)?t:0}
+function normalize(raw){const d={version:4,startDate:todayISO(),selectedDate:todayISO(),reviewTime:"21:30",theme:"dark",entries:{},milestones:{},checks:{},areaNotes:{},weeklyReviews:{},lastSavedAt:null}; const s={...d,...(raw||{})}; s.entries=s.entries||{}; s.milestones=s.milestones||{}; s.checks=s.checks||{}; s.areaNotes=s.areaNotes||{}; s.weeklyReviews=s.weeklyReviews||{}; s.version=4; return s}
+function loadState(){let candidates=[]; const current=getStore(APP_KEY); if(current){try{candidates.push(normalize(JSON.parse(current)))}catch(e){}} for(const key of LEGACY_KEYS){const old=getStore(key); if(old){try{candidates.push(normalize(JSON.parse(old)))}catch(e){}}} const emb=loadEmbedded(); if(emb)candidates.push(normalize(emb)); let s=candidates.sort((a,b)=>stateTime(b)-stateTime(a))[0]||normalize(null); if(!s.selectedDate || Math.abs(diffDays(s.selectedDate,todayISO()))>30){s.selectedDate=todayISO()} setStore(APP_KEY, JSON.stringify(s)); return s}
+let state=loadState(), saveTimer=null, toastTimer=null, notificationTimer=null;
+function todayISO(){const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)}
+function addDays(iso,days){const d=new Date(iso+"T00:00:00");d.setDate(d.getDate()+days);d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)}
+function diffDays(a,b){const da=new Date(a+"T00:00:00"),db=new Date(b+"T00:00:00");return Math.round((db-da)/(86400000))}
+function fmt(iso){const d=new Date(iso+"T00:00:00");return d.toLocaleDateString("es-CO",{weekday:"short",day:"2-digit",month:"short",year:"numeric"})}
+function entry(date=state.selectedDate){if(!state.entries[date]) state.entries[date]={habits:{},fields:{},energy:"",mood:"",weight:"",bankAction:"",trafficAction:"",reflection:"",reviewedAt:null,touchedAt:null,schemaVersion:4}; return state.entries[date]}
+function habitIdsForEntry(e){return e?.schemaVersion>=4 ? trackingHabits.map(h=>h.id) : CORE_LEGACY}
+function scoreFor(date, live=false){const e=state.entries[date]; if(!e) return live?0:null; if(!live && !e.reviewedAt)return null; const ids=habitIdsForEntry(e); const done=ids.filter(id=>e.habits&&e.habits[id]).length; return Math.round(done/ids.length*100)}
+function liveScore(){const e=entry(); const ids=trackingHabits.map(h=>h.id); return Math.round(ids.filter(id=>e.habits[id]).length/ids.length*100)}
+function doneCount(date){const e=state.entries[date]; if(!e||!e.reviewedAt)return 0; const ids=habitIdsForEntry(e); return ids.filter(id=>e.habits&&e.habits[id]).length}
+function persist(msg="Autoguardado"){state.lastSavedAt=new Date().toISOString(); setStore(APP_KEY, JSON.stringify(state)); updateSaveStatus(msg); showToast(msg)}
+function debouncedPersist(msg="Autoguardado"){updateSaveStatus("Guardando..."); clearTimeout(saveTimer); saveTimer=setTimeout(()=>persist(msg),250)}
+function showToast(text){const t=document.getElementById("toast"); t.textContent=text; t.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),1600)}
+function updateSaveStatus(text){const dot=document.getElementById("saveDot"), title=document.getElementById("saveTitle"), sub=document.getElementById("saveSubtitle"); if(!dot)return; title.textContent=text; const when=state.lastSavedAt?new Date(state.lastSavedAt).toLocaleString("es-CO"):"aún sin guardado"; if(!storageAvailable||!lastWriteOk){sub.innerHTML=`Tu navegador bloqueó el guardado local. Último intento: ${when}. Usa <b>Guardar HTML</b> o <b>Respaldo JSON</b>.`; dot.style.background="var(--warn)"; return} sub.textContent=`Guardado automático en este navegador. Último guardado: ${when}.`; dot.style.background=text.includes("Guardando")?"var(--warn)":"var(--good)"}
+function applyTheme(){document.documentElement.setAttribute("data-theme",state.theme||"dark"); const b=document.getElementById("themeBtn"); b.textContent=state.theme==="light"?"☀️ Modo claro":"🌙 Modo oscuro"}
+function toggleTheme(){state.theme=state.theme==="light"?"dark":"light"; applyTheme(); persist("Tema guardado")}
+function switchTab(tab){document.querySelectorAll(".tab-btn").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab)); document.querySelectorAll(".tab-page").forEach(p=>p.classList.toggle("active",p.id===`tab-${tab}`)); window.scrollTo({top:0,behavior:"smooth"})}
+function renderAreas(){const el=document.getElementById("areasGrid"); el.innerHTML=areas.map(a=>`<article class="area-card"><div class="area-title"><div class="emoji">${a.emoji}</div><div><h3>${a.title}</h3><p>${a.focus}</p></div></div><div class="smart-list"><div class="smart-item"><b>Resultado a 6 meses:</b> ${a.result}</div><div class="smart-item"><b>Indicador verificable:</b> ${a.metric}</div><div class="smart-item"><b>Evidencia:</b> ${a.evidence}</div><div class="smart-item"><b>Realista porque:</b> ${a.realistic}</div></div></article>`).join("")}
+function renderDefinitions(){document.getElementById("definitions").innerHTML=areas.map(a=>`<div class="definition"><h3>${a.emoji} ${a.title}</h3><div class="big">${a.target}</div><p>${a.result}</p></div>`).join(""); document.getElementById("verificationRows").innerHTML=areas.map(a=>`<tr><td>${a.title}</td><td>${a.result}</td><td>${a.metric}</td><td>${a.evidence}</td><td>Domingo en la noche</td></tr>`).join("")}
+function checkKey(areaId, idx){return `${areaId}.check.${idx}`}
+function renderActionPlan(){const actionPlan=document.getElementById("actionPlan"); actionPlan.innerHTML=areas.flatMap(a=>a.checks.map((c,i)=>`<label class="check"><input type="checkbox" data-check="${checkKey(a.id,i)}" ${state.checks[checkKey(a.id,i)]?"checked":""}><span><strong>${a.title}:</strong> ${c}</span></label>`)).join(""); actionPlan.querySelectorAll("[data-check]").forEach(inp=>inp.addEventListener("change",e=>{state.checks[e.target.dataset.check]=e.target.checked; persist("Acción actualizada"); updateMetrics()}));
+  const critical=document.getElementById("criticalActions"); critical.innerHTML=criticalActions.map(a=>`<label class="check"><input type="checkbox" data-check="${a.key}" ${state.checks[a.key]?"checked":""}><span>${a.text}</span></label>`).join(""); critical.querySelectorAll("[data-check]").forEach(inp=>inp.addEventListener("change",e=>{state.checks[e.target.dataset.check]=e.target.checked; persist("Acción crítica actualizada"); updateMetrics()}));
+}
+function renderFiveS(){const grid=document.getElementById("fiveSGrid"); if(!grid)return; grid.innerHTML=fiveSItems.map(s=>`<article class="fives-card"><div class="step">${s.step}</div><div><h3>${s.title}</h3><p><b>${s.subtitle}</b></p></div><p>${s.objective}</p><ul>${s.actions.map(a=>`<li>${a}</li>`).join("")}</ul></article>`).join("");
+  const checks=document.getElementById("fiveSChecklist"); checks.innerHTML=fiveSChecks.map(c=>`<label class="check"><input type="checkbox" data-check="${c.key}" ${state.checks[c.key]?"checked":""}><span>${c.text}</span></label>`).join(""); checks.querySelectorAll("[data-check]").forEach(inp=>inp.addEventListener("change",e=>{state.checks[e.target.dataset.check]=e.target.checked; persist("Checklist 5S actualizado"); updateMetrics()}));
+  const notes=document.getElementById("fiveSNotes"); if(notes) notes.value=state.areaNotes?.["5s.notes"]||"";
+}
+function saveFiveS(){state.areaNotes=state.areaNotes||{}; state.areaNotes["5s.notes"]=document.getElementById("fiveSNotes").value; persist("Mejora 5S guardada")}
+function renderRoadmap(){const html=roadmap.map(m=>`<div class="month"><b>${m.m}</b><ul>${m.items.map(i=>`<li>${i}</li>`).join("")}</ul></div>`).join(""); document.getElementById("roadmap").innerHTML=html; document.getElementById("roadmap2").innerHTML=html}
+function fieldHtml(h,f,e){const key=`${h.id}.${f.id}`; const v=e.fields?.[key]||""; if(f.type==="select") return `<div><label>${f.label}</label><select data-field="${key}">${f.options.map(o=>`<option value="${o}" ${o===v?"selected":""}>${o||"Seleccionar"}</option>`).join("")}</select></div>`; return `<div><label>${f.label}</label><input type="${f.type}" data-field="${key}" value="${String(v).replaceAll('"','&quot;')}" placeholder="${f.placeholder||""}"></div>`}
+function updateHabitVisuals(e, root=document){trackingHabits.forEach(h=>{const card=root.querySelector(`[data-habit-card="${h.id}"]`); const checked=!!e.habits[h.id]; if(card){card.classList.toggle("done",checked); const box=card.querySelector(`[data-habit="${h.id}"]`); if(box) box.checked=checked;}})}
+function renderHabits(){const e=entry(); const list=document.getElementById("habitList"); list.innerHTML=trackingHabits.map(h=>`<div class="habit ${e.habits[h.id]?"done":""}" data-habit-card="${h.id}"><div class="habit-main"><div class="emoji">${h.icon}</div><div><div class="habit-title">${h.title}</div><div class="habit-desc">${h.goal} · ${h.area}</div></div><label class="habit-toggle"><input type="checkbox" data-habit="${h.id}" ${e.habits[h.id]?"checked":""}> Cumplido</label></div><div class="habit-fields">${(h.fields||[]).map(f=>fieldHtml(h,f,e)).join("")}</div></div>`).join("");
+  list.querySelectorAll("[data-habit]").forEach(inp=>inp.addEventListener("change",ev=>{const en=entry(); en.habits[ev.target.dataset.habit]=ev.target.checked; en.touchedAt=new Date().toISOString(); en.schemaVersion=4; updateHabitVisuals(en,list); debouncedPersist("Hábito actualizado"); updateMetrics()}));
+  list.querySelectorAll("[data-field]").forEach(inp=>inp.addEventListener("input",ev=>{const en=entry(); en.fields[ev.target.dataset.field]=ev.target.value; en.touchedAt=new Date().toISOString(); en.schemaVersion=4; autoCheckHabits(en); updateHabitVisuals(en,list); debouncedPersist("Campo actualizado"); updateMetrics()}));
+}
+function autoCheckHabits(e){for(const h of trackingHabits){if(typeof h.autoCheck==="function"){const ok=h.autoCheck(e.fields||{}); if(ok) e.habits[h.id]=true;}}}
+function loadSelectedDate(){document.getElementById("datePicker").value=state.selectedDate; const e=entry(); document.getElementById("energy").value=e.energy||""; document.getElementById("mood").value=e.mood||""; document.getElementById("weight").value=e.weight||""; document.getElementById("bankAction").value=e.bankAction||""; document.getElementById("trafficAction").value=e.trafficAction||""; document.getElementById("reflection").value=e.reflection||""; document.getElementById("reviewTime").value=state.reviewTime||"21:30"; document.getElementById("weeklyReview").value=state.weeklyReviews[currentWeekKey()]||""}
+function captureEntry(){const e=entry(); e.energy=document.getElementById("energy").value; e.mood=document.getElementById("mood").value; e.weight=document.getElementById("weight").value; e.bankAction=document.getElementById("bankAction").value; e.trafficAction=document.getElementById("trafficAction").value; e.reflection=document.getElementById("reflection").value; e.touchedAt=new Date().toISOString(); e.schemaVersion=4; return e}
+function saveDay(){const e=captureEntry(); autoCheckHabits(e); e.reviewedAt=new Date().toISOString(); persist("Cierre del día guardado"); renderAll(false)}
+function clearSelectedDay(){if(!confirm("¿Seguro que quieres limpiar este día? No se borran los demás días."))return; delete state.entries[state.selectedDate]; persist("Día limpiado"); renderAll()}
+function resetPlan(){if(!confirm("¿Seguro que quieres reiniciar TODO el plan? Se borrará el historial guardado en este navegador."))return; const theme=state.theme; state=normalize(null); state.theme=theme; setStore(APP_KEY, JSON.stringify(state)); renderAll(); showToast("Plan reiniciado")}
+function updateMetrics(){const today=state.selectedDate; const selectedLive=liveScore(); document.getElementById("dailyScore").textContent=`${selectedLive}%`; document.getElementById("dailyBar").style.width=`${selectedLive}%`; const barBox=document.getElementById("dailyBarBox"); barBox.className="bar"+(selectedLive<60?" bad":selectedLive<80?" warn":""); document.getElementById("dailyHint").textContent=selectedLive>=80?"Buen cierre. Mantén la racha.":"Prioridad: llegar mínimo al 80%.";
+  const reviewed=Object.keys(state.entries).filter(d=>state.entries[d].reviewedAt).sort(); const scores=reviewed.map(d=>scoreFor(d)).filter(x=>x!==null); const avg=scores.length?Math.round(scores.reduce((a,b)=>a+b,0)/scores.length):0; document.getElementById("avgScore").textContent=`${avg}%`; document.getElementById("avgBar").style.width=`${avg}%`; document.getElementById("daysDone").textContent=`${reviewed.length}/${DAYS_TOTAL}`;
+  let streak=0; for(let i=0;i<DAYS_TOTAL;i++){const d=addDays(todayISO(),-i); const s=scoreFor(d); if(s!==null&&s>=80) streak++; else if(s!==null||i>0) break} document.getElementById("streak").textContent=streak;
+  const allKeys=[...areas.flatMap(a=>a.checks.map((_,i)=>checkKey(a.id,i))),...criticalActions.map(a=>a.key),...fiveSChecks.map(a=>a.key)]; const done=allKeys.filter(k=>state.checks[k]).length; const goal=allKeys.length?Math.round(done/allKeys.length*100):0; document.getElementById("goalScore").textContent=`${goal}%`; document.getElementById("goalBar").style.width=`${goal}%`;
+  const day=diffDays(state.startDate,todayISO())+1; document.getElementById("dayBadge").textContent=`Día ${Math.max(1,Math.min(DAYS_TOTAL,day))} de ${DAYS_TOTAL}`; const selectedDay=diffDays(state.startDate,state.selectedDate)+1; document.getElementById("selectedDateLabel").textContent=`Día ${selectedDay} · ${fmt(state.selectedDate)}`; document.getElementById("topDate").textContent=fmt(todayISO()); document.getElementById("weekLabel").textContent=`Semana ${Math.floor(Math.max(0,diffDays(state.startDate,todayISO()))/7)+1}`;
+  updateDiagnostic(avg, reviewed.length, streak, selectedLive); renderCalendar(); renderWeekly(); renderHistory(); updateDailyCoach(selectedLive); updateSaveStatus(state.lastSavedAt?"Progreso protegido":"Listo para guardar")
+}
+function updateDiagnostic(avg, days, streak, todayScore){let msg=""; if(!days) msg="Aún no hay cierres recientes. Hoy el objetivo es registrar sin buscar perfección."; else if(avg>=85) msg="Vas fuerte: tu sistema está creando constancia. Ahora enfócate en evidencia semanal: deudas, odontología, matrimonio y presentación personal."; else if(avg>=70) msg="Hay avance, pero necesitas cerrar mejor el día. Elige dos hábitos críticos y cúmplelos antes de dormir."; else msg="Necesitas volver a lo esencial. No intentes cambiar todo en un día: ejercicio 20 min, Biblia/lectura, higiene y una acción financiera o familiar."; const weak=weakestHabits(); if(weak.length) msg+=`<br><br><b>Hábitos a reforzar:</b> ${weak.join(", ")}.`; if(todayScore<80) msg+=`<br><br><b>Acción inmediata:</b> cumple una acción pequeña ahora y registra evidencia.`; document.getElementById("diagnosticBox").innerHTML=msg}
+function weakestHabits(){const totals={},counts={}; trackingHabits.forEach(h=>{totals[h.id]=0;counts[h.id]=0}); Object.values(state.entries).forEach(e=>{if(!e.reviewedAt)return; const ids=habitIdsForEntry(e); ids.forEach(id=>{totals[id]++; if(e.habits&&e.habits[id])counts[id]++})}); return trackingHabits.map(h=>({title:h.title, rate: totals[h.id]?counts[h.id]/totals[h.id]:1})).filter(x=>x.rate<.75).sort((a,b)=>a.rate-b.rate).slice(0,3).map(x=>x.title)}
+function updateDailyCoach(score){let msg=score>=90?"Excelente. Cierra con reflexión y deja preparado mañana.":score>=80?"Buen día. Protege la racha y no agregues tareas innecesarias.":score>=60?"Día en alerta. Escoge dos hábitos rápidos para subir el porcentaje.":"Día débil. Haz el mínimo: higiene, 10 páginas o Biblia, y 20 minutos de movimiento."; document.getElementById("dailyCoach").innerHTML=msg}
+function renderCalendar(){const cal=document.getElementById("calendar"); if(!cal)return; cal.innerHTML=""; for(let i=0;i<DAYS_TOTAL;i++){const d=addDays(state.startDate,i); const s=scoreFor(d); const btn=document.createElement("button"); btn.type="button"; btn.className="day"+(d===todayISO()?" today":"")+(d===state.selectedDate?" selected":"")+(s!==null?(s>=80?" good":s>=60?" warn":" bad"):""); btn.textContent=i+1; btn.title=`${fmt(d)} · ${s===null?"Sin revisión":s+"%"}`; btn.addEventListener("click",()=>{captureEntry(); state.selectedDate=d; persist("Fecha seleccionada"); renderAll()}); cal.appendChild(btn)}}
+function renderWeekly(){const body=document.getElementById("weeklyTable"); if(!body)return; let rows=""; for(let w=0; w<Math.ceil(DAYS_TOTAL/7); w++){let scores=[], reviewed=0; for(let i=0;i<7;i++){const d=addDays(state.startDate,w*7+i); const s=scoreFor(d); if(s!==null){scores.push(s); reviewed++}} const avg=scores.length?Math.round(scores.reduce((a,b)=>a+b,0)/scores.length):null; const status=avg===null?"Sin registro":avg>=85?"Excelente":avg>=80?"Bueno":avg>=60?"Alerta":"Corregir"; rows+=`<tr><td>Semana ${w+1}</td><td>${avg===null?"Sin datos":avg+"%"}</td><td>${reviewed}/7</td><td>${status}</td></tr>`} body.innerHTML=rows}
+function renderHistory(){const body=document.getElementById("historyTable"); if(!body)return; const dates=Object.keys(state.entries).filter(d=>state.entries[d].reviewedAt).sort(); body.innerHTML=dates.map(d=>{const e=state.entries[d], s=scoreFor(d), ids=habitIdsForEntry(e); return `<tr><td>${fmt(d)}</td><td>${s}%</td><td>${doneCount(d)}/${ids.length}</td><td>${e.fields?.["ejercicio.exerciseMin"]||"-"} min</td><td>${e.fields?.["azucar.sugarCount"]??"-"}</td><td>${e.fields?.["redes.socialMin"]||"-"} min</td><td>${e.weight||"-"}</td><td>${e.bankAction||"-"}</td><td>${e.trafficAction||"-"}</td><td>${e.reflection||"-"}</td></tr>`}).join("")||`<tr><td colspan="10">Aún no hay registros guardados.</td></tr>`}
+function currentWeekKey(){const week=Math.floor(Math.max(0,diffDays(state.startDate,state.selectedDate))/7)+1; return `week.${week}`}
+function saveWeekly(){state.weeklyReviews[currentWeekKey()]=document.getElementById("weeklyReview").value; persist("Revisión semanal guardada")}
+function exportData(){const blob=new Blob([safeJson({exportedAt:new Date().toISOString(), app:"Plan Maestro 6 Meses", data:state})],{type:"application/json"}); download(blob,`respaldo-plan-maestro-${todayISO()}.json`)}
+function exportHtmlSnapshot(){captureEntry(); state.lastSavedAt=new Date().toISOString(); const payload={exportedAt:new Date().toISOString(), app:"Plan Maestro 6 Meses", note:"HTML con progreso integrado", data:state}; const node=document.getElementById("embeddedProgress"); node.textContent=safeJson(payload); const html="<!DOCTYPE html>\n"+document.documentElement.outerHTML; setStore(APP_KEY, JSON.stringify(state)); const blob=new Blob([html],{type:"text/html;charset=utf-8"}); download(blob,`plan-maestro-6-meses-con-progreso-${todayISO()}.html`); showToast("HTML con progreso descargado")}
+function download(blob,name){const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),800)}
+function importData(file){const r=new FileReader(); r.onload=()=>{try{const p=JSON.parse(r.result); state=normalize(p.data||p); setStore(APP_KEY, JSON.stringify(state)); renderAll(); showToast("Progreso restaurado")}catch(e){alert("No se pudo restaurar. Verifica que sea un JSON válido.")}}; r.readAsText(file)}
+function setupNotifications(){state.reviewTime=document.getElementById("reviewTime").value||"21:30"; persist("Hora de revisión guardada"); if(!("Notification" in window)){showToast("Este navegador no permite notificaciones"); return} Notification.requestPermission().then(p=>{if(p==="granted"){showToast(`Notificación activada: ${state.reviewTime}`); scheduleLocalNotification()} else alert("No se concedió permiso de notificación.")})}
+function scheduleLocalNotification(){if(notificationTimer)clearTimeout(notificationTimer); if(!("Notification" in window)||Notification.permission!=="granted")return; const [hh,mm]=(state.reviewTime||"21:30").split(":").map(Number); const now=new Date(), target=new Date(); target.setHours(hh,mm,0,0); if(target<=now)target.setDate(target.getDate()+1); notificationTimer=setTimeout(()=>{new Notification("Revisión de hábitos",{body:"Cierra el día: marca hábitos, evidencia y enfoque de mañana."}); scheduleLocalNotification()},target-now)}
+function renderAll(load=true){applyTheme(); if(load) loadSelectedDate(); renderAreas(); renderDefinitions(); renderRoadmap(); renderActionPlan(); renderFiveS(); renderHabits(); updateMetrics()}
+function bind(){document.getElementById("tabs").addEventListener("click",e=>{const b=e.target.closest("[data-tab]"); if(b)switchTab(b.dataset.tab)}); document.getElementById("themeBtn").addEventListener("click",toggleTheme); document.getElementById("saveBtn").addEventListener("click",saveDay); document.getElementById("notifyBtn").addEventListener("click",setupNotifications); document.getElementById("clearDayBtn").addEventListener("click",clearSelectedDay); document.getElementById("resetPlanBtn").addEventListener("click",resetPlan); document.getElementById("saveWeeklyBtn").addEventListener("click",saveWeekly); document.getElementById("saveFiveSBtn").addEventListener("click",saveFiveS); document.getElementById("fiveSNotes").addEventListener("input",()=>{state.areaNotes=state.areaNotes||{}; state.areaNotes["5s.notes"]=document.getElementById("fiveSNotes").value; debouncedPersist("Notas 5S guardadas")}); ["exportBtn","exportBtn2"].forEach(id=>document.getElementById(id).addEventListener("click",exportData)); ["exportHtmlBtn","exportHtmlBtn2"].forEach(id=>document.getElementById(id).addEventListener("click",exportHtmlSnapshot)); document.getElementById("importBtn").addEventListener("click",()=>document.getElementById("importFile").click()); document.getElementById("importFile").addEventListener("change",e=>{const f=e.target.files?.[0]; if(f)importData(f); e.target.value=""}); document.getElementById("datePicker").addEventListener("change",e=>{captureEntry(); state.selectedDate=e.target.value||todayISO(); persist("Fecha cambiada"); renderAll()}); ["energy","mood","weight","bankAction","trafficAction","reflection","reviewTime"].forEach(id=>{document.getElementById(id).addEventListener("input",()=>{captureEntry(); if(id==="reviewTime")state.reviewTime=document.getElementById(id).value; debouncedPersist("Autoguardado"); updateMetrics()})})}
+document.addEventListener("DOMContentLoaded",()=>{bind(); renderAll(); scheduleLocalNotification()});
+  </script>
+</body>
+</html>
