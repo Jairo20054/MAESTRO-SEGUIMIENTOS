@@ -1,0 +1,2312 @@
+<!doctype html>
+<html lang="es" data-visualize-standalone>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Raíces — Estudio bíblico diario</title>
+<meta name="description" content="Aplicación personal para estudiar la Biblia cada día, crear reflexiones, registrar oraciones y seguir el progreso.">
+<style>:root {
+  color-scheme: light dark;
+  background-color: transparent !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --main-surface-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: light-dark(rgb(26 28 31), rgb(255 255 255));
+  --card: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --card-foreground: var(--foreground);
+  --popover: light-dark(rgb(255 255 255), rgb(45 45 45));
+  --popover-foreground: var(--foreground);
+  --primary: light-dark(rgb(51 156 255), rgb(131 195 255));
+  --primary-foreground: light-dark(rgb(255 255 255), rgb(13 13 13));
+  --secondary: light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%));
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: light-dark(
+    rgb(26 28 31 / 49.4%),
+    rgb(255 255 255 / 49.8%)
+  );
+  --accent: light-dark(rgb(229 242 255), rgb(13 39 63));
+  --accent-foreground: var(--primary);
+  --destructive: light-dark(rgb(226 85 7), rgb(255 133 73));
+  --border: light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%));
+  --input: light-dark(
+    rgb(26 28 31 / 11.8%),
+    color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+  );
+  --ring: light-dark(rgb(51 156 255), rgb(131 195 255 / 76%));
+  --font-size-base: 14px;
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, "Segoe UI", sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: 10px;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 17 17'%3E%3Cpath d='M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z'/%3E%3C/svg%3E");
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+  --color-background-primary: var(--background);
+  --color-text-primary: var(--foreground);
+  --color-border-secondary: var(--border);
+}
+
+:root[data-visualize-standalone] {
+  background-color: var(--background) !important;
+}
+
+/* Generic mobile code-block hosts provide light/dark mode but no series palette.
+   AppBlock hosts set all six variables themselves. */
+:root:not([data-app-block-surface]) {
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(#f3883b, #f59a56);
+  --viz-series-3: light-dark(#5dc977, #74d58b);
+  --viz-series-4: light-dark(#eb77b1, #f08fc0);
+  --viz-series-5: light-dark(#9b79ec, #aa91ef);
+  --viz-series-6: light-dark(#3ab9b1, #5acbc2);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html > body {
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+:root:not([data-app-block-surface]) > body {
+  padding: 12px;
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--viz-font-weight-medium);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget > :not(.card) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-legend,
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls > .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls > .form-label > :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type="checkbox"] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type="checkbox"]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type="checkbox"]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: "";
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type="radio"] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type="radio"]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: "";
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+    [aria-pressed="true"],
+    [aria-selected="true"],
+    .is-selected
+  ) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed="true"], [aria-selected="true"], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget > svg {
+  width: 100%;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+</style>
+</head>
+<body>
+<div id="biblia-viva-app" class="bv-app">
+  <style>
+    #biblia-viva-app {
+      --bv-sidebar: 248px;
+      --bv-gap: 18px;
+      --bv-soft: color-mix(in srgb, var(--muted) 72%, transparent);
+      --bv-soft-2: color-mix(in srgb, var(--accent) 62%, transparent);
+      --bv-line: color-mix(in srgb, var(--border) 86%, transparent);
+      --bv-primary-soft: color-mix(in srgb, var(--primary) 13%, transparent);
+      --bv-series-soft: color-mix(in srgb, var(--viz-series-1) 15%, transparent);
+      color: var(--foreground);
+      background:
+        radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--viz-series-1) 10%, transparent), transparent 25rem),
+        radial-gradient(circle at 95% 15%, color-mix(in srgb, var(--viz-series-2) 9%, transparent), transparent 24rem),
+        var(--background);
+      min-height: 760px;
+      width: 100%;
+      border: 1px solid var(--bv-line);
+      border-radius: 24px;
+      overflow: hidden;
+      font-size: var(--font-size-base);
+    }
+
+    #biblia-viva-app[data-theme="dark"] {
+      color-scheme: dark;
+      --background: #121714;
+      --foreground: #eef2ef;
+      --card: #19201c;
+      --card-foreground: #eef2ef;
+      --popover: #1d2621;
+      --popover-foreground: #eef2ef;
+      --primary: #dce9df;
+      --primary-foreground: #142019;
+      --secondary: #26322b;
+      --secondary-foreground: #f0f5f1;
+      --muted: #242d28;
+      --muted-foreground: #b4c0b8;
+      --accent: #2b3931;
+      --accent-foreground: #f1f6f2;
+      --destructive: #f29b91;
+      --border: #344039;
+      --input: #344039;
+      --ring: #a9c8b2;
+      --viz-series-1: #91c6a1;
+      --viz-series-2: #d7b876;
+      --viz-series-3: #80b4c9;
+      --viz-series-4: #c596c7;
+    }
+
+    #biblia-viva-app[data-theme="light"] {
+      color-scheme: light;
+      --background: #f6f7f3;
+      --foreground: #17231c;
+      --card: #ffffff;
+      --card-foreground: #17231c;
+      --popover: #ffffff;
+      --popover-foreground: #17231c;
+      --primary: #215a45;
+      --primary-foreground: #ffffff;
+      --secondary: #e7eee9;
+      --secondary-foreground: #1e4938;
+      --muted: #e9ece7;
+      --muted-foreground: #58665d;
+      --accent: #e4eee7;
+      --accent-foreground: #1b4e3a;
+      --destructive: #a9362e;
+      --border: #d9dfda;
+      --input: #cdd6cf;
+      --ring: #3e765e;
+      --viz-series-1: #2d7458;
+      --viz-series-2: #a5792a;
+      --viz-series-3: #3f7890;
+      --viz-series-4: #805889;
+    }
+
+    #biblia-viva-app * { box-sizing: border-box; }
+    #biblia-viva-app button,
+    #biblia-viva-app input,
+    #biblia-viva-app textarea,
+    #biblia-viva-app select { font: inherit; }
+    #biblia-viva-app button { cursor: pointer; }
+    #biblia-viva-app a { color: inherit; }
+    #biblia-viva-app svg { flex: 0 0 auto; }
+
+    .bv-shell { display: grid; grid-template-columns: var(--bv-sidebar) minmax(0, 1fr); min-height: 760px; }
+    .bv-sidebar {
+      border-right: 1px solid var(--bv-line);
+      background: color-mix(in srgb, var(--card) 90%, transparent);
+      padding: 22px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .bv-brand { display: flex; align-items: center; gap: 11px; padding: 0 8px; }
+    .bv-brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      color: var(--primary-foreground);
+      background: var(--primary);
+      box-shadow: 0 10px 28px color-mix(in srgb, var(--primary) 22%, transparent);
+    }
+    .bv-brand-copy strong { display: block; font-weight: 500; letter-spacing: -0.02em; }
+    .bv-brand-copy span { display: block; color: var(--muted-foreground); margin-top: 2px; }
+    .bv-nav { display: grid; gap: 5px; }
+    .bv-nav-btn {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: var(--muted-foreground);
+      border-radius: 12px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+    }
+    .bv-nav-btn:hover { background: var(--accent); color: var(--accent-foreground); }
+    .bv-nav-btn[aria-current="page"] { background: var(--primary); color: var(--primary-foreground); }
+    .bv-nav-btn svg { width: 18px; height: 18px; }
+    .bv-side-card {
+      margin-top: auto;
+      padding: 15px;
+      border-radius: 16px;
+      background: var(--bv-primary-soft);
+      border: 1px solid color-mix(in srgb, var(--primary) 16%, transparent);
+    }
+    .bv-side-card p { margin: 0 0 10px; color: var(--muted-foreground); }
+    .bv-mini-progress { height: 7px; border-radius: 999px; background: var(--muted); overflow: hidden; }
+    .bv-mini-progress span { display: block; height: 100%; border-radius: inherit; background: var(--viz-series-1); transition: width .3s ease; }
+
+    .bv-main { min-width: 0; padding: 24px 26px 40px; }
+    .bv-topbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 24px; }
+    .bv-mobile-nav { display: none; }
+    .bv-date-line { color: var(--muted-foreground); margin-top: 4px; }
+    .bv-top-actions { display: flex; gap: 8px; align-items: center; }
+    .bv-icon-btn {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--bv-line);
+      border-radius: 12px;
+      background: var(--card);
+      color: var(--card-foreground);
+      display: grid;
+      place-items: center;
+    }
+    .bv-icon-btn:hover { background: var(--accent); }
+    .bv-icon-btn svg { width: 18px; height: 18px; }
+    .bv-profile-chip { display: flex; align-items: center; gap: 9px; padding: 5px 10px 5px 5px; border-radius: 999px; background: var(--card); border: 1px solid var(--bv-line); }
+    .bv-avatar { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--secondary); color: var(--secondary-foreground); font-weight: 500; }
+
+    .bv-view { display: none; }
+    .bv-view.is-active { display: block; animation: bv-in .22s ease both; }
+    @keyframes bv-in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .bv-view.is-active { animation: none; } }
+
+    .bv-hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      padding: 26px;
+      min-height: 242px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(210px, .55fr);
+      gap: 24px;
+      background:
+        linear-gradient(125deg, color-mix(in srgb, var(--primary) 92%, transparent), color-mix(in srgb, var(--viz-series-3) 65%, var(--primary)));
+      color: var(--primary-foreground);
+      box-shadow: 0 18px 55px color-mix(in srgb, var(--primary) 18%, transparent);
+    }
+    .bv-hero::after {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      right: -70px;
+      top: -125px;
+      border: 48px solid color-mix(in srgb, var(--primary-foreground) 9%, transparent);
+    }
+    .bv-eyebrow { display: inline-flex; align-items: center; gap: 7px; text-transform: uppercase; letter-spacing: .12em; opacity: .85; }
+    .bv-hero h1 { margin: 15px 0 10px; max-width: 720px; letter-spacing: -0.04em; font-weight: 500; }
+    .bv-hero p { margin: 0; max-width: 690px; opacity: .88; }
+    .bv-hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; position: relative; z-index: 1; }
+    .bv-hero .bv-action-primary { background: var(--primary-foreground); color: var(--primary); border-color: transparent; }
+    .bv-hero .bv-action-quiet { color: var(--primary-foreground); border-color: color-mix(in srgb, var(--primary-foreground) 35%, transparent); background: color-mix(in srgb, var(--primary-foreground) 8%, transparent); }
+    .bv-hero-side { align-self: end; position: relative; z-index: 1; }
+    .bv-day-number { font-size: 4.8rem; line-height: .85; letter-spacing: -.08em; opacity: .22; font-weight: 500; }
+    .bv-hero-side strong { display: block; margin-top: 12px; font-weight: 500; }
+    .bv-hero-side span { opacity: .78; }
+
+    .bv-action, .bv-action-primary, .bv-action-quiet, .bv-danger {
+      min-height: 40px;
+      border-radius: 11px;
+      border: 1px solid var(--bv-line);
+      padding: 9px 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      background: var(--card);
+      color: var(--card-foreground);
+    }
+    .bv-action:hover, .bv-action-quiet:hover { background: var(--accent); }
+    .bv-action-primary { background: var(--primary); color: var(--primary-foreground); border-color: var(--primary); }
+    .bv-danger { color: var(--destructive); background: transparent; border-color: color-mix(in srgb, var(--destructive) 32%, transparent); }
+    .bv-danger:hover { background: color-mix(in srgb, var(--destructive) 10%, transparent); }
+    .bv-action svg, .bv-action-primary svg, .bv-action-quiet svg, .bv-danger svg { width: 16px; height: 16px; }
+
+    .bv-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 16px 0; }
+    .bv-stat { padding: 16px; border-radius: 16px; background: var(--card); border: 1px solid var(--bv-line); }
+    .bv-stat-head { display: flex; justify-content: space-between; gap: 8px; color: var(--muted-foreground); }
+    .bv-stat-head svg { width: 17px; height: 17px; color: var(--viz-series-1); }
+    .bv-stat-value { display: block; margin-top: 11px; font-size: 1.55em; letter-spacing: -.04em; font-weight: 500; }
+    .bv-stat small { display: block; color: var(--muted-foreground); margin-top: 3px; }
+
+    .bv-grid-two { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr); gap: var(--bv-gap); }
+    .bv-grid-equal { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--bv-gap); }
+    .bv-panel { border-radius: 18px; padding: 19px; background: var(--card); border: 1px solid var(--bv-line); }
+    .bv-panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 17px; }
+    .bv-panel-head h2, .bv-panel-head h3 { margin: 0; font-weight: 500; letter-spacing: -.02em; }
+    .bv-panel-head p { margin: 4px 0 0; color: var(--muted-foreground); }
+    .bv-section-title { margin: 0 0 5px; font-weight: 500; letter-spacing: -.03em; }
+    .bv-section-subtitle { color: var(--muted-foreground); margin: 0 0 20px; }
+
+    .bv-checklist { display: grid; gap: 9px; }
+    .bv-check-item {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 11px;
+      border-radius: 12px;
+      border: 1px solid var(--bv-line);
+      background: color-mix(in srgb, var(--card) 94%, var(--muted));
+    }
+    .bv-check-item:has(input:checked) { background: var(--bv-primary-soft); border-color: color-mix(in srgb, var(--primary) 26%, transparent); }
+    .bv-check-item input { width: 18px; height: 18px; accent-color: var(--primary); }
+    .bv-check-item span { flex: 1; }
+    .bv-check-item small { color: var(--muted-foreground); }
+
+    .bv-field { display: grid; gap: 6px; }
+    .bv-field label { color: var(--muted-foreground); }
+    .bv-input, .bv-textarea, .bv-select {
+      width: 100%;
+      border: 1px solid var(--input);
+      background: var(--background);
+      color: var(--foreground);
+      border-radius: 11px;
+      padding: 10px 11px;
+      outline: none;
+    }
+    .bv-input:focus, .bv-textarea:focus, .bv-select:focus { border-color: var(--ring); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 18%, transparent); }
+    .bv-textarea { resize: vertical; min-height: 106px; }
+    .bv-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+    .bv-field-full { grid-column: 1 / -1; }
+    .bv-form-actions { display: flex; gap: 9px; flex-wrap: wrap; margin-top: 15px; }
+    .bv-note-stack { display: grid; gap: 12px; }
+    .bv-save-state { color: var(--muted-foreground); display: inline-flex; gap: 6px; align-items: center; }
+
+    .bv-passage-box { padding: 14px; border-radius: 14px; background: var(--bv-series-soft); border-left: 3px solid var(--viz-series-1); margin-bottom: 13px; }
+    .bv-passage-box strong { display: block; font-weight: 500; }
+    .bv-passage-box span { color: var(--muted-foreground); display: block; margin-top: 4px; }
+    .bv-prompt-list { margin: 0; padding-left: 19px; color: var(--muted-foreground); }
+    .bv-prompt-list li + li { margin-top: 7px; }
+    .bv-divider { height: 1px; background: var(--bv-line); margin: 16px 0; }
+    .bv-verse-chip { display: inline-flex; align-items: center; gap: 7px; padding: 7px 9px; background: var(--secondary); color: var(--secondary-foreground); border-radius: 9px; text-decoration: none; }
+
+    .bv-toolbar { display: flex; gap: 10px; align-items: end; flex-wrap: wrap; margin-bottom: 18px; }
+    .bv-toolbar .bv-field { flex: 1 1 190px; }
+    .bv-toolbar .bv-field:first-child { flex-basis: 270px; }
+    .bv-topic-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
+    .bv-topic-card { border: 1px solid var(--bv-line); border-radius: 16px; background: var(--card); padding: 16px; display: flex; flex-direction: column; min-height: 202px; }
+    .bv-topic-card.is-complete { background: var(--bv-primary-soft); }
+    .bv-card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .bv-day-pill { display: inline-flex; padding: 5px 8px; border-radius: 999px; background: var(--secondary); color: var(--secondary-foreground); }
+    .bv-status-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); border: 2px solid var(--card); box-shadow: 0 0 0 1px var(--border); }
+    .bv-topic-card.is-complete .bv-status-dot { background: var(--viz-series-1); }
+    .bv-topic-card h3 { margin: 14px 0 7px; font-weight: 500; }
+    .bv-topic-card p { color: var(--muted-foreground); margin: 0 0 14px; }
+    .bv-topic-card .bv-card-actions { margin-top: auto; display: flex; gap: 7px; }
+
+    .bv-editor { display: none; margin-bottom: 18px; }
+    .bv-editor.is-open { display: block; animation: bv-in .2s ease; }
+    .bv-method-tabs { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
+    .bv-method-chip { padding: 6px 9px; border-radius: 999px; background: var(--muted); color: var(--muted-foreground); }
+    .bv-study-list { display: grid; gap: 10px; }
+    .bv-study-item { border: 1px solid var(--bv-line); border-radius: 14px; padding: 14px; background: var(--card); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; }
+    .bv-study-item h3 { margin: 0 0 5px; font-weight: 500; }
+    .bv-study-meta { display: flex; gap: 7px; flex-wrap: wrap; color: var(--muted-foreground); }
+    .bv-study-summary { margin: 10px 0 0; color: var(--muted-foreground); }
+    .bv-study-actions { display: flex; gap: 6px; align-items: start; }
+    .bv-empty { text-align: center; padding: 42px 20px; border: 1px dashed var(--border); border-radius: 16px; color: var(--muted-foreground); }
+    .bv-empty svg { width: 34px; height: 34px; margin-bottom: 9px; }
+
+    .bv-journal-layout { display: grid; grid-template-columns: minmax(0, .7fr) minmax(320px, 1.3fr); gap: var(--bv-gap); }
+    .bv-timeline { display: grid; gap: 10px; }
+    .bv-journal-item { position: relative; padding: 14px 14px 14px 42px; border: 1px solid var(--bv-line); border-radius: 14px; background: var(--card); }
+    .bv-journal-item::before { content: ""; position: absolute; width: 10px; height: 10px; border-radius: 50%; left: 17px; top: 19px; background: var(--viz-series-1); }
+    .bv-journal-item strong { font-weight: 500; }
+    .bv-journal-item p { margin: 6px 0 0; color: var(--muted-foreground); white-space: pre-wrap; }
+    .bv-prayer-list { display: grid; gap: 9px; margin-top: 13px; }
+    .bv-prayer-item { display: flex; align-items: flex-start; gap: 10px; padding: 11px; border-radius: 12px; background: var(--bv-soft); }
+    .bv-prayer-item.is-answered { opacity: .74; }
+    .bv-prayer-item.is-answered .bv-prayer-text { text-decoration: line-through; }
+    .bv-prayer-text { flex: 1; }
+    .bv-prayer-item button { border: 0; background: transparent; color: var(--muted-foreground); padding: 2px; }
+
+    .bv-word-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .bv-word-card { border: 1px solid var(--bv-line); border-radius: 15px; background: var(--card); padding: 16px; }
+    .bv-word-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .bv-word-card h3 { margin: 0; font-weight: 500; }
+    .bv-original { color: var(--viz-series-2); margin-top: 4px; }
+    .bv-word-card p { color: var(--muted-foreground); margin: 12px 0; }
+    .bv-ref-row { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .bv-progress-layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: var(--bv-gap); }
+    .bv-ring-wrap { display: grid; place-items: center; padding: 18px 0; }
+    .bv-ring { width: 176px; height: 176px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--viz-series-1) calc(var(--value) * 1%), var(--muted) 0); position: relative; }
+    .bv-ring::after { content: ""; position: absolute; inset: 15px; border-radius: 50%; background: var(--card); }
+    .bv-ring-value { position: relative; z-index: 1; text-align: center; }
+    .bv-ring-value strong { display: block; font-size: 2em; font-weight: 500; letter-spacing: -.05em; }
+    .bv-ring-value span { color: var(--muted-foreground); }
+    .bv-week-bars { height: 190px; display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; align-items: end; padding-top: 10px; }
+    .bv-bar-col { display: grid; gap: 7px; justify-items: center; height: 100%; grid-template-rows: 1fr auto; }
+    .bv-bar-track { width: min(34px, 70%); height: 100%; border-radius: 999px; background: var(--muted); position: relative; overflow: hidden; align-self: stretch; }
+    .bv-bar-fill { position: absolute; left: 0; right: 0; bottom: 0; min-height: 3px; border-radius: inherit; background: var(--viz-series-1); transition: height .35s ease; }
+    .bv-bar-col span { color: var(--muted-foreground); }
+    .bv-calendar { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+    .bv-cal-head { text-align: center; color: var(--muted-foreground); padding: 4px; }
+    .bv-cal-day { aspect-ratio: 1; min-height: 34px; border-radius: 9px; display: grid; place-items: center; background: var(--muted); color: var(--muted-foreground); border: 1px solid transparent; }
+    .bv-cal-day.is-empty { background: transparent; }
+    .bv-cal-day.has-progress { background: var(--bv-primary-soft); color: var(--foreground); }
+    .bv-cal-day.is-complete { background: var(--primary); color: var(--primary-foreground); }
+    .bv-cal-day.is-today { border-color: var(--viz-series-2); }
+    .bv-achievements { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .bv-achievement { padding: 13px; border-radius: 13px; border: 1px solid var(--bv-line); background: var(--card); opacity: .55; }
+    .bv-achievement.is-earned { opacity: 1; background: var(--bv-series-soft); }
+    .bv-achievement strong { display: block; margin: 7px 0 3px; font-weight: 500; }
+    .bv-achievement span { color: var(--muted-foreground); }
+
+    .bv-resource-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .bv-resource { min-height: 180px; display: flex; flex-direction: column; padding: 17px; border-radius: 16px; border: 1px solid var(--bv-line); background: var(--card); text-decoration: none; }
+    .bv-resource:hover { background: var(--accent); }
+    .bv-resource-icon { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; background: var(--secondary); color: var(--secondary-foreground); }
+    .bv-resource h3 { margin: 14px 0 6px; font-weight: 500; }
+    .bv-resource p { margin: 0; color: var(--muted-foreground); }
+    .bv-resource .bv-external { margin-top: auto; padding-top: 16px; display: flex; align-items: center; gap: 6px; color: var(--muted-foreground); }
+    .bv-book-map { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px; }
+    .bv-book-group { padding: 12px; border-radius: 12px; background: var(--bv-soft); }
+    .bv-book-group strong { display: block; font-weight: 500; }
+    .bv-book-group span { color: var(--muted-foreground); display: block; margin-top: 4px; }
+
+    .bv-settings-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .8fr); gap: var(--bv-gap); }
+    .bv-setting-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 13px 0; border-bottom: 1px solid var(--bv-line); }
+    .bv-setting-row:last-child { border-bottom: 0; }
+    .bv-setting-copy strong { display: block; font-weight: 500; }
+    .bv-setting-copy span { color: var(--muted-foreground); display: block; margin-top: 3px; }
+    .bv-switch { position: relative; width: 44px; height: 24px; }
+    .bv-switch input { opacity: 0; width: 0; height: 0; }
+    .bv-switch span { position: absolute; inset: 0; border-radius: 999px; background: var(--muted); transition: .2s; }
+    .bv-switch span::after { content: ""; position: absolute; width: 18px; height: 18px; top: 3px; left: 3px; border-radius: 50%; background: var(--card); transition: .2s; box-shadow: 0 1px 5px color-mix(in srgb, var(--foreground) 18%, transparent); }
+    .bv-switch input:checked + span { background: var(--primary); }
+    .bv-switch input:checked + span::after { transform: translateX(20px); background: var(--primary-foreground); }
+    .bv-file-input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .bv-toast { position: fixed; right: 22px; bottom: 22px; z-index: 20; max-width: 340px; padding: 12px 15px; border-radius: 12px; background: var(--foreground); color: var(--background); box-shadow: 0 16px 45px color-mix(in srgb, var(--foreground) 24%, transparent); opacity: 0; transform: translateY(10px); pointer-events: none; transition: .2s; }
+    .bv-toast.is-visible { opacity: 1; transform: none; }
+    .bv-footer-note { text-align: center; color: var(--muted-foreground); margin-top: 22px; }
+
+    @media (max-width: 1020px) {
+      #biblia-viva-app { --bv-sidebar: 82px; }
+      .bv-brand-copy, .bv-nav-btn span, .bv-side-card { display: none; }
+      .bv-brand { justify-content: center; padding: 0; }
+      .bv-nav-btn { justify-content: center; padding: 11px; }
+      .bv-topic-grid, .bv-resource-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .bv-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .bv-progress-layout { grid-template-columns: 240px minmax(0, 1fr); }
+      .bv-book-map { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 760px) {
+      #biblia-viva-app { border-radius: 16px; }
+      .bv-shell { display: block; }
+      .bv-sidebar { display: none; }
+      .bv-main { padding: 16px 14px 30px; }
+      .bv-topbar { align-items: flex-start; }
+      .bv-mobile-nav { display: block; margin-bottom: 15px; }
+      .bv-profile-chip span { display: none; }
+      .bv-hero { grid-template-columns: 1fr; padding: 21px; min-height: auto; }
+      .bv-hero-side { display: none; }
+      .bv-grid-two, .bv-grid-equal, .bv-journal-layout, .bv-progress-layout, .bv-settings-grid { grid-template-columns: 1fr; }
+      .bv-topic-grid, .bv-word-grid, .bv-resource-grid { grid-template-columns: 1fr; }
+      .bv-form-grid { grid-template-columns: 1fr; }
+      .bv-field-full { grid-column: auto; }
+      .bv-achievements { grid-template-columns: 1fr; }
+      .bv-study-item { grid-template-columns: 1fr; }
+      .bv-study-actions { justify-content: flex-start; }
+      .bv-book-map { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 430px) {
+      .bv-stats { grid-template-columns: 1fr; }
+      .bv-top-actions .bv-profile-chip { display: none; }
+      .bv-hero-actions > * { width: 100%; }
+      .bv-panel { padding: 15px; }
+    }
+  </style>
+
+  <div class="bv-shell">
+    <aside class="bv-sidebar" aria-label="Navegación principal">
+      <div class="bv-brand">
+        <div class="bv-brand-mark"><i data-lucide="book-open" aria-hidden="true"></i></div>
+        <div class="bv-brand-copy"><strong>Raíces</strong><span class="text-small">Estudio bíblico</span></div>
+      </div>
+      <nav class="bv-nav">
+        <button class="bv-nav-btn" data-view="hoy" aria-current="page"><i data-lucide="sun" aria-hidden="true"></i><span>Hoy</span></button>
+        <button class="bv-nav-btn" data-view="plan"><i data-lucide="calendar-days" aria-hidden="true"></i><span>Plan de 30 días</span></button>
+        <button class="bv-nav-btn" data-view="estudios"><i data-lucide="notebook-tabs" aria-hidden="true"></i><span>Mis estudios</span></button>
+        <button class="bv-nav-btn" data-view="diario"><i data-lucide="heart-handshake" aria-hidden="true"></i><span>Diario y oración</span></button>
+        <button class="bv-nav-btn" data-view="palabras"><i data-lucide="languages" aria-hidden="true"></i><span>Palabras bíblicas</span></button>
+        <button class="bv-nav-btn" data-view="progreso"><i data-lucide="chart-no-axes-combined" aria-hidden="true"></i><span>Mi progreso</span></button>
+        <button class="bv-nav-btn" data-view="recursos"><i data-lucide="library" aria-hidden="true"></i><span>Recursos</span></button>
+        <button class="bv-nav-btn" data-view="ajustes"><i data-lucide="settings-2" aria-hidden="true"></i><span>Ajustes</span></button>
+      </nav>
+      <div class="bv-side-card">
+        <p class="text-small">Meta semanal</p>
+        <strong id="bv-side-goal">0 de 7 días</strong>
+        <div class="bv-mini-progress" aria-hidden="true"><span id="bv-side-progress" style="width:0%"></span></div>
+      </div>
+    </aside>
+
+    <main class="bv-main">
+      <select id="bv-mobile-nav" class="bv-select bv-mobile-nav" aria-label="Cambiar sección">
+        <option value="hoy">Hoy</option>
+        <option value="plan">Plan de 30 días</option>
+        <option value="estudios">Mis estudios</option>
+        <option value="diario">Diario y oración</option>
+        <option value="palabras">Palabras bíblicas</option>
+        <option value="progreso">Mi progreso</option>
+        <option value="recursos">Recursos</option>
+        <option value="ajustes">Ajustes</option>
+      </select>
+
+      <header class="bv-topbar">
+        <div>
+          <strong id="bv-greeting">Buenos días</strong>
+          <div class="bv-date-line text-small" id="bv-date"></div>
+        </div>
+        <div class="bv-top-actions">
+          <button id="bv-theme-toggle" class="bv-icon-btn" aria-label="Cambiar tema" data-tooltip="Cambiar tema"><i data-lucide="moon" aria-hidden="true"></i></button>
+          <button id="bv-quick-add" class="bv-icon-btn" aria-label="Crear estudio" data-tooltip="Crear estudio"><i data-lucide="plus" aria-hidden="true"></i></button>
+          <div class="bv-profile-chip"><span class="bv-avatar" id="bv-avatar">T</span><span id="bv-profile-name">Tu espacio</span></div>
+        </div>
+      </header>
+
+      <section id="bv-view-hoy" class="bv-view is-active" aria-labelledby="bv-today-title">
+        <div class="bv-hero">
+          <div>
+            <span class="bv-eyebrow text-small"><i data-lucide="sparkles" aria-hidden="true"></i>Tema de hoy</span>
+            <h1 id="bv-today-title">Cargando estudio…</h1>
+            <p id="bv-today-focus"></p>
+            <div class="bv-hero-actions">
+              <button id="bv-start-study" class="bv-action-primary"><i data-lucide="play" aria-hidden="true"></i>Comenzar estudio</button>
+              <a id="bv-open-passage" class="bv-action-quiet" href="#" target="_blank" rel="noopener noreferrer"><i data-lucide="external-link" aria-hidden="true"></i>Leer en RVR1960</a>
+            </div>
+          </div>
+          <div class="bv-hero-side">
+            <div class="bv-day-number" id="bv-day-number">01</div>
+            <strong id="bv-today-passage">—</strong>
+            <span class="text-small">Lectura principal</span>
+          </div>
+        </div>
+
+        <div class="bv-stats">
+          <div class="bv-stat"><div class="bv-stat-head"><span>Racha actual</span><i data-lucide="flame" aria-hidden="true"></i></div><span class="bv-stat-value" id="bv-streak">0 días</span><small>La constancia construye raíces</small></div>
+          <div class="bv-stat"><div class="bv-stat-head"><span>Hoy</span><i data-lucide="circle-check-big" aria-hidden="true"></i></div><span class="bv-stat-value" id="bv-today-percent">0%</span><small>de tu rutina completada</small></div>
+          <div class="bv-stat"><div class="bv-stat-head"><span>Tiempo total</span><i data-lucide="clock-3" aria-hidden="true"></i></div><span class="bv-stat-value" id="bv-total-minutes">0 min</span><small>registrado en tus estudios</small></div>
+          <div class="bv-stat"><div class="bv-stat-head"><span>Estudios propios</span><i data-lucide="book-marked" aria-hidden="true"></i></div><span class="bv-stat-value" id="bv-study-count">0</span><small>guardados por ti</small></div>
+        </div>
+
+        <div class="bv-grid-two">
+          <div class="bv-panel" id="bv-study-workspace">
+            <div class="bv-panel-head"><div><h2>Tu sesión de hoy</h2><p class="text-small">Lee, reflexiona y lleva la enseñanza a una acción concreta.</p></div><span class="bv-save-state text-small" id="bv-autosave"><i data-lucide="cloud-check" aria-hidden="true"></i>Guardado local</span></div>
+            <div class="bv-passage-box"><strong id="bv-core-idea">Idea central</strong><span id="bv-core-text"></span></div>
+            <div class="bv-checklist" id="bv-daily-checklist">
+              <label class="bv-check-item"><input type="checkbox" data-check="reading"><span><strong>Lectura</strong><small> Leer el pasaje con calma</small></span></label>
+              <label class="bv-check-item"><input type="checkbox" data-check="reflection"><span><strong>Reflexión</strong><small> Responder las preguntas</small></span></label>
+              <label class="bv-check-item"><input type="checkbox" data-check="prayer"><span><strong>Oración</strong><small> Hablar con Dios sobre lo aprendido</small></span></label>
+              <label class="bv-check-item"><input type="checkbox" data-check="application"><span><strong>Aplicación</strong><small> Cumplir una acción práctica</small></span></label>
+            </div>
+            <div class="bv-divider"></div>
+            <strong>Preguntas para profundizar</strong>
+            <ol class="bv-prompt-list" id="bv-today-questions"></ol>
+            <div class="bv-divider"></div>
+            <div class="bv-form-grid">
+              <div class="bv-field bv-field-full"><label for="bv-today-verse">Versículo o frase que estoy estudiando</label><input id="bv-today-verse" class="bv-input" placeholder="Ej.: Filipenses 4:6–7"></div>
+              <div class="bv-field bv-field-full"><label for="bv-today-notes">Mi reflexión</label><textarea id="bv-today-notes" class="bv-textarea" placeholder="¿Qué comprendo? ¿Qué revela este texto? ¿Qué debo cambiar o fortalecer?"></textarea></div>
+              <div class="bv-field"><label for="bv-today-gratitude">Gratitud de hoy</label><input id="bv-today-gratitude" class="bv-input" placeholder="Hoy doy gracias por…"></div>
+              <div class="bv-field"><label for="bv-minutes">Minutos de estudio</label><input id="bv-minutes" class="bv-input" type="number" min="0" max="600" step="5" placeholder="20"></div>
+            </div>
+            <div class="bv-form-actions"><button id="bv-save-today" class="bv-action-primary"><i data-lucide="save" aria-hidden="true"></i>Guardar reflexión</button><button id="bv-new-own-study" class="bv-action"><i data-lucide="notebook-pen" aria-hidden="true"></i>Convertir en estudio propio</button></div>
+          </div>
+
+          <aside class="bv-note-stack">
+            <div class="bv-panel">
+              <div class="bv-panel-head"><div><h3>Acción del día</h3><p class="text-small">Una fe que se traduce en vida.</p></div><i data-lucide="footprints" aria-hidden="true"></i></div>
+              <p id="bv-today-action"></p>
+            </div>
+            <div class="bv-panel">
+              <div class="bv-panel-head"><div><h3>Guía de oración</h3><p class="text-small">Puedes expresarla con tus propias palabras.</p></div><i data-lucide="heart" aria-hidden="true"></i></div>
+              <p id="bv-today-prayer"></p>
+            </div>
+            <div class="bv-panel">
+              <div class="bv-panel-head"><div><h3>Próximos temas</h3><p class="text-small">Tu ruta de los siguientes tres días.</p></div></div>
+              <div id="bv-next-topics" class="bv-study-list"></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="bv-view-plan" class="bv-view" aria-labelledby="bv-plan-title">
+        <h1 id="bv-plan-title" class="bv-section-title">Plan de 30 días</h1>
+        <p class="bv-section-subtitle">Treinta temas esenciales para formar un ritmo de lectura, reflexión, oración y aplicación.</p>
+        <div class="bv-panel" style="margin-bottom:18px">
+          <div class="bv-panel-head"><div><h2>Avance del plan</h2><p class="text-small" id="bv-plan-progress-copy">0 de 30 temas completados</p></div><strong id="bv-plan-progress-percent">0%</strong></div>
+          <div class="bv-mini-progress"><span id="bv-plan-progress-bar" style="width:0%"></span></div>
+        </div>
+        <div class="bv-toolbar">
+          <div class="bv-field"><label for="bv-plan-search">Buscar tema o pasaje</label><input id="bv-plan-search" class="bv-input" type="search" placeholder="Ej.: esperanza, Salmos…"></div>
+          <div class="bv-field"><label for="bv-plan-filter">Mostrar</label><select id="bv-plan-filter" class="bv-select"><option value="all">Todos</option><option value="pending">Pendientes</option><option value="complete">Completados</option></select></div>
+        </div>
+        <div id="bv-topic-grid" class="bv-topic-grid"></div>
+      </section>
+
+      <section id="bv-view-estudios" class="bv-view" aria-labelledby="bv-studies-title">
+        <div class="bv-panel-head"><div><h1 id="bv-studies-title" class="bv-section-title">Mis estudios</h1><p class="bv-section-subtitle">Crea estudios personales con un método claro y conserva tus descubrimientos.</p></div><button id="bv-create-study" class="bv-action-primary"><i data-lucide="plus" aria-hidden="true"></i>Nuevo estudio</button></div>
+        <form id="bv-study-editor" class="bv-panel bv-editor" novalidate>
+          <div class="bv-panel-head"><div><h2 id="bv-editor-title">Nuevo estudio personal</h2><p class="text-small">Método de cinco movimientos: observar, comprender, conectar, aplicar y orar.</p></div><button type="button" id="bv-close-editor" class="bv-icon-btn" aria-label="Cerrar editor"><i data-lucide="x" aria-hidden="true"></i></button></div>
+          <div class="bv-method-tabs"><span class="bv-method-chip">1 · Observa</span><span class="bv-method-chip">2 · Comprende</span><span class="bv-method-chip">3 · Conecta</span><span class="bv-method-chip">4 · Aplica</span><span class="bv-method-chip">5 · Ora</span></div>
+          <input type="hidden" id="bv-study-id">
+          <div class="bv-form-grid">
+            <div class="bv-field"><label for="bv-study-title">Título *</label><input id="bv-study-title" class="bv-input" required placeholder="Ej.: Confiar en medio de la incertidumbre"></div>
+            <div class="bv-field"><label for="bv-study-date">Fecha</label><input id="bv-study-date" class="bv-input" type="date"></div>
+            <div class="bv-field"><label for="bv-study-passage">Pasaje o versículos *</label><input id="bv-study-passage" class="bv-input" required placeholder="Ej.: Salmo 23; Juan 10:1–18"></div>
+            <div class="bv-field"><label for="bv-study-category">Categoría</label><select id="bv-study-category" class="bv-select"><option>Fe</option><option>Carácter</option><option>Oración</option><option>Sabiduría</option><option>Relaciones</option><option>Doctrina</option><option>Servicio</option><option>Otro</option></select></div>
+            <div class="bv-field bv-field-full"><label for="bv-study-observe">Observa · ¿Qué dice el texto?</label><textarea id="bv-study-observe" class="bv-textarea" placeholder="Personas, acciones, palabras repetidas, contexto, contrastes y promesas…"></textarea></div>
+            <div class="bv-field bv-field-full"><label for="bv-study-understand">Comprende · ¿Qué significó en su contexto?</label><textarea id="bv-study-understand" class="bv-textarea" placeholder="Autor, destinatarios, intención, contexto histórico y sentido principal…"></textarea></div>
+            <div class="bv-field bv-field-full"><label for="bv-study-connect">Conecta · ¿Qué enseña sobre Dios y la vida?</label><textarea id="bv-study-connect" class="bv-textarea" placeholder="Relaciona el pasaje con otras enseñanzas bíblicas sin aislarlo de su contexto…"></textarea></div>
+            <div class="bv-field"><label for="bv-study-apply">Aplica · Mi paso concreto</label><textarea id="bv-study-apply" class="bv-textarea" placeholder="Hoy voy a…"></textarea></div>
+            <div class="bv-field"><label for="bv-study-prayer">Ora · Mi respuesta</label><textarea id="bv-study-prayer" class="bv-textarea" placeholder="Señor, ayúdame a…"></textarea></div>
+            <div class="bv-field"><label for="bv-study-tags">Etiquetas</label><input id="bv-study-tags" class="bv-input" placeholder="confianza, decisiones, paciencia"></div>
+            <div class="bv-field"><label for="bv-study-status">Estado</label><select id="bv-study-status" class="bv-select"><option value="draft">En proceso</option><option value="complete">Completado</option></select></div>
+          </div>
+          <div class="bv-form-actions"><button type="submit" class="bv-action-primary"><i data-lucide="save" aria-hidden="true"></i>Guardar estudio</button><button type="button" id="bv-cancel-study" class="bv-action">Cancelar</button></div>
+        </form>
+        <div class="bv-toolbar">
+          <div class="bv-field"><label for="bv-study-search">Buscar en mis estudios</label><input id="bv-study-search" class="bv-input" type="search" placeholder="Título, pasaje, etiqueta o reflexión…"></div>
+          <div class="bv-field"><label for="bv-study-filter">Estado</label><select id="bv-study-filter" class="bv-select"><option value="all">Todos</option><option value="draft">En proceso</option><option value="complete">Completados</option></select></div>
+        </div>
+        <div id="bv-study-list" class="bv-study-list"></div>
+      </section>
+
+      <section id="bv-view-diario" class="bv-view" aria-labelledby="bv-journal-title">
+        <h1 id="bv-journal-title" class="bv-section-title">Diario y oración</h1>
+        <p class="bv-section-subtitle">Reúne tus reflexiones diarias, gratitud, peticiones y respuestas recibidas.</p>
+        <div class="bv-journal-layout">
+          <div class="bv-panel">
+            <div class="bv-panel-head"><div><h2>Mi lista de oración</h2><p class="text-small">Registra aquello por lo que deseas perseverar.</p></div></div>
+            <form id="bv-prayer-form">
+              <div class="bv-field"><label for="bv-prayer-input">Nueva petición</label><textarea id="bv-prayer-input" class="bv-textarea" required placeholder="Escribe una petición concreta…"></textarea></div>
+              <div class="bv-form-actions"><button class="bv-action-primary" type="submit"><i data-lucide="plus" aria-hidden="true"></i>Agregar petición</button></div>
+            </form>
+            <div id="bv-prayer-list" class="bv-prayer-list"></div>
+          </div>
+          <div class="bv-panel">
+            <div class="bv-panel-head"><div><h2>Mis reflexiones</h2><p class="text-small">Se muestran los días en los que guardaste notas, versículos o gratitud.</p></div><select id="bv-journal-filter" class="bv-select" style="width:auto"><option value="all">Todas</option><option value="30">Últimos 30 días</option><option value="7">Últimos 7 días</option></select></div>
+            <div id="bv-journal-list" class="bv-timeline"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="bv-view-palabras" class="bv-view" aria-labelledby="bv-words-title">
+        <h1 id="bv-words-title" class="bv-section-title">Palabras bíblicas</h1>
+        <p class="bv-section-subtitle">Definiciones claras para comprender conceptos frecuentes. Úsalas como punto de partida y confirma siempre el contexto del pasaje.</p>
+        <div class="bv-toolbar">
+          <div class="bv-field"><label for="bv-word-search">Buscar palabra, significado o referencia</label><input id="bv-word-search" class="bv-input" type="search" placeholder="Ej.: gracia, pacto, santidad…"></div>
+          <div class="bv-field"><label for="bv-word-filter">Categoría</label><select id="bv-word-filter" class="bv-select"><option value="all">Todas</option><option value="salvacion">Salvación</option><option value="vida">Vida espiritual</option><option value="biblia">Biblia y contexto</option><option value="iglesia">Iglesia y misión</option></select></div>
+        </div>
+        <div id="bv-word-grid" class="bv-word-grid"></div>
+      </section>
+
+      <section id="bv-view-progreso" class="bv-view" aria-labelledby="bv-progress-title">
+        <h1 id="bv-progress-title" class="bv-section-title">Mi progreso</h1>
+        <p class="bv-section-subtitle">Observa tu constancia sin convertir el estudio en una competencia: el objetivo es comprender y vivir mejor la Palabra.</p>
+        <div class="bv-progress-layout">
+          <div class="bv-panel">
+            <div class="bv-panel-head"><div><h2>Este mes</h2><p class="text-small" id="bv-month-label"></p></div></div>
+            <div class="bv-ring-wrap"><div class="bv-ring" id="bv-month-ring" style="--value:0"><div class="bv-ring-value"><strong id="bv-month-percent">0%</strong><span class="text-small">días con estudio</span></div></div></div>
+            <div class="bv-divider"></div>
+            <div class="bv-setting-row"><div class="bv-setting-copy"><strong id="bv-complete-days">0 días</strong><span class="text-small">Rutina completa</span></div><i data-lucide="circle-check" aria-hidden="true"></i></div>
+            <div class="bv-setting-row"><div class="bv-setting-copy"><strong id="bv-reflection-days">0 días</strong><span class="text-small">Con reflexión guardada</span></div><i data-lucide="notebook-pen" aria-hidden="true"></i></div>
+          </div>
+          <div class="bv-note-stack">
+            <div class="bv-panel">
+              <div class="bv-panel-head"><div><h2>Actividad de los últimos 7 días</h2><p class="text-small">Porcentaje diario de tu rutina completada.</p></div></div>
+              <div id="bv-week-bars" class="bv-week-bars" role="img" aria-label="Actividad de los últimos siete días"></div>
+            </div>
+            <div class="bv-panel">
+              <div class="bv-panel-head"><div><h2 id="bv-calendar-title">Calendario</h2><p class="text-small">Oscuro: rutina completa · Suave: progreso parcial</p></div></div>
+              <div id="bv-calendar" class="bv-calendar"></div>
+            </div>
+          </div>
+        </div>
+        <div class="bv-panel" style="margin-top:18px">
+          <div class="bv-panel-head"><div><h2>Hitos de constancia</h2><p class="text-small">Pequeñas señales de un hábito que está creciendo.</p></div></div>
+          <div id="bv-achievements" class="bv-achievements"></div>
+        </div>
+      </section>
+
+      <section id="bv-view-recursos" class="bv-view" aria-labelledby="bv-resources-title">
+        <h1 id="bv-resources-title" class="bv-section-title">Recursos para estudiar</h1>
+        <p class="bv-section-subtitle">Accesos externos para leer la Reina-Valera 1960. La disponibilidad y las condiciones de cada sitio dependen de su proveedor.</p>
+        <div class="bv-resource-grid">
+          <a class="bv-resource" href="https://www.biblegateway.com/versions/Reina-Valera-1960-RVR1960-Biblia/" target="_blank" rel="noopener noreferrer"><span class="bv-resource-icon"><i data-lucide="book-open-text" aria-hidden="true"></i></span><h3>Bible Gateway</h3><p>Lectura y búsqueda por libro, capítulo o palabra en RVR1960.</p><span class="bv-external text-small">Abrir recurso <i data-lucide="external-link" aria-hidden="true"></i></span></a>
+          <a class="bv-resource" href="https://www.bible.com/es/versions/149-rvr1960-biblia-reina-valera-1960" target="_blank" rel="noopener noreferrer"><span class="bv-resource-icon"><i data-lucide="smartphone" aria-hidden="true"></i></span><h3>YouVersion</h3><p>Versión RVR1960 para leer desde la web o continuar en la aplicación.</p><span class="bv-external text-small">Abrir recurso <i data-lucide="external-link" aria-hidden="true"></i></span></a>
+          <a class="bv-resource" href="https://www.bibliatodo.com/la-biblia/version/Reina-valera-1960" target="_blank" rel="noopener noreferrer"><span class="bv-resource-icon"><i data-lucide="search" aria-hidden="true"></i></span><h3>BibliaTodo</h3><p>Lectura por capítulos, concordancia y herramientas complementarias.</p><span class="bv-external text-small">Abrir recurso <i data-lucide="external-link" aria-hidden="true"></i></span></a>
+        </div>
+        <div class="bv-grid-equal" style="margin-top:18px">
+          <div class="bv-panel">
+            <div class="bv-panel-head"><div><h2>Método R.AÍ.C.E.S.</h2><p class="text-small">Una ruta sencilla para no quedarse solo en leer.</p></div></div>
+            <div class="bv-study-list">
+              <div class="bv-passage-box"><strong>R · Respira y ora</strong><span>Pide atención, humildad y sabiduría antes de comenzar.</span></div>
+              <div class="bv-passage-box"><strong>A · Atiende al texto</strong><span>Observa quién habla, a quién, qué ocurre y qué se repite.</span></div>
+              <div class="bv-passage-box"><strong>Í · Indaga el contexto</strong><span>Revisa género literario, momento histórico y propósito del autor.</span></div>
+              <div class="bv-passage-box"><strong>C · Conecta la enseñanza</strong><span>Relaciona el pasaje con su capítulo, el libro y el mensaje bíblico general.</span></div>
+              <div class="bv-passage-box"><strong>E · Elige una respuesta</strong><span>Define una acción específica, realista y verificable.</span></div>
+              <div class="bv-passage-box"><strong>S · Sigue y comparte</strong><span>Regresa a tu aprendizaje, ora y compártelo con sabiduría.</span></div>
+            </div>
+          </div>
+          <div class="bv-panel">
+            <div class="bv-panel-head"><div><h2>Mapa de los 66 libros</h2><p class="text-small">Una vista general para ubicar cada lectura.</p></div></div>
+            <div class="bv-book-map">
+              <div class="bv-book-group"><strong>Pentateuco</strong><span>Génesis–Deuteronomio · 5</span></div>
+              <div class="bv-book-group"><strong>Historia</strong><span>Josué–Ester · 12</span></div>
+              <div class="bv-book-group"><strong>Poesía y sabiduría</strong><span>Job–Cantares · 5</span></div>
+              <div class="bv-book-group"><strong>Profetas mayores</strong><span>Isaías–Daniel · 5</span></div>
+              <div class="bv-book-group"><strong>Profetas menores</strong><span>Oseas–Malaquías · 12</span></div>
+              <div class="bv-book-group"><strong>Evangelios e historia</strong><span>Mateo–Hechos · 5</span></div>
+              <div class="bv-book-group"><strong>Cartas</strong><span>Romanos–Judas · 21</span></div>
+              <div class="bv-book-group"><strong>Profecía</strong><span>Apocalipsis · 1</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="bv-view-ajustes" class="bv-view" aria-labelledby="bv-settings-title">
+        <h1 id="bv-settings-title" class="bv-section-title">Ajustes y respaldo</h1>
+        <p class="bv-section-subtitle">Personaliza tu experiencia y conserva una copia de tus estudios.</p>
+        <div class="bv-settings-grid">
+          <form id="bv-profile-form" class="bv-panel">
+            <div class="bv-panel-head"><div><h2>Mi perfil de estudio</h2><p class="text-small">Estos datos solo se guardan en este navegador.</p></div></div>
+            <div class="bv-form-grid">
+              <div class="bv-field"><label for="bv-name">Nombre</label><input id="bv-name" class="bv-input" placeholder="¿Cómo quieres que te llamemos?"></div>
+              <div class="bv-field"><label for="bv-weekly-goal">Meta semanal</label><select id="bv-weekly-goal" class="bv-select"><option value="3">3 días</option><option value="5">5 días</option><option value="7">7 días</option></select></div>
+              <div class="bv-field"><label for="bv-preferred-time">Momento preferido</label><select id="bv-preferred-time" class="bv-select"><option value="morning">Mañana</option><option value="afternoon">Tarde</option><option value="night">Noche</option></select></div>
+              <div class="bv-field"><label for="bv-session-goal">Duración sugerida</label><select id="bv-session-goal" class="bv-select"><option value="10">10 minutos</option><option value="20">20 minutos</option><option value="30">30 minutos</option><option value="45">45 minutos</option><option value="60">60 minutos</option></select></div>
+            </div>
+            <div class="bv-form-actions"><button type="submit" class="bv-action-primary"><i data-lucide="save" aria-hidden="true"></i>Guardar perfil</button></div>
+          </form>
+          <div class="bv-note-stack">
+            <div class="bv-panel">
+              <div class="bv-panel-head"><div><h2>Apariencia</h2><p class="text-small">Adapta la lectura a tu comodidad.</p></div></div>
+              <div class="bv-setting-row"><div class="bv-setting-copy"><strong>Modo oscuro</strong><span class="text-small">Reduce el brillo en ambientes con poca luz</span></div><label class="bv-switch"><input id="bv-dark-switch" type="checkbox" aria-label="Activar modo oscuro"><span></span></label></div>
+              <div class="bv-field" style="margin-top:13px"><label for="bv-font-size">Tamaño del texto</label><select id="bv-font-size" class="bv-select"><option value="14">Compacto</option><option value="16">Normal</option><option value="18">Grande</option><option value="20">Muy grande</option></select></div>
+            </div>
+            <div class="bv-panel">
+              <div class="bv-panel-head"><div><h2>Copia de seguridad</h2><p class="text-small">Exporta todo a un archivo JSON o restaura una copia anterior.</p></div></div>
+              <div class="bv-form-actions"><button id="bv-export" class="bv-action"><i data-lucide="download" aria-hidden="true"></i>Exportar mis datos</button><label for="bv-import-file" class="bv-action"><i data-lucide="upload" aria-hidden="true"></i>Importar copia</label><input id="bv-import-file" class="bv-file-input" type="file" accept="application/json"></div>
+              <div class="bv-divider"></div>
+              <button id="bv-reset" class="bv-danger"><i data-lucide="trash-2" aria-hidden="true"></i>Borrar todos mis datos</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <p class="bv-footer-note text-small">Tus datos permanecen en este navegador. Este recurso acompaña tu estudio; no reemplaza la lectura completa del pasaje ni la orientación pastoral.</p>
+    </main>
+  </div>
+  <div id="bv-toast" class="bv-toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (function () {
+      "use strict";
+      var root = document.getElementById("biblia-viva-app");
+      if (!root) return;
+
+      var STORAGE_KEY = "raices-estudio-biblico-v1";
+      var today = new Date();
+      var todayKey = toISO(today);
+      var dayMs = 86400000;
+
+      var topics = [
+        { title: "Comenzar con propósito", passage: "Salmo 119:9–16", focus: "Acercarse a la Escritura con atención y un deseo sincero de vivir lo aprendido.", idea: "La lectura bíblica cobra profundidad cuando guardamos la enseñanza y volvemos a ella durante el día.", questions: ["¿Qué acciones aparecen junto a conocer la Palabra?", "¿Qué hábito concreto puede ayudarte a recordar lo leído?"], action: "Elige una frase del pasaje, escríbela y recuérdala tres veces durante el día.", prayer: "Pide un corazón enseñable y constancia para no leer de manera apresurada." },
+        { title: "Dios, creador y sustentador", passage: "Génesis 1:1–5; Salmo 19:1–4", focus: "Reconocer que la creación señala orden, poder y propósito.", idea: "La Biblia comienza presentando a Dios como origen de todo, antes de explicar al ser humano o sus problemas.", questions: ["¿Qué revela este inicio acerca de Dios?", "¿Cómo cambia tu perspectiva saber que la vida no es accidental?"], action: "Observa algo de la creación y escribe qué cualidad de Dios te invita a considerar.", prayer: "Agradece por la vida y pide sabiduría para cuidar responsablemente lo creado." },
+        { title: "Identidad y dignidad humana", passage: "Génesis 1:26–31", focus: "Comprender la dignidad, responsabilidad y propósito del ser humano como imagen de Dios.", idea: "El valor de una persona no depende de su productividad, apariencia o reconocimiento social.", questions: ["¿Qué responsabilidades acompañan la dignidad humana?", "¿A quién necesitas tratar hoy con mayor respeto?"], action: "Realiza una acción que afirme la dignidad de una persona sin esperar nada a cambio.", prayer: "Pide aprender a verte y a mirar a otros con dignidad, verdad y misericordia." },
+        { title: "Confiar cuando no veo el camino", passage: "Proverbios 3:5–8", focus: "Distinguir entre depender solo del propio criterio y caminar con confianza obediente.", idea: "Confiar no significa dejar de pensar; significa no convertir nuestro entendimiento limitado en la autoridad final.", questions: ["¿En qué asunto estás dependiendo únicamente de tu propia prudencia?", "¿Qué decisión puede reflejar hoy una confianza responsable?"], action: "Entrega por escrito una preocupación y define el próximo paso sabio que sí está a tu alcance.", prayer: "Pide dirección, humildad y serenidad para obedecer aun sin controlar todos los resultados." },
+        { title: "La gracia que transforma", passage: "Efesios 2:1–10", focus: "Reconocer la salvación como regalo de Dios que produce una vida renovada.", idea: "Las buenas obras no compran la gracia; nacen de una vida alcanzada por ella.", questions: ["¿Qué contraste encuentras entre la condición anterior y la nueva vida?", "¿Qué buena obra puedes realizar como respuesta agradecida?"], action: "Sirve a alguien de forma práctica y discreta.", prayer: "Agradece por la gracia y pide que produzca humildad, obediencia y servicio." },
+        { title: "Arrepentimiento y nuevo rumbo", passage: "Lucas 15:11–24", focus: "Ver el arrepentimiento como regreso sincero y cambio de dirección.", idea: "Volver comienza al reconocer con honestidad dónde estamos y dar pasos hacia el Padre.", questions: ["¿Qué reconoce el hijo antes de regresar?", "¿Qué diferencia hay entre remordimiento y un cambio real?"], action: "Identifica una conducta que debes corregir y toma hoy una medida concreta.", prayer: "Confiesa con honestidad y pide valor para reparar lo que sea posible." },
+        { title: "Paz en medio de la ansiedad", passage: "Filipenses 4:4–9", focus: "Practicar oración, gratitud y una atención disciplinada frente a la preocupación.", idea: "El pasaje no niega las dificultades; enseña a llevarlas a Dios y orientar la mente hacia lo verdadero.", questions: ["¿Qué relación hay entre petición y agradecimiento?", "¿Qué pensamientos necesitan un filtro más saludable y verdadero?"], action: "Convierte tres preocupaciones en tres peticiones específicas y añade un motivo de gratitud.", prayer: "Presenta tus cargas con sinceridad y pide una mente guardada en paz." },
+        { title: "Sabiduría para decidir", passage: "Santiago 1:5–8; 3:13–18", focus: "Buscar una sabiduría humilde, coherente y orientada al bien.", idea: "La sabiduría bíblica se reconoce también por el carácter y los frutos que produce.", questions: ["¿Qué características distinguen la sabiduría que viene de lo alto?", "¿Tu decisión promueve paz, verdad y justicia?"], action: "Evalúa una decisión con cuatro criterios: verdad, motivos, consecuencias y consejo sabio.", prayer: "Pide sabiduría sin orgullo y disposición para corregir tu rumbo." },
+        { title: "El valor de la oración", passage: "Mateo 6:5–13", focus: "Aprender una oración centrada en Dios, sus propósitos y nuestras necesidades reales.", idea: "Jesús enseña una relación sincera, no una actuación religiosa basada en muchas palabras.", questions: ["¿Qué prioridades ordena el modelo de oración?", "¿Qué parte suele faltar en tus oraciones?"], action: "Ora siguiendo las seis ideas del pasaje y deja un minuto de silencio para escuchar y reflexionar.", prayer: "Pide sinceridad, reverencia, provisión, perdón y protección." },
+        { title: "Perdonar y buscar reconciliación", passage: "Colosenses 3:12–15", focus: "Comprender el perdón como parte de una vida revestida de compasión y humildad.", idea: "Perdonar no llama bueno a lo injusto ni elimina límites; renuncia a vivir gobernado por la venganza.", questions: ["¿Qué virtudes rodean el llamado a perdonar?", "¿Necesitas perdonar, pedir perdón o establecer un límite sano?"], action: "Da un paso seguro hacia la paz: conversa, escribe, pide ayuda o deja de alimentar la ofensa.", prayer: "Pide compasión, justicia, prudencia y libertad del resentimiento." },
+        { title: "Amar con acciones", passage: "1 Corintios 13:1–7", focus: "Examinar el amor más allá de palabras, emociones o habilidades llamativas.", idea: "El amor se hace visible en paciencia, verdad, humildad y perseverancia.", questions: ["¿Qué rasgo del amor confronta más tu manera de relacionarte?", "¿Cómo se vería ese rasgo en una acción cotidiana?"], action: "Practica hoy una forma de paciencia o bondad con alguien cercano.", prayer: "Pide amar con verdad, madurez y acciones consistentes." },
+        { title: "Servir con humildad", passage: "Juan 13:1–17", focus: "Mirar el liderazgo y la grandeza desde el ejemplo de servicio de Jesús.", idea: "La autoridad según Jesús no busca superioridad; usa su posición para servir.", questions: ["¿Qué sabía Jesús y qué decidió hacer?", "¿Qué tarea sencilla sueles considerar inferior?"], action: "Haz una tarea necesaria que normalmente evitas, sin buscar reconocimiento.", prayer: "Pide un corazón dispuesto a servir sin orgullo ni resentimiento." },
+        { title: "La fe que persevera", passage: "Hebreos 12:1–3", focus: "Correr con paciencia, dejando cargas y manteniendo la mirada en Jesús.", idea: "Perseverar implica quitar obstáculos, aceptar el proceso y recordar el ejemplo correcto.", questions: ["¿Qué peso, hábito o distracción te resta constancia?", "¿Qué te ayuda a no desanimarte?"], action: "Elimina por 24 horas una distracción que compite con tu propósito.", prayer: "Pide resistencia, enfoque y libertad de aquello que te frena." },
+        { title: "Esperanza en el sufrimiento", passage: "Romanos 5:1–5", focus: "Comprender cómo la dificultad puede formar perseverancia, carácter y esperanza.", idea: "El sufrimiento no es llamado bueno en sí mismo, pero Dios puede obrar formación en medio de él.", questions: ["¿Qué proceso describe el texto?", "¿Qué tipo de carácter deseas formar en esta etapa?"], action: "Escribe una dificultad, el aprendizaje posible y la ayuda concreta que necesitas buscar.", prayer: "Pide fortaleza, compañía y una esperanza que no niegue el dolor." },
+        { title: "Descanso para el alma", passage: "Mateo 11:28–30", focus: "Responder a la invitación de Jesús a llevar las cargas y aprender de él.", idea: "El descanso bíblico no siempre elimina responsabilidades; cambia quién guía y cómo cargamos con ellas.", questions: ["¿Qué cargas estás intentando llevar a solas?", "¿Qué significa aprender del carácter manso y humilde de Jesús?"], action: "Haz una pausa consciente, entrega una carga en oración y solicita apoyo si lo necesitas.", prayer: "Pide descanso interior, humildad para recibir ayuda y sabiduría para priorizar." },
+        { title: "Contentamiento y administración", passage: "1 Timoteo 6:6–10, 17–19", focus: "Relacionarse con los recursos desde el contentamiento, la generosidad y la responsabilidad.", idea: "El problema no es poseer recursos, sino colocar en ellos la seguridad y permitir que gobiernen el corazón.", questions: ["¿Dónde está puesta tu seguridad práctica?", "¿Cómo puedes usar tus recursos para hacer bien?"], action: "Revisa un gasto, una deuda o una oportunidad de compartir y toma una decisión responsable.", prayer: "Pide contentamiento, disciplina y generosidad sin apariencia." },
+        { title: "El poder de las palabras", passage: "Santiago 3:2–12", focus: "Reconocer que hablar revela y también dirige aspectos importantes de la vida.", idea: "La madurez se muestra al usar las palabras para verdad, corrección y edificación, no para destruir.", questions: ["¿En qué contexto pierdes más fácilmente el dominio de tus palabras?", "¿Qué conversación necesitas abordar con gracia y verdad?"], action: "Antes de responder hoy, pregúntate: ¿es verdadero, necesario y respetuoso?", prayer: "Pide dominio propio y palabras que sanen sin ocultar la verdad." },
+        { title: "Integridad cuando nadie mira", passage: "Daniel 6:1–10", focus: "Construir una vida coherente que no dependa de vigilancia o aprobación.", idea: "La integridad se forma en hábitos previos y se hace visible bajo presión.", questions: ["¿Qué hábitos sostuvieron a Daniel antes de la crisis?", "¿Qué área de tu vida necesita mayor coherencia?"], action: "Cumple hoy una responsabilidad pendiente aunque nadie vaya a reconocértelo.", prayer: "Pide firmeza, prudencia y una vida privada coherente con tus convicciones." },
+        { title: "Comunidad que fortalece", passage: "Hechos 2:42–47", focus: "Observar una comunidad formada por enseñanza, comunión, oración y generosidad.", idea: "La fe bíblica tiene una dimensión personal, pero no está diseñada para el aislamiento.", questions: ["¿Qué prácticas sostenían a la comunidad?", "¿Qué relación espiritual necesitas cultivar de forma más intencional?"], action: "Contacta a alguien para animarlo, escucharle o estudiar juntos.", prayer: "Pide relaciones sanas, compromiso y disposición para dar y recibir apoyo." },
+        { title: "Fruto y carácter", passage: "Gálatas 5:16–26", focus: "Examinar el carácter que crece al caminar guiados por el Espíritu.", idea: "El fruto se expresa en rasgos conectados entre sí, no en una imagen perfecta construida para impresionar.", questions: ["¿Qué contraste presenta el pasaje?", "¿Qué fruto necesita una práctica deliberada esta semana?"], action: "Elige un fruto y define una situación específica donde lo practicarás hoy.", prayer: "Pide transformación interior que se haga visible en decisiones y relaciones." },
+        { title: "Propósito en el trabajo", passage: "Colosenses 3:22–24", focus: "Trabajar con integridad, excelencia y una motivación más profunda que la aprobación humana.", idea: "El trabajo cotidiano puede convertirse en un espacio de fidelidad, servicio y carácter.", questions: ["¿Qué cambia cuando trabajas con una motivación correcta?", "¿Qué tarea puedes hacer hoy con mayor excelencia?"], action: "Completa una tarea importante con atención total y sin atajos deshonestos.", prayer: "Pide diligencia, justicia y equilibrio para trabajar sin convertir el trabajo en ídolo." },
+        { title: "Cuidar la mente", passage: "Romanos 12:1–2", focus: "Reconocer la renovación de la mente como parte de una vida transformada.", idea: "No conformarse requiere revisar ideas, hábitos y deseos a la luz de la verdad.", questions: ["¿Qué patrón de tu entorno influye negativamente en ti?", "¿Qué verdad necesitas practicar para renovar tu manera de pensar?"], action: "Reemplaza hoy una entrada dañina por una lectura, conversación o práctica edificante.", prayer: "Pide discernimiento y una mente abierta a la corrección." },
+        { title: "Generosidad sin espectáculo", passage: "2 Corintios 9:6–11", focus: "Dar con libertad, planificación y alegría, no por presión ni para recibir aplausos.", idea: "La generosidad bíblica nace de una decisión del corazón y busca producir gratitud a Dios.", questions: ["¿Qué actitudes deben acompañar el dar?", "¿Qué recurso, tiempo o capacidad puedes compartir?"], action: "Comparte algo útil de manera discreta y responsable.", prayer: "Pide libertad de la avaricia y sabiduría para ser generoso sin irresponsabilidad." },
+        { title: "Justicia y misericordia", passage: "Miqueas 6:6–8", focus: "Integrar justicia, misericordia y humildad como expresión de una vida fiel.", idea: "Dios no se impresiona con religiosidad externa cuando la vida cotidiana ignora la justicia y la compasión.", questions: ["¿Cómo se relacionan justicia, misericordia y humildad?", "¿Qué situación cercana necesita una respuesta más justa?"], action: "Escucha una realidad que sueles ignorar y realiza una acción respetuosa dentro de tus posibilidades.", prayer: "Pide sensibilidad, valentía y humildad para actuar con justicia." },
+        { title: "Discernir voces e influencias", passage: "1 Juan 4:1–6", focus: "No aceptar toda idea automáticamente, sino examinarla con verdad y madurez.", idea: "El discernimiento evita tanto la ingenuidad como la sospecha permanente.", questions: ["¿Qué criterios ofrece el texto para probar las voces?", "¿Qué influencia necesitas evaluar con más cuidado?"], action: "Antes de compartir una enseñanza, revisa su contexto, fuente y coherencia bíblica.", prayer: "Pide discernimiento, amor por la verdad y humildad para reconocer errores." },
+        { title: "El buen pastor", passage: "Salmo 23", focus: "Meditar en la guía, provisión, presencia y cuidado de Dios.", idea: "La confianza del salmo no depende de un camino sin valles, sino de la presencia del Pastor.", questions: ["¿Qué verbos describen el cuidado de Dios?", "¿En qué valle necesitas recordar su presencia?"], action: "Lee el salmo lentamente, identificando una imagen que hable a tu situación actual.", prayer: "Agradece por la guía recibida y entrega el temor que acompaña tu valle." },
+        { title: "Buscar primero el Reino", passage: "Mateo 6:25–34", focus: "Ordenar preocupaciones y prioridades bajo el gobierno y la justicia de Dios.", idea: "Jesús no promueve pasividad; invita a no permitir que la ansiedad domine el presente.", questions: ["¿Qué diferencia hay entre planificar y vivir afanado?", "¿Qué prioridad del Reino puedes atender hoy?"], action: "Haz lo responsable de hoy y pospón conscientemente la preocupación por aquello que aún no puedes resolver.", prayer: "Pide provisión, enfoque para el presente y confianza para el futuro." },
+        { title: "Aprender a escuchar", passage: "Santiago 1:19–25", focus: "Unir escucha atenta, dominio propio y obediencia práctica.", idea: "Oír sin responder con acciones puede producir autoengaño; la verdad busca formar la conducta.", questions: ["¿Qué te impide escuchar bien: prisa, enojo o deseo de responder?", "¿Qué enseñanza ya conoces pero todavía no practicas?"], action: "En una conversación, escucha hasta el final y resume lo entendido antes de responder.", prayer: "Pide lentitud para enojarte, atención y disposición para obedecer." },
+        { title: "Administrar el tiempo", passage: "Efesios 5:15–17", focus: "Vivir con atención, sabiduría y propósito en el uso del tiempo.", idea: "Aprovechar el tiempo no significa llenar cada minuto, sino elegir bien en días complejos.", questions: ["¿Qué actividad consume tiempo sin aportar a tus responsabilidades o descanso?", "¿Qué es verdaderamente importante esta semana?"], action: "Reserva hoy un bloque breve sin distracciones para tu prioridad principal.", prayer: "Pide sabiduría para decir sí, decir no y descansar de manera saludable." },
+        { title: "Recordar y dar gracias", passage: "Salmo 103:1–5", focus: "Entrenar la memoria espiritual para no olvidar el bien recibido.", idea: "La gratitud bíblica no ignora el dolor; recuerda activamente la misericordia en medio de una historia real.", questions: ["¿Qué beneficios enumera el salmista?", "¿Qué bondad has normalizado y necesitas volver a valorar?"], action: "Escribe cinco motivos específicos de gratitud y expresa uno a otra persona.", prayer: "Agradece con detalles y pide una memoria menos dominada por la queja." }
+      ];
+
+      var words = [
+        { term: "Gracia", original: "Griego: cháris", category: "salvacion", definition: "Favor y bondad concedidos por Dios, no ganados como salario. En el Nuevo Testamento también describe la acción de Dios que salva, sostiene y forma una nueva manera de vivir.", refs: ["Efesios 2:8–10", "Tito 2:11–12"] },
+        { term: "Fe", original: "Griego: pístis", category: "salvacion", definition: "Confianza, fidelidad y respuesta a Dios. No es solo aceptar una idea; implica descansar en su carácter y actuar de acuerdo con esa confianza.", refs: ["Hebreos 11:1", "Santiago 2:17"] },
+        { term: "Arrepentimiento", original: "Griego: metánoia", category: "salvacion", definition: "Cambio de mente y dirección que reconoce el pecado y vuelve hacia Dios. Incluye una respuesta visible, no únicamente remordimiento emocional.", refs: ["Marcos 1:15", "Hechos 3:19"] },
+        { term: "Redención", original: "Griego: apolýtrōsis", category: "salvacion", definition: "Liberación obtenida mediante un precio. La Biblia usa esta imagen para hablar de la obra de Cristo que libera del dominio del pecado.", refs: ["Efesios 1:7", "1 Pedro 1:18–19"] },
+        { term: "Justificación", original: "Griego: dikaíōsis", category: "salvacion", definition: "Declaración de justicia o aceptación delante de Dios. En Romanos está ligada a la gracia y a la fe, no al mérito personal.", refs: ["Romanos 3:23–26", "Romanos 5:1"] },
+        { term: "Santificación", original: "Griego: hagiasmós", category: "salvacion", definition: "Proceso y condición de ser apartado para Dios. Describe una vida que va siendo formada en obediencia, pureza y amor.", refs: ["1 Tesalonicenses 4:3", "Hebreos 12:14"] },
+        { term: "Salvación", original: "Griego: sōtēría", category: "salvacion", definition: "Rescate, liberación y restauración que provienen de Dios. Su sentido debe observarse en cada contexto: peligro, pecado, juicio o plenitud futura.", refs: ["Lucas 19:10", "Romanos 1:16"] },
+        { term: "Expiación", original: "Hebreo: kippēr", category: "salvacion", definition: "Acción relacionada con cubrir o quitar culpa y restaurar la relación quebrada. El sistema sacrificial prepara el lenguaje que el Nuevo Testamento aplica a Cristo.", refs: ["Levítico 16:30", "Hebreos 9:11–14"] },
+        { term: "Pacto", original: "Hebreo: berit", category: "biblia", definition: "Compromiso solemne que establece una relación con promesas y responsabilidades. Los pactos ayudan a seguir la historia bíblica de creación, pueblo, reino y nueva alianza.", refs: ["Génesis 12:1–3", "Jeremías 31:31–34"] },
+        { term: "Testamento", original: "Latín: testamentum", category: "biblia", definition: "Nombre tradicional de las dos grandes partes de la Biblia. Está relacionado con la idea de pacto: Antiguo y Nuevo Pacto o Testamento.", refs: ["2 Corintios 3:6", "Hebreos 8:6–13"] },
+        { term: "Evangelio", original: "Griego: euangélion", category: "salvacion", definition: "Buena noticia. En el Nuevo Testamento anuncia que el reino de Dios se acerca y que Jesús, muerto y resucitado, es Señor y Salvador.", refs: ["Marcos 1:14–15", "1 Corintios 15:1–5"] },
+        { term: "Mesías / Cristo", original: "Hebreo: mashíaj · Griego: christós", category: "biblia", definition: "Ambos términos significan ‘ungido’. Designan al rey y libertador prometido, título que el Nuevo Testamento aplica a Jesús.", refs: ["Salmo 2:2", "Juan 20:31"] },
+        { term: "Reino de Dios", original: "Griego: basileía tou Theoú", category: "biblia", definition: "Gobierno o reinado activo de Dios, más que un lugar geográfico. En Jesús se anuncia como presente y también esperado en plenitud.", refs: ["Mateo 4:17", "Lucas 17:20–21"] },
+        { term: "Justicia", original: "Hebreo: tsédeq · Griego: dikaiosýnē", category: "vida", definition: "Rectitud, fidelidad a lo correcto y relaciones ordenadas según la voluntad de Dios. Puede hablar del carácter de Dios, del juicio justo o de la conducta humana.", refs: ["Miqueas 6:8", "Mateo 6:33"] },
+        { term: "Misericordia", original: "Hebreo: jésed / rajamím", category: "vida", definition: "Compasión fiel que se acerca a quien sufre o falla. Según el contexto puede destacar amor leal, ternura o perdón.", refs: ["Éxodo 34:6", "Lucas 6:36"] },
+        { term: "Santidad", original: "Hebreo: qódesh", category: "vida", definition: "Cualidad de ser apartado y perteneciente a Dios. En Dios expresa su absoluta singularidad y pureza; en su pueblo, una vida consagrada.", refs: ["Isaías 6:3", "1 Pedro 1:15–16"] },
+        { term: "Gloria", original: "Hebreo: kavód · Griego: dóxa", category: "biblia", definition: "Peso, honor, esplendor y manifestación de la grandeza de Dios. También puede referirse al honor humano, por lo que el contexto es decisivo.", refs: ["Éxodo 33:18–23", "Juan 1:14"] },
+        { term: "Temor de Dios", original: "Hebreo: yir’á", category: "vida", definition: "Reverencia profunda que reconoce la autoridad de Dios y conduce a sabiduría y obediencia; no equivale simplemente a terror paralizante.", refs: ["Proverbios 1:7", "Eclesiastés 12:13"] },
+        { term: "Sabiduría", original: "Hebreo: jokmá", category: "vida", definition: "Capacidad de vivir bien bajo el orden de Dios. Integra conocimiento, carácter, experiencia, prudencia y decisiones justas.", refs: ["Proverbios 2:1–6", "Santiago 3:17"] },
+        { term: "Pecado", original: "Hebreo: jatá · Griego: hamartía", category: "salvacion", definition: "Fallar al propósito de Dios, rebelarse y quebrar la relación con él y con otros. La Biblia lo presenta como actos, poder y condición humana.", refs: ["Romanos 3:23", "1 Juan 1:8–9"] },
+        { term: "Alma", original: "Hebreo: néfesh", category: "biblia", definition: "Según el contexto puede significar vida, persona, garganta o ser viviente. No siempre designa una parte separable del cuerpo; debe interpretarse dentro del pasaje.", refs: ["Génesis 2:7", "Salmo 42:1–2"] },
+        { term: "Espíritu", original: "Hebreo: rúaj · Griego: pneúma", category: "biblia", definition: "Palabra que puede significar viento, aliento o espíritu. Se usa para el Espíritu de Dios, la dimensión espiritual humana y otros seres espirituales.", refs: ["Génesis 1:2", "Juan 3:8"] },
+        { term: "Corazón", original: "Hebreo: lev / levav", category: "vida", definition: "Centro interior de pensamiento, voluntad, deseos y decisiones. En lenguaje bíblico no se limita a las emociones.", refs: ["Proverbios 4:23", "Marcos 7:21–23"] },
+        { term: "Adoración", original: "Hebreo: shajá · Griego: proskynéō", category: "vida", definition: "Respuesta de reverencia, entrega y reconocimiento a Dios. Incluye actos comunitarios y una vida orientada a honrarlo.", refs: ["Salmo 95:6", "Juan 4:23–24"] },
+        { term: "Discípulo", original: "Griego: mathētḗs", category: "iglesia", definition: "Aprendiz o seguidor que recibe la enseñanza de un maestro y organiza su vida alrededor de ella. En el cristianismo, seguidor de Jesús.", refs: ["Lucas 9:23", "Mateo 28:19–20"] },
+        { term: "Apóstol", original: "Griego: apóstolos", category: "iglesia", definition: "Enviado o representante comisionado. El Nuevo Testamento usa el término de forma especial para testigos y enviados fundamentales de Cristo.", refs: ["Marcos 3:13–19", "1 Corintios 9:1"] },
+        { term: "Iglesia", original: "Griego: ekklēsía", category: "iglesia", definition: "Asamblea o comunidad convocada. En el Nuevo Testamento se refiere a comunidades locales y al pueblo de Cristo en sentido amplio, no principalmente a un edificio.", refs: ["Hechos 2:42–47", "Efesios 2:19–22"] },
+        { term: "Comunión", original: "Griego: koinōnía", category: "iglesia", definition: "Participación compartida, compañerismo y contribución. Describe vínculos espirituales que también se expresan en apoyo concreto.", refs: ["Hechos 2:42", "Filipenses 2:1–4"] },
+        { term: "Bautismo", original: "Griego: báptisma", category: "iglesia", definition: "Acto de inmersión o lavamiento asociado con arrepentimiento, unión con Cristo e incorporación visible a la comunidad de fe.", refs: ["Mateo 28:19", "Romanos 6:3–4"] },
+        { term: "Cena del Señor", original: "Griego: kyriakón deípnon", category: "iglesia", definition: "Comida conmemorativa instituida por Jesús con pan y copa. Proclama su muerte y expresa comunión mientras la iglesia espera su regreso.", refs: ["Lucas 22:14–20", "1 Corintios 11:23–26"] },
+        { term: "Profeta", original: "Hebreo: naví", category: "biblia", definition: "Persona llamada a comunicar el mensaje de Dios a una situación concreta. Su tarea incluye confrontar, advertir, consolar y llamar a la fidelidad, no solo predecir.", refs: ["Deuteronomio 18:18–22", "Jeremías 1:4–10"] },
+        { term: "Torá / Ley", original: "Hebreo: torá", category: "biblia", definition: "Instrucción o enseñanza. Puede referirse a mandamientos específicos, a los cinco libros de Moisés o, de forma más amplia, a la dirección de Dios.", refs: ["Salmo 1:1–3", "Mateo 5:17"] },
+        { term: "Parábola", original: "Griego: parabolḗ", category: "biblia", definition: "Relato o comparación que coloca una realidad junto a otra para revelar y provocar reflexión. Debe leerse atendiendo a su contexto y punto central.", refs: ["Mateo 13:10–17", "Lucas 15:1–7"] },
+        { term: "Amén", original: "Hebreo: amén", category: "vida", definition: "Expresión de firmeza, verdad o acuerdo: ‘ciertamente’ o ‘así sea’. Puede confirmar una oración, bendición o declaración.", refs: ["Nehemías 8:6", "2 Corintios 1:20"] },
+        { term: "Aleluya", original: "Hebreo: halelú-Yah", category: "vida", definition: "Invitación que significa ‘alaben a Yah’. Une un llamado plural a alabar con una forma abreviada del nombre divino.", refs: ["Salmo 150:1", "Apocalipsis 19:1"] },
+        { term: "Hosanna", original: "Hebreo/Arameo: hôshî‘â-nnā", category: "biblia", definition: "Expresión que originalmente pide ‘salva, por favor’ y llegó a usarse como aclamación de alabanza y esperanza mesiánica.", refs: ["Salmo 118:25–26", "Mateo 21:9"] }
+      ];
+
+      var defaultState = {
+        profile: { name: "", weeklyGoal: 7, preferredTime: "morning", sessionGoal: 20 },
+        settings: { theme: "light", fontSize: 16 },
+        logs: {},
+        plan: {},
+        studies: [],
+        prayers: []
+      };
+
+      var state = loadState();
+      var autosaveTimer = null;
+      var toastTimer = null;
+
+      function toISO(date) {
+        var y = date.getFullYear();
+        var m = String(date.getMonth() + 1).padStart(2, "0");
+        var d = String(date.getDate()).padStart(2, "0");
+        return y + "-" + m + "-" + d;
+      }
+
+      function parseISO(value) {
+        var parts = value.split("-").map(Number);
+        return new Date(parts[0], parts[1] - 1, parts[2]);
+      }
+
+      function safeText(value) {
+        return String(value == null ? "" : value).replace(/[&<>'"]/g, function (char) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[char];
+        });
+      }
+
+      function mergeState(raw) {
+        return {
+          profile: Object.assign({}, defaultState.profile, raw && raw.profile),
+          settings: Object.assign({}, defaultState.settings, raw && raw.settings),
+          logs: raw && raw.logs && typeof raw.logs === "object" ? raw.logs : {},
+          plan: raw && raw.plan && typeof raw.plan === "object" ? raw.plan : {},
+          studies: raw && Array.isArray(raw.studies) ? raw.studies : [],
+          prayers: raw && Array.isArray(raw.prayers) ? raw.prayers : []
+        };
+      }
+
+      function loadState() {
+        try {
+          return mergeState(JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"));
+        } catch (error) {
+          return mergeState(null);
+        }
+      }
+
+      function saveState(message) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        if (message) showToast(message);
+      }
+
+      function getLog(key) {
+        if (!state.logs[key]) state.logs[key] = { reading: false, reflection: false, prayer: false, application: false, notes: "", gratitude: "", verse: "", minutes: 0 };
+        return state.logs[key];
+      }
+
+      function completedParts(log) {
+        return [log.reading, log.reflection, log.prayer, log.application].filter(Boolean).length;
+      }
+
+      function dayHasActivity(log) {
+        return !!(log && (completedParts(log) || log.notes || log.gratitude || log.verse || Number(log.minutes)));
+      }
+
+      function isComplete(log) { return !!log && completedParts(log) === 4; }
+
+      function dayOfYear(date) {
+        var start = new Date(date.getFullYear(), 0, 0);
+        return Math.floor((date - start) / dayMs);
+      }
+
+      function topicIndexFor(date) { return (dayOfYear(date) - 1 + topics.length) % topics.length; }
+      function quickSearchUrl(passage) { return "https://www.biblegateway.com/quicksearch/?quicksearch=" + encodeURIComponent(passage) + "&version=RVR1960"; }
+
+      function formatDate(date, options) {
+        return new Intl.DateTimeFormat("es-CO", options || { weekday: "long", day: "numeric", month: "long", year: "numeric" }).format(date);
+      }
+
+      function showToast(message) {
+        var toast = document.getElementById("bv-toast");
+        toast.textContent = message;
+        toast.classList.add("is-visible");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () { toast.classList.remove("is-visible"); }, 2600);
+      }
+
+      function refreshIcons() {
+        if (window.lucide && typeof window.lucide.createIcons === "function") {
+          window.lucide.createIcons({ attrs: { width: 16, height: 16 } });
+        }
+      }
+
+      function applyAppearance() {
+        root.setAttribute("data-theme", state.settings.theme === "dark" ? "dark" : "light");
+        root.style.setProperty("--font-size-base", Number(state.settings.fontSize || 16) + "px");
+        var toggleIcon = document.querySelector("#bv-theme-toggle [data-lucide]");
+        if (toggleIcon) toggleIcon.setAttribute("data-lucide", state.settings.theme === "dark" ? "sun" : "moon");
+        document.getElementById("bv-dark-switch").checked = state.settings.theme === "dark";
+        document.getElementById("bv-font-size").value = String(state.settings.fontSize || 16);
+        refreshIcons();
+      }
+
+      function navigate(view) {
+        document.querySelectorAll(".bv-view").forEach(function (section) { section.classList.toggle("is-active", section.id === "bv-view-" + view); });
+        document.querySelectorAll(".bv-nav-btn").forEach(function (button) {
+          if (button.dataset.view === view) button.setAttribute("aria-current", "page");
+          else button.removeAttribute("aria-current");
+        });
+        document.getElementById("bv-mobile-nav").value = view;
+        if (view === "plan") renderPlan();
+        if (view === "estudios") renderStudies();
+        if (view === "diario") { renderJournal(); renderPrayers(); }
+        if (view === "palabras") renderWords();
+        if (view === "progreso") renderProgress();
+        if (view === "ajustes") syncSettingsForm();
+        root.scrollIntoView({ behavior: "smooth", block: "start" });
+        refreshIcons();
+      }
+
+      function renderHeader() {
+        var hour = new Date().getHours();
+        var salutation = hour < 12 ? "Buenos días" : hour < 19 ? "Buenas tardes" : "Buenas noches";
+        var name = (state.profile.name || "").trim();
+        document.getElementById("bv-greeting").textContent = salutation + (name ? ", " + name.split(" ")[0] : "");
+        document.getElementById("bv-date").textContent = formatDate(today);
+        document.getElementById("bv-profile-name").textContent = name || "Tu espacio";
+        document.getElementById("bv-avatar").textContent = name ? name.charAt(0).toUpperCase() : "T";
+      }
+
+      function renderToday() {
+        var index = topicIndexFor(today);
+        var topic = topics[index];
+        var log = getLog(todayKey);
+        document.getElementById("bv-today-title").textContent = topic.title;
+        document.getElementById("bv-today-focus").textContent = topic.focus;
+        document.getElementById("bv-today-passage").textContent = topic.passage;
+        document.getElementById("bv-day-number").textContent = String(index + 1).padStart(2, "0");
+        document.getElementById("bv-open-passage").href = quickSearchUrl(topic.passage);
+        document.getElementById("bv-core-text").textContent = topic.idea;
+        document.getElementById("bv-today-action").textContent = topic.action;
+        document.getElementById("bv-today-prayer").textContent = topic.prayer;
+        document.getElementById("bv-today-questions").innerHTML = topic.questions.map(function (question) { return "<li>" + safeText(question) + "</li>"; }).join("");
+        document.querySelectorAll("[data-check]").forEach(function (input) { input.checked = !!log[input.dataset.check]; });
+        document.getElementById("bv-today-verse").value = log.verse || "";
+        document.getElementById("bv-today-notes").value = log.notes || "";
+        document.getElementById("bv-today-gratitude").value = log.gratitude || "";
+        document.getElementById("bv-minutes").value = log.minutes || "";
+        document.getElementById("bv-today-percent").textContent = Math.round(completedParts(log) / 4 * 100) + "%";
+        renderNextTopics(index);
+        renderStats();
+      }
+
+      function renderNextTopics(index) {
+        var html = [];
+        for (var i = 1; i <= 3; i++) {
+          var topic = topics[(index + i) % topics.length];
+          html.push('<div class="bv-passage-box"><strong>' + safeText(topic.title) + '</strong><span>' + safeText(topic.passage) + "</span></div>");
+        }
+        document.getElementById("bv-next-topics").innerHTML = html.join("");
+      }
+
+      function getStreak() {
+        var streak = 0;
+        var cursor = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        if (!dayHasActivity(state.logs[toISO(cursor)])) cursor = new Date(cursor.getTime() - dayMs);
+        while (dayHasActivity(state.logs[toISO(cursor)])) {
+          streak++;
+          cursor = new Date(cursor.getTime() - dayMs);
+        }
+        return streak;
+      }
+
+      function activeDaysInLast(count) {
+        var total = 0;
+        for (var i = 0; i < count; i++) {
+          var date = new Date(today.getFullYear(), today.getMonth(), today.getDate() - i);
+          if (dayHasActivity(state.logs[toISO(date)])) total++;
+        }
+        return total;
+      }
+
+      function renderStats() {
+        var totalMinutes = Object.keys(state.logs).reduce(function (sum, key) { return sum + (Number(state.logs[key].minutes) || 0); }, 0);
+        document.getElementById("bv-streak").textContent = getStreak() + " días";
+        document.getElementById("bv-total-minutes").textContent = totalMinutes + " min";
+        document.getElementById("bv-study-count").textContent = state.studies.length;
+        var active = activeDaysInLast(7);
+        var goal = Number(state.profile.weeklyGoal) || 7;
+        document.getElementById("bv-side-goal").textContent = active + " de " + goal + " días";
+        document.getElementById("bv-side-progress").style.width = Math.min(100, Math.round(active / goal * 100)) + "%";
+      }
+
+      function collectToday() {
+        var log = getLog(todayKey);
+        document.querySelectorAll("[data-check]").forEach(function (input) { log[input.dataset.check] = input.checked; });
+        log.verse = document.getElementById("bv-today-verse").value.trim();
+        log.notes = document.getElementById("bv-today-notes").value.trim();
+        log.gratitude = document.getElementById("bv-today-gratitude").value.trim();
+        log.minutes = Math.max(0, Number(document.getElementById("bv-minutes").value) || 0);
+        document.getElementById("bv-today-percent").textContent = Math.round(completedParts(log) / 4 * 100) + "%";
+      }
+
+      function autosaveToday() {
+        clearTimeout(autosaveTimer);
+        document.getElementById("bv-autosave").textContent = "Guardando…";
+        autosaveTimer = setTimeout(function () {
+          collectToday();
+          saveState();
+          document.getElementById("bv-autosave").innerHTML = '<i data-lucide="cloud-check" aria-hidden="true"></i>Guardado local';
+          renderStats();
+          refreshIcons();
+        }, 450);
+      }
+
+      function renderPlan() {
+        var query = document.getElementById("bv-plan-search").value.trim().toLowerCase();
+        var filter = document.getElementById("bv-plan-filter").value;
+        var html = topics.map(function (topic, index) {
+          var done = !!state.plan[index];
+          var haystack = (topic.title + " " + topic.passage + " " + topic.focus).toLowerCase();
+          if (query && haystack.indexOf(query) === -1) return "";
+          if (filter === "pending" && done) return "";
+          if (filter === "complete" && !done) return "";
+          return '<article class="bv-topic-card' + (done ? " is-complete" : "") + '">' +
+            '<div class="bv-card-top"><span class="bv-day-pill text-small">Día ' + (index + 1) + '</span><span class="bv-status-dot" aria-label="' + (done ? "Completado" : "Pendiente") + '"></span></div>' +
+            "<h3>" + safeText(topic.title) + "</h3>" +
+            "<p>" + safeText(topic.passage) + "</p>" +
+            '<div class="bv-card-actions"><button class="bv-action bv-plan-open" data-index="' + index + '">Ver tema</button><button class="' + (done ? "bv-action" : "bv-action-primary") + ' bv-plan-toggle" data-index="' + index + '">' + (done ? "Reabrir" : "Completar") + "</button></div></article>";
+        }).join("");
+        document.getElementById("bv-topic-grid").innerHTML = html || '<div class="bv-empty" style="grid-column:1/-1">No hay temas que coincidan con este filtro.</div>';
+        var complete = Object.keys(state.plan).filter(function (key) { return state.plan[key]; }).length;
+        var percent = Math.round(complete / topics.length * 100);
+        document.getElementById("bv-plan-progress-copy").textContent = complete + " de " + topics.length + " temas completados";
+        document.getElementById("bv-plan-progress-percent").textContent = percent + "%";
+        document.getElementById("bv-plan-progress-bar").style.width = percent + "%";
+      }
+
+      function openTopic(index) {
+        var date = new Date(today.getFullYear(), 0, 1 + index);
+        var topic = topics[index];
+        document.getElementById("bv-today-title").textContent = topic.title;
+        document.getElementById("bv-today-focus").textContent = topic.focus;
+        document.getElementById("bv-today-passage").textContent = topic.passage;
+        document.getElementById("bv-day-number").textContent = String(index + 1).padStart(2, "0");
+        document.getElementById("bv-open-passage").href = quickSearchUrl(topic.passage);
+        document.getElementById("bv-core-text").textContent = topic.idea;
+        document.getElementById("bv-today-action").textContent = topic.action;
+        document.getElementById("bv-today-prayer").textContent = topic.prayer;
+        document.getElementById("bv-today-questions").innerHTML = topic.questions.map(function (question) { return "<li>" + safeText(question) + "</li>"; }).join("");
+        renderNextTopics(index);
+        navigate("hoy");
+        showToast("Tema del día " + (index + 1) + " abierto para consulta");
+        void date;
+      }
+
+      function resetStudyForm() {
+        document.getElementById("bv-study-editor").reset();
+        document.getElementById("bv-study-id").value = "";
+        document.getElementById("bv-study-date").value = todayKey;
+        document.getElementById("bv-editor-title").textContent = "Nuevo estudio personal";
+      }
+
+      function openStudyEditor(study) {
+        var editor = document.getElementById("bv-study-editor");
+        resetStudyForm();
+        if (study) {
+          document.getElementById("bv-editor-title").textContent = "Editar estudio personal";
+          document.getElementById("bv-study-id").value = study.id;
+          document.getElementById("bv-study-title").value = study.title || "";
+          document.getElementById("bv-study-date").value = study.date || todayKey;
+          document.getElementById("bv-study-passage").value = study.passage || "";
+          document.getElementById("bv-study-category").value = study.category || "Fe";
+          document.getElementById("bv-study-observe").value = study.observe || "";
+          document.getElementById("bv-study-understand").value = study.understand || "";
+          document.getElementById("bv-study-connect").value = study.connect || "";
+          document.getElementById("bv-study-apply").value = study.apply || "";
+          document.getElementById("bv-study-prayer").value = study.prayer || "";
+          document.getElementById("bv-study-tags").value = (study.tags || []).join(", ");
+          document.getElementById("bv-study-status").value = study.status || "draft";
+        }
+        editor.classList.add("is-open");
+        editor.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function closeStudyEditor() { document.getElementById("bv-study-editor").classList.remove("is-open"); }
+
+      function saveStudy(event) {
+        event.preventDefault();
+        var title = document.getElementById("bv-study-title").value.trim();
+        var passage = document.getElementById("bv-study-passage").value.trim();
+        if (!title || !passage) { showToast("Agrega un título y un pasaje"); return; }
+        var id = document.getElementById("bv-study-id").value || String(Date.now());
+        var study = {
+          id: id,
+          title: title,
+          date: document.getElementById("bv-study-date").value || todayKey,
+          passage: passage,
+          category: document.getElementById("bv-study-category").value,
+          observe: document.getElementById("bv-study-observe").value.trim(),
+          understand: document.getElementById("bv-study-understand").value.trim(),
+          connect: document.getElementById("bv-study-connect").value.trim(),
+          apply: document.getElementById("bv-study-apply").value.trim(),
+          prayer: document.getElementById("bv-study-prayer").value.trim(),
+          tags: document.getElementById("bv-study-tags").value.split(",").map(function (tag) { return tag.trim(); }).filter(Boolean),
+          status: document.getElementById("bv-study-status").value,
+          updatedAt: new Date().toISOString()
+        };
+        var index = state.studies.findIndex(function (item) { return item.id === id; });
+        if (index >= 0) state.studies[index] = study;
+        else state.studies.unshift(study);
+        saveState(index >= 0 ? "Estudio actualizado" : "Estudio creado");
+        closeStudyEditor();
+        renderStudies();
+        renderStats();
+      }
+
+      function renderStudies() {
+        var query = document.getElementById("bv-study-search").value.trim().toLowerCase();
+        var filter = document.getElementById("bv-study-filter").value;
+        var studies = state.studies.filter(function (study) {
+          var haystack = [study.title, study.passage, study.category, study.observe, study.understand, study.connect, study.apply, (study.tags || []).join(" ")].join(" ").toLowerCase();
+          return (!query || haystack.indexOf(query) >= 0) && (filter === "all" || study.status === filter);
+        }).sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); });
+        if (!studies.length) {
+          document.getElementById("bv-study-list").innerHTML = '<div class="bv-empty"><i data-lucide="notebook-tabs" aria-hidden="true"></i><div>' + (state.studies.length ? "No hay resultados con este filtro." : "Todavía no has creado estudios propios.") + "</div></div>";
+          refreshIcons();
+          return;
+        }
+        document.getElementById("bv-study-list").innerHTML = studies.map(function (study) {
+          var summary = study.apply || study.connect || study.observe || "Sin reflexión escrita todavía.";
+          return '<article class="bv-study-item"><div><h3>' + safeText(study.title) + '</h3><div class="bv-study-meta text-small"><span class="bv-day-pill">' + safeText(study.category) + "</span><span>" + safeText(study.passage) + "</span><span>·</span><span>" + safeText(formatDate(parseISO(study.date), { day: "numeric", month: "short", year: "numeric" })) + "</span><span>·</span><span>" + (study.status === "complete" ? "Completado" : "En proceso") + '</span></div><p class="bv-study-summary">' + safeText(summary).slice(0, 240) + '</p></div><div class="bv-study-actions"><button class="bv-icon-btn bv-edit-study" data-id="' + safeText(study.id) + '" aria-label="Editar estudio"><i data-lucide="pencil" aria-hidden="true"></i></button><a class="bv-icon-btn" href="' + safeText(quickSearchUrl(study.passage)) + '" target="_blank" rel="noopener noreferrer" aria-label="Abrir pasaje"><i data-lucide="external-link" aria-hidden="true"></i></a><button class="bv-icon-btn bv-delete-study" data-id="' + safeText(study.id) + '" aria-label="Eliminar estudio"><i data-lucide="trash-2" aria-hidden="true"></i></button></div></article>';
+        }).join("");
+        refreshIcons();
+      }
+
+      function seedStudyFromToday() {
+        var topic = topics[topicIndexFor(today)];
+        var log = getLog(todayKey);
+        navigate("estudios");
+        openStudyEditor({ id: "", title: topic.title, date: todayKey, passage: topic.passage, category: "Fe", observe: log.notes || "", understand: "", connect: topic.idea, apply: topic.action, prayer: topic.prayer, tags: ["tema diario"], status: "draft" });
+        document.getElementById("bv-study-id").value = "";
+      }
+
+      function renderJournal() {
+        var range = document.getElementById("bv-journal-filter").value;
+        var cutoff = range === "all" ? null : new Date(today.getTime() - (Number(range) - 1) * dayMs);
+        var keys = Object.keys(state.logs).filter(function (key) {
+          var log = state.logs[key];
+          var hasText = log && (log.notes || log.gratitude || log.verse);
+          return hasText && (!cutoff || parseISO(key) >= new Date(cutoff.getFullYear(), cutoff.getMonth(), cutoff.getDate()));
+        }).sort().reverse();
+        if (!keys.length) {
+          document.getElementById("bv-journal-list").innerHTML = '<div class="bv-empty">Tus reflexiones aparecerán aquí cuando guardes la sesión de un día.</div>';
+          return;
+        }
+        document.getElementById("bv-journal-list").innerHTML = keys.map(function (key) {
+          var log = state.logs[key];
+          var pieces = [];
+          if (log.verse) pieces.push("Versículo: " + log.verse);
+          if (log.notes) pieces.push(log.notes);
+          if (log.gratitude) pieces.push("Gratitud: " + log.gratitude);
+          return '<article class="bv-journal-item"><strong>' + safeText(formatDate(parseISO(key), { weekday: "long", day: "numeric", month: "long", year: "numeric" })) + '</strong><p>' + safeText(pieces.join("\n\n")) + "</p></article>";
+        }).join("");
+      }
+
+      function renderPrayers() {
+        var list = document.getElementById("bv-prayer-list");
+        if (!state.prayers.length) { list.innerHTML = '<div class="bv-empty" style="padding:22px 12px">No hay peticiones registradas.</div>'; return; }
+        list.innerHTML = state.prayers.map(function (item) {
+          return '<div class="bv-prayer-item' + (item.answered ? " is-answered" : "") + '"><input class="bv-prayer-toggle" data-id="' + safeText(item.id) + '" type="checkbox" aria-label="Marcar como respondida" ' + (item.answered ? "checked" : "") + '><div class="bv-prayer-text"><strong>' + safeText(item.text) + '</strong><div class="text-small text-muted">' + safeText(formatDate(parseISO(item.date), { day: "numeric", month: "short", year: "numeric" })) + (item.answered ? " · Respondida" : " · En oración") + '</div></div><button class="bv-prayer-delete" data-id="' + safeText(item.id) + '" aria-label="Eliminar petición"><i data-lucide="x" aria-hidden="true"></i></button></div>';
+        }).join("");
+        refreshIcons();
+      }
+
+      function renderWords() {
+        var query = document.getElementById("bv-word-search").value.trim().toLowerCase();
+        var filter = document.getElementById("bv-word-filter").value;
+        var filtered = words.filter(function (word) {
+          var haystack = [word.term, word.original, word.definition, word.refs.join(" ")].join(" ").toLowerCase();
+          return (!query || haystack.indexOf(query) >= 0) && (filter === "all" || word.category === filter);
+        });
+        document.getElementById("bv-word-grid").innerHTML = filtered.length ? filtered.map(function (word) {
+          return '<article class="bv-word-card"><div class="bv-word-head"><div><h3>' + safeText(word.term) + '</h3><div class="bv-original text-small">' + safeText(word.original) + '</div></div><span class="bv-day-pill text-small">' + safeText({ salvacion: "Salvación", vida: "Vida espiritual", biblia: "Biblia y contexto", iglesia: "Iglesia y misión" }[word.category]) + '</span></div><p>' + safeText(word.definition) + '</p><div class="bv-ref-row">' + word.refs.map(function (ref) { return '<a class="bv-verse-chip text-small" href="' + safeText(quickSearchUrl(ref)) + '" target="_blank" rel="noopener noreferrer">' + safeText(ref) + '<i data-lucide="external-link" aria-hidden="true"></i></a>'; }).join("") + "</div></article>";
+        }).join("") : '<div class="bv-empty" style="grid-column:1/-1">No encontramos una palabra con ese criterio.</div>';
+        refreshIcons();
+      }
+
+      function renderProgress() {
+        var year = today.getFullYear();
+        var month = today.getMonth();
+        var daysInMonth = new Date(year, month + 1, 0).getDate();
+        var elapsed = month === today.getMonth() && year === today.getFullYear() ? today.getDate() : daysInMonth;
+        var active = 0;
+        var complete = 0;
+        var reflections = 0;
+        for (var day = 1; day <= daysInMonth; day++) {
+          var log = state.logs[toISO(new Date(year, month, day))];
+          if (dayHasActivity(log)) active++;
+          if (isComplete(log)) complete++;
+          if (log && log.notes) reflections++;
+        }
+        var percent = Math.round(active / Math.max(1, elapsed) * 100);
+        document.getElementById("bv-month-label").textContent = formatDate(today, { month: "long", year: "numeric" });
+        document.getElementById("bv-month-ring").style.setProperty("--value", Math.min(100, percent));
+        document.getElementById("bv-month-percent").textContent = percent + "%";
+        document.getElementById("bv-complete-days").textContent = complete + " días";
+        document.getElementById("bv-reflection-days").textContent = reflections + " días";
+        renderWeekBars();
+        renderCalendar(year, month);
+        renderAchievements();
+      }
+
+      function renderWeekBars() {
+        var html = [];
+        for (var i = 6; i >= 0; i--) {
+          var date = new Date(today.getFullYear(), today.getMonth(), today.getDate() - i);
+          var log = state.logs[toISO(date)] || {};
+          var value = Math.round(completedParts(log) / 4 * 100);
+          html.push('<div class="bv-bar-col"><div class="bv-bar-track" data-tooltip="' + safeText(formatDate(date, { day: "numeric", month: "short" }) + ": " + value + "%") + '"><div class="bv-bar-fill" style="height:' + value + '%"></div></div><span class="text-small">' + safeText(formatDate(date, { weekday: "short" }).replace(".", "")) + "</span></div>");
+        }
+        document.getElementById("bv-week-bars").innerHTML = html.join("");
+      }
+
+      function renderCalendar(year, month) {
+        var names = ["L", "M", "X", "J", "V", "S", "D"];
+        var html = names.map(function (name) { return '<div class="bv-cal-head text-small">' + name + "</div>"; });
+        var first = new Date(year, month, 1);
+        var offset = (first.getDay() + 6) % 7;
+        for (var blank = 0; blank < offset; blank++) html.push('<div class="bv-cal-day is-empty"></div>');
+        var days = new Date(year, month + 1, 0).getDate();
+        for (var day = 1; day <= days; day++) {
+          var date = new Date(year, month, day);
+          var key = toISO(date);
+          var log = state.logs[key];
+          var classes = "bv-cal-day" + (dayHasActivity(log) ? " has-progress" : "") + (isComplete(log) ? " is-complete" : "") + (key === todayKey ? " is-today" : "");
+          var value = Math.round(completedParts(log || {}) / 4 * 100);
+          html.push('<div class="' + classes + '" data-tooltip="' + safeText(formatDate(date, { day: "numeric", month: "long" }) + ": " + value + "%") + '">' + day + "</div>");
+        }
+        document.getElementById("bv-calendar-title").textContent = "Calendario de " + formatDate(first, { month: "long" });
+        document.getElementById("bv-calendar").innerHTML = html.join("");
+      }
+
+      function renderAchievements() {
+        var streak = getStreak();
+        var allActive = Object.keys(state.logs).filter(function (key) { return dayHasActivity(state.logs[key]); }).length;
+        var studyDone = state.studies.filter(function (study) { return study.status === "complete"; }).length;
+        var achievements = [
+          { icon: "sprout", name: "Primera raíz", copy: "Completa tu primera sesión", earned: allActive >= 1 },
+          { icon: "flame", name: "Una semana firme", copy: "Alcanza una racha de 7 días", earned: streak >= 7 },
+          { icon: "notebook-check", name: "Investigador", copy: "Completa 3 estudios propios", earned: studyDone >= 3 },
+          { icon: "heart", name: "Corazón agradecido", copy: "Registra gratitud 7 veces", earned: Object.keys(state.logs).filter(function (key) { return state.logs[key].gratitude; }).length >= 7 },
+          { icon: "calendar-check-2", name: "Constancia 30", copy: "Estudia en 30 días diferentes", earned: allActive >= 30 },
+          { icon: "circle-check-big", name: "Plan esencial", copy: "Completa los 30 temas", earned: Object.keys(state.plan).filter(function (key) { return state.plan[key]; }).length >= 30 }
+        ];
+        document.getElementById("bv-achievements").innerHTML = achievements.map(function (item) {
+          return '<div class="bv-achievement' + (item.earned ? " is-earned" : "") + '"><i data-lucide="' + item.icon + '" aria-hidden="true"></i><strong>' + safeText(item.name) + '</strong><span class="text-small">' + safeText(item.copy) + "</span></div>";
+        }).join("");
+        refreshIcons();
+      }
+
+      function syncSettingsForm() {
+        document.getElementById("bv-name").value = state.profile.name || "";
+        document.getElementById("bv-weekly-goal").value = String(state.profile.weeklyGoal || 7);
+        document.getElementById("bv-preferred-time").value = state.profile.preferredTime || "morning";
+        document.getElementById("bv-session-goal").value = String(state.profile.sessionGoal || 20);
+        document.getElementById("bv-dark-switch").checked = state.settings.theme === "dark";
+        document.getElementById("bv-font-size").value = String(state.settings.fontSize || 16);
+      }
+
+      function exportData() {
+        var payload = { app: "Raíces — Estudio bíblico", version: 1, exportedAt: new Date().toISOString(), data: state };
+        var blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement("a");
+        link.href = url;
+        link.download = "respaldo-estudio-biblico-" + todayKey + ".json";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        showToast("Copia de seguridad descargada");
+      }
+
+      function importData(file) {
+        var reader = new FileReader();
+        reader.onload = function () {
+          try {
+            var payload = JSON.parse(String(reader.result));
+            var incoming = payload && payload.data ? payload.data : payload;
+            state = mergeState(incoming);
+            saveState();
+            renderAll();
+            showToast("Copia restaurada correctamente");
+          } catch (error) {
+            showToast("El archivo no contiene una copia válida");
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      function bindEvents() {
+        document.querySelectorAll(".bv-nav-btn").forEach(function (button) { button.addEventListener("click", function () { navigate(button.dataset.view); }); });
+        document.getElementById("bv-mobile-nav").addEventListener("change", function (event) { navigate(event.target.value); });
+        document.getElementById("bv-theme-toggle").addEventListener("click", function () { state.settings.theme = state.settings.theme === "dark" ? "light" : "dark"; saveState(); applyAppearance(); });
+        document.getElementById("bv-dark-switch").addEventListener("change", function (event) { state.settings.theme = event.target.checked ? "dark" : "light"; saveState(); applyAppearance(); });
+        document.getElementById("bv-font-size").addEventListener("change", function (event) { state.settings.fontSize = Number(event.target.value); saveState(); applyAppearance(); });
+        document.getElementById("bv-quick-add").addEventListener("click", function () { navigate("estudios"); openStudyEditor(); });
+        document.getElementById("bv-create-study").addEventListener("click", function () { openStudyEditor(); });
+        document.getElementById("bv-close-editor").addEventListener("click", closeStudyEditor);
+        document.getElementById("bv-cancel-study").addEventListener("click", closeStudyEditor);
+        document.getElementById("bv-study-editor").addEventListener("submit", saveStudy);
+        document.getElementById("bv-study-search").addEventListener("input", renderStudies);
+        document.getElementById("bv-study-filter").addEventListener("change", renderStudies);
+        document.getElementById("bv-plan-search").addEventListener("input", renderPlan);
+        document.getElementById("bv-plan-filter").addEventListener("change", renderPlan);
+        document.getElementById("bv-word-search").addEventListener("input", renderWords);
+        document.getElementById("bv-word-filter").addEventListener("change", renderWords);
+        document.getElementById("bv-journal-filter").addEventListener("change", renderJournal);
+        document.getElementById("bv-start-study").addEventListener("click", function () { document.getElementById("bv-study-workspace").scrollIntoView({ behavior: "smooth", block: "start" }); document.getElementById("bv-today-notes").focus(); });
+        document.getElementById("bv-save-today").addEventListener("click", function () { collectToday(); saveState("Reflexión guardada"); renderToday(); });
+        document.getElementById("bv-new-own-study").addEventListener("click", seedStudyFromToday);
+        document.querySelectorAll("[data-check], #bv-today-verse, #bv-today-notes, #bv-today-gratitude, #bv-minutes").forEach(function (input) { input.addEventListener(input.type === "checkbox" ? "change" : "input", autosaveToday); });
+
+        document.getElementById("bv-topic-grid").addEventListener("click", function (event) {
+          var toggle = event.target.closest(".bv-plan-toggle");
+          var open = event.target.closest(".bv-plan-open");
+          if (toggle) { var index = Number(toggle.dataset.index); state.plan[index] = !state.plan[index]; saveState(state.plan[index] ? "Tema completado" : "Tema marcado como pendiente"); renderPlan(); }
+          if (open) openTopic(Number(open.dataset.index));
+        });
+
+        document.getElementById("bv-study-list").addEventListener("click", function (event) {
+          var edit = event.target.closest(".bv-edit-study");
+          var remove = event.target.closest(".bv-delete-study");
+          if (edit) { var study = state.studies.find(function (item) { return item.id === edit.dataset.id; }); if (study) openStudyEditor(study); }
+          if (remove && window.confirm("¿Eliminar este estudio? Esta acción no se puede deshacer.")) { state.studies = state.studies.filter(function (item) { return item.id !== remove.dataset.id; }); saveState("Estudio eliminado"); renderStudies(); renderStats(); }
+        });
+
+        document.getElementById("bv-prayer-form").addEventListener("submit", function (event) {
+          event.preventDefault();
+          var input = document.getElementById("bv-prayer-input");
+          var text = input.value.trim();
+          if (!text) return;
+          state.prayers.unshift({ id: String(Date.now()), text: text, date: todayKey, answered: false });
+          input.value = "";
+          saveState("Petición agregada");
+          renderPrayers();
+        });
+
+        document.getElementById("bv-prayer-list").addEventListener("change", function (event) {
+          var toggle = event.target.closest(".bv-prayer-toggle");
+          if (!toggle) return;
+          var item = state.prayers.find(function (prayer) { return prayer.id === toggle.dataset.id; });
+          if (item) { item.answered = toggle.checked; saveState(toggle.checked ? "Marcada como respondida" : "Petición reabierta"); renderPrayers(); }
+        });
+
+        document.getElementById("bv-prayer-list").addEventListener("click", function (event) {
+          var remove = event.target.closest(".bv-prayer-delete");
+          if (remove && window.confirm("¿Eliminar esta petición?")) { state.prayers = state.prayers.filter(function (item) { return item.id !== remove.dataset.id; }); saveState("Petición eliminada"); renderPrayers(); }
+        });
+
+        document.getElementById("bv-profile-form").addEventListener("submit", function (event) {
+          event.preventDefault();
+          state.profile.name = document.getElementById("bv-name").value.trim();
+          state.profile.weeklyGoal = Number(document.getElementById("bv-weekly-goal").value);
+          state.profile.preferredTime = document.getElementById("bv-preferred-time").value;
+          state.profile.sessionGoal = Number(document.getElementById("bv-session-goal").value);
+          saveState("Perfil actualizado");
+          renderHeader();
+          renderStats();
+        });
+
+        document.getElementById("bv-export").addEventListener("click", exportData);
+        document.getElementById("bv-import-file").addEventListener("change", function (event) { if (event.target.files && event.target.files[0]) importData(event.target.files[0]); event.target.value = ""; });
+        document.getElementById("bv-reset").addEventListener("click", function () {
+          if (!window.confirm("¿Borrar estudios, reflexiones, progreso y ajustes guardados en este navegador? Esta acción no se puede deshacer.")) return;
+          state = mergeState(null);
+          localStorage.removeItem(STORAGE_KEY);
+          renderAll();
+          showToast("Todos los datos fueron borrados");
+        });
+      }
+
+      function renderAll() {
+        applyAppearance();
+        renderHeader();
+        renderToday();
+        renderPlan();
+        renderStudies();
+        renderJournal();
+        renderPrayers();
+        renderWords();
+        renderProgress();
+        syncSettingsForm();
+        refreshIcons();
+      }
+
+      bindEvents();
+      renderAll();
+    })();
+  </script>
+</div>
+
+<script id="codex-visualization-floating-ui-core" src="https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js"></script>
+<script id="codex-visualization-floating-ui-dom" src="https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js"></script>
+<script id="codex-visualization-lucide" async src="https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js"></script>
+<script id="codex-visualization-tooltip">/* oxlint-disable typescript/no-unsafe-argument, typescript/no-unsafe-call, typescript/no-unsafe-return */
+// Runs inside the visualization sandbox, not the host webview.
+(() => {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set(["top", "right", "bottom", "left"]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =>
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest("[data-tooltip]")
+      : null;
+  const containsTarget = (trigger, target) =>
+    target?.nodeType != null && trigger.contains(target);
+  const getContent = (trigger) =>
+    trigger.getAttribute("data-tooltip")?.trim() ?? "";
+  const getPlacement = (trigger) => {
+    const placement = trigger.getAttribute("data-tooltip-placement");
+    return tooltipPlacements.has(placement) ? placement : "top";
+  };
+  const getTooltip = () => {
+    if (tooltip == null) {
+      tooltip = document.createElement("div");
+      tooltip.id = tooltipId;
+      tooltip.className = "tooltip";
+      tooltip.setAttribute("role", "tooltip");
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) => {
+    const ids = new Set(
+      (trigger.getAttribute("aria-describedby") ?? "")
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute("aria-describedby");
+    } else {
+      trigger.setAttribute("aria-describedby", [...ids].join(" "));
+    }
+  };
+  const clearOpenTimeout = () => {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) => {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) => {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              "--tooltip-available-width",
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              "--tooltip-available-height",
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: "fixed",
+    })
+      .then(({ x, y }) => {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = "visible";
+      })
+      .catch(() => {
+        if (activeTrigger === trigger && request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) => {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = "hidden";
+    floating.style.transform = "translate(0, 0)";
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () => {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) => {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() < skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() => {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) => {
+    if (event.pointerType === "touch") {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) => {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) => {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(":focus-visible")) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) => {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () => {
+    closeTooltip(false);
+    document.removeEventListener("pointerover", handlePointerOpen);
+    document.removeEventListener("pointerout", handleLeave);
+    document.removeEventListener("focusin", handleFocusIn);
+    document.removeEventListener("focusout", handleLeave);
+    document.removeEventListener("keydown", handleKeyDown);
+    document.removeEventListener("contextmenu", handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener("pointerover", handlePointerOpen);
+  document.addEventListener("pointerout", handleLeave);
+  document.addEventListener("focusin", handleFocusIn);
+  document.addEventListener("focusout", handleLeave);
+  document.addEventListener("keydown", handleKeyDown);
+  document.addEventListener("contextmenu", handleContextMenu);
+  window.addEventListener("pagehide", destroy, { once: true });
+})();
+</script>
+<script id="codex-visualization-lucide-initialization">(() => {
+  const initialize = () => {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById("codex-visualization-lucide")
+    ?.addEventListener("load", initialize, { once: true });
+})();
+</script>
+</body>
+</html>
