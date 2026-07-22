@@ -1,0 +1,25 @@
+{
+  "name": "MAESTRO-SEGUIMIENTOS",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ritwickdey.LiveServer"
+      ],
+      "settings": {
+        "liveServer.settings.port": 5500,
+        "liveServer.settings.root": "/",
+        "liveServer.settings.fullReload": true
+      }
+    }
+  },
+  "forwardPorts": [
+    5500
+  ],
+  "portsAttributes": {
+    "5500": {
+      "label": "Live Server",
+      "onAutoForward": "openBrowser",
+      "protocol": "http"
+    }
+  }
+}
