@@ -1,0 +1,15 @@
+{
+  "files.associations": {
+    "*.html": "html",
+    "*.HTML": "html"
+  },
+  "liveServer.settings.port": 5500,
+  "liveServer.settings.root": "/",
+  "liveServer.settings.NoBrowser": false,
+  "liveServer.settings.fullReload": true,
+  "liveServer.settings.wait": 100,
+  "liveServer.settings.ignoreFiles": [
+    ".vscode/**",
+    ".git/**"
+  ]
+}
