@@ -3,7 +3,7 @@
     "*.html": "html",
     "*.HTML": "html"
   },
-  "liveServer.settings.port": 5500,
+  "liveServer.settings.port": 5502,
   "liveServer.settings.root": "/",
   "liveServer.settings.file": "",
   "liveServer.settings.host": "0.0.0.0",
