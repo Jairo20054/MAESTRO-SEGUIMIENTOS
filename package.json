@@ -1,0 +1,8 @@
+{
+  "name": "maestro-seguimientos",
+  "private": true,
+  "scripts": {
+    "generate:index": "node scripts/generate-index.js",
+    "watch:index": "node scripts/generate-index.js --watch"
+  }
+}

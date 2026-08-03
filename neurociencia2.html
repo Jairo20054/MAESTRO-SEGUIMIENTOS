@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manual de operación del cerebro — neurociencia, mitos y cambio de hábitos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS
+   El color codifica el estatus epistémico de lo que lees:
+   violeta = mecanismo · verde = evidencia · óxido = mito
+   ámbar = advertencia / matiz
+   ============================================================ */
+:root{
+  --paper:      #E7E9E2;
+  --paper-hi:   #F3F4EF;
+  --paper-lo:   #DBDED4;
+  --ink:        #14161C;
+  --ink-soft:   #4C525C;
+  --ink-faint:  #7A808A;
+  --rule:       #C4C8BC;
+  --synapse:    #4B2FE0;
+  --synapse-lo: #E2DEFB;
+  --evidence:   #0E7C66;
+  --evidence-lo:#D6EAE4;
+  --myth:       #9E2B25;
+  --myth-lo:    #F1DEDC;
+  --amber:      #9A6B06;
+  --amber-lo:   #F0E6CC;
+
+  --f-display: "Bricolage Grotesque", "Helvetica Neue", sans-serif;
+  --f-body:    "Newsreader", Georgia, serif;
+  --f-mono:    "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+
+  --measure: 68ch;
+  --gap: clamp(1rem, 3vw, 2rem);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:5.5rem}
+body{
+  margin:0;
+  background-color:var(--paper);
+  /* papel milimetrado de laboratorio */
+  background-image:
+    linear-gradient(to right, rgba(20,22,28,.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20,22,28,.045) 1px, transparent 1px),
+    linear-gradient(to right, rgba(20,22,28,.09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20,22,28,.09) 1px, transparent 1px);
+  background-size: 12px 12px, 12px 12px, 60px 60px, 60px 60px;
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:clamp(17px,1.05vw + 14px,19px);
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+img,svg{max-width:100%}
+a{color:var(--synapse); text-decoration-thickness:1px; text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{
+  outline:2.5px solid var(--synapse); outline-offset:3px; border-radius:2px;
+}
+
+/* ============================================================
+   BARRA SUPERIOR + PROGRESO DE LECTURA
+   ============================================================ */
+.topbar{
+  position:sticky; top:0; z-index:60;
+  background:rgba(231,233,226,.88);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--rule);
+}
+.topbar__in{
+  max-width:1240px; margin:0 auto; padding:.7rem var(--gap);
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+}
+.mark{
+  font-family:var(--f-mono); font-size:.7rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-soft); margin:0;
+}
+.mark b{color:var(--ink); font-weight:600}
+.topnav{display:none; gap:1.1rem}
+.topnav a{
+  font-family:var(--f-mono); font-size:.68rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-soft); text-decoration:none;
+}
+.topnav a:hover{color:var(--synapse)}
+.progress{height:3px; background:transparent}
+.progress__bar{height:100%; width:0; background:var(--synapse); transition:width .1s linear}
+@media(min-width:900px){ .topnav{display:flex} }
+
+/* ============================================================
+   HERO — el trazo
+   ============================================================ */
+.hero{
+  max-width:1240px; margin:0 auto; padding:clamp(2.5rem,7vw,5rem) var(--gap) 2rem;
+}
+.hero__eyebrow{
+  font-family:var(--f-mono); font-size:.72rem; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--myth); margin:0 0 1.2rem;
+}
+.hero h1{
+  font-family:var(--f-display); font-weight:800;
+  font-size:clamp(2.4rem,7.5vw,5.4rem); line-height:.94;
+  letter-spacing:-.03em; margin:0 0 1.4rem; max-width:16ch;
+}
+.hero h1 em{font-style:normal; color:var(--synapse)}
+.hero__sub{
+  font-size:clamp(1.05rem,1.6vw,1.3rem); max-width:56ch; color:var(--ink-soft);
+  margin:0 0 2rem;
+}
+.trace{width:100%; height:auto; display:block; margin:1rem 0 0}
+.trace path{fill:none; stroke:var(--ink); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round}
+.trace .hot{stroke:var(--synapse); stroke-width:2.4}
+@media (prefers-reduced-motion: no-preference){
+  .trace path{stroke-dasharray:2400; stroke-dashoffset:2400; animation:draw 2.6s cubic-bezier(.4,0,.2,1) forwards}
+  .trace .hot{animation-delay:.5s}
+}
+@keyframes draw{to{stroke-dashoffset:0}}
+.hero__meta{
+  display:flex; flex-wrap:wrap; gap:.5rem 1.6rem; margin-top:1.4rem;
+  font-family:var(--f-mono); font-size:.7rem; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--ink-faint);
+}
+
+/* ============================================================
+   ESTRUCTURA DE PÁGINA
+   ============================================================ */
+.shell{max-width:1240px; margin:0 auto; padding:0 var(--gap) 5rem; display:block}
+@media(min-width:1040px){
+  .shell{display:grid; grid-template-columns:210px minmax(0,1fr); gap:3.5rem; align-items:start}
+}
+.index{display:none}
+@media(min-width:1040px){
+  .index{display:block; position:sticky; top:5.5rem; padding-top:2rem}
+}
+.index h2{
+  font-family:var(--f-mono); font-size:.66rem; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--ink-faint); margin:0 0 .9rem; font-weight:400;
+}
+.index ol{list-style:none; margin:0; padding:0; border-left:1px solid var(--rule)}
+.index li{margin:0}
+.index a{
+  display:block; padding:.42rem 0 .42rem .8rem; margin-left:-1px;
+  border-left:2px solid transparent;
+  font-family:var(--f-mono); font-size:.72rem; line-height:1.35;
+  color:var(--ink-soft); text-decoration:none;
+}
+.index a:hover{color:var(--ink)}
+.index a.on{color:var(--synapse); border-left-color:var(--synapse)}
+.index a .n{color:var(--ink-faint); margin-right:.45rem}
+
+main{min-width:0}
+.sec{padding:3.2rem 0 1rem; border-top:1px solid var(--rule)}
+.sec:first-child{border-top:none}
+.sec__no{
+  font-family:var(--f-mono); font-size:.72rem; letter-spacing:.2em;
+  color:var(--myth); text-transform:uppercase; display:block; margin-bottom:.7rem;
+}
+.sec h2{
+  font-family:var(--f-display); font-weight:800; letter-spacing:-.02em;
+  font-size:clamp(1.8rem,4.2vw,2.9rem); line-height:1.02; margin:0 0 1rem; max-width:20ch;
+}
+.sec h3{
+  font-family:var(--f-display); font-weight:600; letter-spacing:-.01em;
+  font-size:clamp(1.25rem,2.4vw,1.6rem); line-height:1.15; margin:2.6rem 0 .8rem;
+}
+.sec h4{
+  font-family:var(--f-mono); font-weight:600; font-size:.78rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-soft); margin:1.8rem 0 .6rem;
+}
+.sec p, .sec li{max-width:var(--measure)}
+.sec p{margin:0 0 1.05rem}
+.lead{font-size:1.12em; color:var(--ink-soft)}
+.sec ul,.sec ol{padding-left:1.15rem; margin:0 0 1.2rem}
+.sec li{margin-bottom:.55rem}
+strong{font-weight:600}
+.term{font-family:var(--f-mono); font-size:.86em; background:var(--paper-hi); padding:.08em .32em; border:1px solid var(--rule); border-radius:3px}
+
+/* separador de trazo entre bloques */
+.divider{width:100%; height:26px; margin:2.4rem 0; display:block}
+.divider path{fill:none; stroke:var(--rule); stroke-width:1.4}
+
+/* ============================================================
+   COMPONENTES
+   ============================================================ */
+.card{
+  background:var(--paper-hi); border:1px solid var(--rule);
+  padding:1.3rem 1.4rem; margin:0 0 1rem; border-radius:4px;
+}
+.card > :last-child{margin-bottom:0}
+.card__tag{
+  font-family:var(--f-mono); font-size:.66rem; letter-spacing:.14em;
+  text-transform:uppercase; display:inline-block; margin-bottom:.6rem;
+}
+.grid{display:grid; gap:1rem; margin:1.4rem 0}
+@media(min-width:720px){ .grid.two{grid-template-columns:1fr 1fr} }
+@media(min-width:720px){ .grid.three{grid-template-columns:repeat(3,1fr)} }
+.grid .card p, .grid .card li{max-width:none}
+
+/* mito vs evidencia */
+.myth-card{border-left:3px solid var(--myth); background:var(--myth-lo)}
+.myth-card .card__tag{color:var(--myth)}
+.ev-card{border-left:3px solid var(--evidence); background:var(--evidence-lo)}
+.ev-card .card__tag{color:var(--evidence)}
+.mech-card{border-left:3px solid var(--synapse); background:var(--synapse-lo)}
+.mech-card .card__tag{color:var(--synapse)}
+.warn-card{border-left:3px solid var(--amber); background:var(--amber-lo)}
+.warn-card .card__tag{color:var(--amber)}
+
+/* acordeón de neuromitos */
+.myth{border:1px solid var(--rule); border-radius:4px; background:var(--paper-hi); margin-bottom:.6rem; overflow:hidden}
+.myth summary{
+  cursor:pointer; padding:.9rem 1.1rem; list-style:none;
+  display:flex; gap:.9rem; align-items:baseline;
+  font-family:var(--f-display); font-weight:600; font-size:1.02rem;
+}
+.myth summary::-webkit-details-marker{display:none}
+.myth summary::after{content:"+"; margin-left:auto; font-family:var(--f-mono); color:var(--ink-faint)}
+.myth[open] summary::after{content:"–"}
+.myth[open] summary{background:var(--myth-lo); color:var(--myth)}
+.myth .verdict{
+  font-family:var(--f-mono); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--myth); border:1px solid var(--myth); padding:.1rem .4rem; border-radius:99px; white-space:nowrap;
+}
+.myth .body{padding:.2rem 1.1rem 1.1rem; border-top:1px solid var(--rule)}
+.myth .body p{margin:.9rem 0 0; max-width:none}
+.myth .body .fix{
+  margin-top:.9rem; padding-left:.9rem; border-left:2px solid var(--evidence);
+  color:var(--evidence); font-size:.97em;
+}
+
+/* pasos numerados (secuencia real) */
+.steps{list-style:none; padding:0; counter-reset:s; margin:1.5rem 0}
+.steps > li{
+  counter-increment:s; position:relative; padding:0 0 1.4rem 3.2rem;
+  border-left:1px solid var(--rule); margin:0; max-width:none;
+}
+.steps > li::before{
+  content:counter(s,decimal-leading-zero);
+  position:absolute; left:0; top:0; transform:translateX(-50%);
+  background:var(--paper); color:var(--synapse);
+  font-family:var(--f-mono); font-size:.72rem; padding:.15rem .3rem;
+}
+.steps > li:last-child{border-left-color:transparent}
+.steps h4{margin:0 0 .35rem; font-family:var(--f-display); font-size:1.08rem;
+  text-transform:none; letter-spacing:-.01em; color:var(--ink); font-weight:600}
+.steps p{margin:0 0 .5rem; max-width:var(--measure)}
+.steps .how{
+  font-family:var(--f-mono); font-size:.78rem; line-height:1.5;
+  background:var(--paper-hi); border:1px solid var(--rule);
+  padding:.6rem .75rem; border-radius:3px; color:var(--ink-soft); max-width:var(--measure);
+}
+
+/* tabla / registro de libros */
+.books{margin:1.5rem 0}
+.book{
+  display:grid; grid-template-columns:auto 1fr; gap:.2rem 1rem;
+  padding:1rem 0; border-top:1px solid var(--rule);
+}
+.book:last-child{border-bottom:1px solid var(--rule)}
+.book__n{font-family:var(--f-mono); font-size:.72rem; color:var(--ink-faint); padding-top:.35rem}
+.book__t{font-family:var(--f-display); font-weight:600; font-size:1.08rem; line-height:1.25; margin:0}
+.book__a{font-family:var(--f-mono); font-size:.72rem; color:var(--ink-soft); margin:.25rem 0 .45rem; letter-spacing:.03em}
+.book__d{margin:0; font-size:.97em; max-width:60ch}
+.book__tags{margin-top:.5rem; display:flex; flex-wrap:wrap; gap:.35rem}
+.tag{
+  font-family:var(--f-mono); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase;
+  padding:.15rem .45rem; border-radius:99px; border:1px solid var(--rule); color:var(--ink-soft);
+}
+.tag.t-base{border-color:var(--synapse); color:var(--synapse)}
+.tag.t-hab{border-color:var(--evidence); color:var(--evidence)}
+.tag.t-warn{border-color:var(--amber); color:var(--amber)}
+.book__col2{grid-column:2}
+
+/* constructor de intenciones */
+.builder{
+  border:1px solid var(--ink); border-radius:4px; background:var(--paper-hi);
+  padding:1.4rem; margin:1.8rem 0;
+}
+.builder__hd{
+  font-family:var(--f-mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-soft); margin:0 0 1rem; display:flex; justify-content:space-between; gap:1rem;
+}
+.field{margin-bottom:.9rem}
+.field label{
+  display:block; font-family:var(--f-mono); font-size:.68rem; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--ink-soft); margin-bottom:.3rem;
+}
+.field input{
+  width:100%; padding:.6rem .7rem; font-family:var(--f-body); font-size:1rem;
+  border:1px solid var(--rule); border-radius:3px; background:var(--paper); color:var(--ink);
+}
+.field input::placeholder{color:var(--ink-faint); opacity:.8}
+.out{
+  margin-top:1.1rem; padding:1rem 1.1rem; border-radius:3px;
+  background:var(--ink); color:var(--paper-hi);
+  font-family:var(--f-body); font-size:1.05rem; line-height:1.5;
+}
+.out b{color:#A79BFB; font-weight:600}
+.btn{
+  font-family:var(--f-mono); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase;
+  padding:.55rem .9rem; border-radius:3px; border:1px solid var(--ink);
+  background:var(--ink); color:var(--paper-hi); cursor:pointer; margin-top:.9rem;
+}
+.btn:hover{background:var(--synapse); border-color:var(--synapse)}
+
+/* figuras svg */
+figure{margin:1.8rem 0; padding:0}
+figure svg{background:var(--paper-hi); border:1px solid var(--rule); border-radius:4px; display:block; width:100%; height:auto}
+figcaption{
+  font-family:var(--f-mono); font-size:.7rem; line-height:1.5; color:var(--ink-faint);
+  margin-top:.6rem; max-width:var(--measure);
+}
+.svg-t{font-family:"JetBrains Mono",monospace; font-size:10px; fill:var(--ink-soft)}
+.svg-t.b{fill:var(--ink); font-weight:600}
+.svg-t.a{fill:var(--synapse)}
+
+/* cierre */
+.closing{
+  margin-top:3rem; padding:2rem; border:1px solid var(--ink); border-radius:4px;
+  background:var(--ink); color:var(--paper);
+}
+.closing h2{color:var(--paper-hi); max-width:22ch}
+.closing p{color:#C9CCC4; max-width:var(--measure)}
+.closing .sec__no{color:#A79BFB}
+footer{
+  max-width:1240px; margin:0 auto; padding:2rem var(--gap) 4rem;
+  font-family:var(--f-mono); font-size:.68rem; color:var(--ink-faint); line-height:1.7;
+}
+footer p{max-width:70ch}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important; transition:none !important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar__in">
+    <p class="mark"><b>Manual de operación del cerebro</b> · neurociencia aplicada</p>
+    <nav class="topnav" aria-label="Secciones principales">
+      <a href="#s3">Mito supervivencia</a>
+      <a href="#s5">No negociar</a>
+      <a href="#s7">Protocolo</a>
+      <a href="#s9">Libros</a>
+    </nav>
+  </div>
+  <div class="progress"><div class="progress__bar" id="bar"></div></div>
+</div>
+
+<header class="hero">
+  <p class="hero__eyebrow">Documento técnico · lo que la evidencia sostiene y lo que no</p>
+  <h1>Tu cerebro no está roto. Está <em>prediciendo</em>.</h1>
+  <p class="hero__sub">Cómo funciona el cerebro según la neurociencia actual, por qué la idea del “modo supervivencia” es medio verdad y medio mito, qué significa realmente “no negociar con el cerebro”, y qué protocolos tienen evidencia real para cambiar hábitos y patrones ya instalados.</p>
+
+  <svg class="trace" viewBox="0 0 1200 120" preserveAspectRatio="none" role="img" aria-label="Trazo tipo electroencefalograma: actividad basal que se dispara y vuelve a estabilizarse">
+    <path d="M0,60 L80,60 L92,52 L104,68 L116,58 L128,62 L160,60 L172,45 L184,75 L196,55 L208,63 L250,60 L262,50 L274,70 L286,57 L300,61 L340,60"/>
+    <path class="hot" d="M340,60 L360,60 L370,14 L380,106 L392,30 L404,86 L416,48 L428,70 L440,58 L460,61 L480,60 L500,60 L512,40 L524,80 L536,55 L548,64 L570,60 L600,60"/>
+    <path d="M600,60 L640,60 L652,52 L664,68 L676,58 L700,61 L740,60 L752,54 L764,66 L776,58 L800,60 L860,60 L872,56 L884,64 L896,59 L920,60 L1000,60 L1012,57 L1024,63 L1036,60 L1200,60"/>
+  </svg>
+  <div class="hero__meta">
+    <span>10 secciones</span>
+    <span>Mecanismo · Evidencia · Mito · Matiz</span>
+    <span>Incluye 26 libros comentados</span>
+  </div>
+</header>
+
+<div class="shell">
+
+  <nav class="index" aria-label="Índice del documento">
+    <h2>Índice</h2>
+    <ol>
+      <li><a href="#s1"><span class="n">01</span>Arquitectura</a></li>
+      <li><a href="#s2"><span class="n">02</span>Cómo aprende</a></li>
+      <li><a href="#s3"><span class="n">03</span>Modo supervivencia</a></li>
+      <li><a href="#s4"><span class="n">04</span>Neuromitos</a></li>
+      <li><a href="#s5"><span class="n">05</span>No negociar</a></li>
+      <li><a href="#s6"><span class="n">06</span>Anatomía del hábito</a></li>
+      <li><a href="#s7"><span class="n">07</span>Protocolo (12)</a></li>
+      <li><a href="#s8"><span class="n">08</span>Patrones arraigados</a></li>
+      <li><a href="#s9"><span class="n">09</span>Biblioteca</a></li>
+      <li><a href="#s10"><span class="n">10</span>Errores comunes</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+  <!-- =========================================================
+       01
+       ========================================================= -->
+  <section class="sec" id="s1">
+    <span class="sec__no">Sección 01 — Mecanismo</span>
+    <h2>La arquitectura: qué hay ahí adentro y qué hace cada parte</h2>
+    <p class="lead">Antes de hablar de hábitos hay que entender qué tipo de máquina es. No es una computadora que ejecuta órdenes. Es un órgano biológico caro, lento para cambiar y obsesionado con anticiparse.</p>
+
+    <h3>Los números que sí son correctos</h3>
+    <ul>
+      <li><strong>~86.000 millones de neuronas</strong>, no 100.000 millones. El conteo isotrópico de Suzana Herculano-Houzel corrigió la cifra que se repetía por inercia.</li>
+      <li><strong>Células gliales en proporción cercana a 1:1</strong> con las neuronas, no 10:1. La glía no es “relleno”: los astrocitos modulan sinapsis, la microglía poda conexiones, los oligodendrocitos mielinizan.</li>
+      <li><strong>~2% del peso corporal, ~20% del gasto energético</strong> en reposo. Esta desproporción explica casi toda la conducta: el cerebro es un administrador de presupuesto energético, y automatizar es su forma de ahorrar.</li>
+      <li><strong>Miles de conexiones por neurona.</strong> No importa el número exacto: lo relevante es que la información vive en el <em>patrón</em> de conexión, no en celdas individuales.</li>
+    </ul>
+
+    <h3>Los niveles funcionales (sin el cuento de las tres capas)</h3>
+    <div class="grid two">
+      <div class="card mech-card">
+        <span class="card__tag">Regulación basal</span>
+        <p><strong>Tronco encefálico e hipotálamo.</strong> Respiración, ritmo cardiaco, temperatura, sueño-vigilia, hambre, eje hormonal. Aquí vive el <span class="term">eje HPA</span> (hipotálamo–hipófisis–adrenal) que libera cortisol. Nunca “se apaga”, y su estado condiciona todo lo de arriba: mal dormido, con hambre o enfermo, tu capacidad de decisión cae de verdad.</p>
+      </div>
+      <div class="card mech-card">
+        <span class="card__tag">Valoración y memoria</span>
+        <p><strong>Amígdala, hipocampo, ínsula, cíngulo, estriado.</strong> La amígdala <em>no</em> es “el centro del miedo”: detecta relevancia motivacional (amenaza <em>y</em> oportunidad). El hipocampo indexa memoria episódica y contexto. La ínsula lee el estado interno del cuerpo (interocepción). El estriado y el núcleo accumbens son el motor del aprendizaje por recompensa.</p>
+      </div>
+      <div class="card mech-card">
+        <span class="card__tag">Control y modelo del mundo</span>
+        <p><strong>Corteza prefrontal (dorsolateral, ventromedial, orbitofrontal) y cíngulo anterior.</strong> Mantiene metas en el tiempo, inhibe respuestas dominantes, simula futuros, asigna valor. Es la última zona en madurar (hasta mediados de los 20) y la primera en degradarse con falta de sueño, estrés crónico o alcohol.</p>
+      </div>
+      <div class="card mech-card">
+        <span class="card__tag">Automatización motora</span>
+        <p><strong>Ganglios basales y cerebelo.</strong> Convierten secuencias repetidas en “paquetes” ejecutables sin supervisión consciente. Todo hábito, bueno o malo, termina viviendo aquí. Este es el hardware real del cambio de conducta.</p>
+      </div>
+    </div>
+
+    <h3>Las tres redes que se disputan tu atención</h3>
+    <p>Más útil que pensar en regiones es pensar en <strong>redes distribuidas</strong> que compiten por recursos:</p>
+    <ul>
+      <li><strong>Red por defecto (DMN).</strong> Se activa cuando no haces nada dirigido: divagación, autorreferencia, rumiación, planeación autobiográfica. No es “tiempo perdido”, es donde se consolida el sentido de sí mismo — y también donde vive el bucle de darle vueltas a lo mismo.</li>
+      <li><strong>Red de saliencia (ínsula + cíngulo anterior).</strong> El conmutador. Decide qué merece entrar a la consciencia y si el cuerpo tiene algo urgente que decir. Cuando “sientes” la tentación, es esto marcando algo como relevante.</li>
+      <li><strong>Red ejecutiva central (frontoparietal).</strong> Trabajo dirigido a metas, memoria de trabajo, foco sostenido. Es cara de mantener y compite directamente con la DMN.</li>
+    </ul>
+    <div class="card ev-card">
+      <span class="card__tag">Implicación práctica</span>
+      <p>No puedes estar en modo ejecutivo y en modo divagación al mismo tiempo. Cada notificación fuerza un cambio de red y cobra un peaje de reconfiguración. Reducir interrupciones no es “disciplina”: es evitar pagar el mismo peaje cincuenta veces al día.</p>
+    </div>
+
+    <h3>La idea central: el cerebro es una máquina de predicción</h3>
+    <p>El modelo dominante hoy (procesamiento predictivo, alostasis) invierte el sentido común. El cerebro no espera pasivamente los estímulos para reaccionar. <strong>Genera constantemente predicciones sobre lo que va a pasar</strong> —afuera y dentro del cuerpo— y solo procesa a fondo el <em>error de predicción</em>: la diferencia entre lo esperado y lo ocurrido.</p>
+    <p>Esto reencuadra tres cosas:</p>
+    <ul>
+      <li><strong>La percepción</strong> es una hipótesis corregida por los sentidos, no una fotografía.</li>
+      <li><strong>La emoción</strong>, según Lisa Feldman Barrett, es una predicción sobre el estado del cuerpo construida con conceptos aprendidos, no un circuito fijo que se dispara igual en todos.</li>
+      <li><strong>La regulación</strong> no es homeostasis reactiva sino <span class="term">alostasis</span>: gastar recursos por adelantado para lo que se anticipa. Tu ansiedad de las 3 a.m. es un presupuesto corporal preparándose para una factura que quizá nunca llegue.</li>
+    </ul>
+    <p>Para cambiar hábitos esto es decisivo: <strong>no peleas contra impulsos, peleas contra predicciones bien entrenadas.</strong> Y una predicción solo se actualiza con evidencia repetida en contra.</p>
+  </section>
+
+  <!-- =========================================================
+       02
+       ========================================================= -->
+  <section class="sec" id="s2">
+    <span class="sec__no">Sección 02 — Mecanismo</span>
+    <h2>Cómo aprende: plasticidad, dopamina y error de predicción</h2>
+
+    <h3>Neuroplasticidad, sin misticismo</h3>
+    <p>La plasticidad es real y dura toda la vida, pero es mucho más específica y más lenta de lo que promete la industria de la autoayuda. Sus mecanismos:</p>
+    <ul>
+      <li><strong>Potenciación a largo plazo (LTP).</strong> Sinapsis que se activan juntas de forma repetida y coordinada se refuerzan (más receptores AMPA, más eficiencia). La versión popular es la regla de Hebb: <em>neuronas que se disparan juntas se cablean juntas</em>.</li>
+      <li><strong>Depresión a largo plazo (LTD) y poda.</strong> Lo que no se usa se debilita y la microglía lo elimina. Desaprender también es un proceso activo.</li>
+      <li><strong>Mielinización.</strong> La repetición de una secuencia recubre los axones implicados, aumentando velocidad y fiabilidad. Es por esto que la práctica hace la conducta <em>rápida</em>, no solo posible.</li>
+      <li><strong>Neurogénesis.</strong> Existe en el giro dentado del hipocampo, pero su magnitud en humanos adultos sigue en disputa científica. No construyas tu plan personal sobre ella.</li>
+    </ul>
+    <div class="card warn-card">
+      <span class="card__tag">Matiz importante</span>
+      <p>La plasticidad no es voluntad pura. Requiere tres condiciones: <strong>atención enfocada</strong> (los sistemas de acetilcolina y noradrenalina marcan qué vale la pena consolidar), <strong>repetición espaciada</strong> y <strong>consolidación durante el sueño</strong>. Practicar distraído, sin descanso y sin dormir es entrenar y luego borrar la cinta.</p>
+    </div>
+
+    <h3>La dopamina no es la molécula del placer</h3>
+    <p>Este es probablemente el malentendido más costoso en el mundo de los hábitos. La distinción de Berridge y Robinson entre <em>wanting</em> (querer) y <em>liking</em> (gustar) mostró que:</p>
+    <div class="grid two">
+      <div class="card ev-card">
+        <span class="card__tag">Lo que hace la dopamina</span>
+        <p>Codifica <strong>deseo, motivación, búsqueda y aprendizaje predictivo</strong>. Te empuja hacia algo. Es el sistema de “ir a por ello”.</p>
+      </div>
+      <div class="card myth-card">
+        <span class="card__tag">Lo que no hace</span>
+        <p>No produce el placer en sí (eso involucra opioides y endocannabinoides en zonas hedónicas puntuales). Por eso puedes desear compulsivamente algo que <strong>ya no te gusta</strong>: redes sociales, porno, azúcar, esa app que abres sin querer abrirla.</p>
+      </div>
+    </div>
+    <p>El hallazgo de Wolfram Schultz completa el cuadro: las neuronas dopaminérgicas responden al <strong>error de predicción de recompensa</strong>. Recompensa inesperada → pico. Recompensa esperada y cumplida → sin pico. Recompensa esperada que no llega → caída por debajo de la línea base (eso se siente como frustración o vacío).</p>
+    <p>La consecuencia clave: <strong>con el aprendizaje, el pico de dopamina se desplaza de la recompensa hacia la señal que la anuncia.</strong> El ansia no aparece cuando consumes; aparece cuando ves el desencadenante. No luchas contra la recompensa, luchas contra la señal.</p>
+
+    <figure>
+      <svg viewBox="0 0 720 260" role="img" aria-label="Diagrama del desplazamiento de la señal dopaminérgica desde la recompensa hacia la señal predictiva durante el aprendizaje">
+        <line x1="60" y1="90" x2="680" y2="90" stroke="#C4C8BC" stroke-width="1"/>
+        <line x1="60" y1="210" x2="680" y2="210" stroke="#C4C8BC" stroke-width="1"/>
+        <text class="svg-t b" x="60" y="34">ANTES DE APRENDER</text>
+        <path d="M60,90 L300,90 L308,90 L316,44 L324,90 L680,90" fill="none" stroke="#4B2FE0" stroke-width="2"/>
+        <line x1="180" y1="70" x2="180" y2="110" stroke="#9E2B25" stroke-width="1.4" stroke-dasharray="4 3"/>
+        <text class="svg-t" x="150" y="128">señal</text>
+        <line x1="316" y1="70" x2="316" y2="110" stroke="#0E7C66" stroke-width="1.4" stroke-dasharray="4 3"/>
+        <text class="svg-t" x="288" y="128">recompensa</text>
+        <text class="svg-t a" x="330" y="48">pico</text>
+
+        <text class="svg-t b" x="60" y="164">DESPUÉS DE APRENDER</text>
+        <path d="M60,210 L172,210 L180,164 L188,210 L308,210 L316,210 L680,210" fill="none" stroke="#4B2FE0" stroke-width="2"/>
+        <line x1="180" y1="190" x2="180" y2="230" stroke="#9E2B25" stroke-width="1.4" stroke-dasharray="4 3"/>
+        <text class="svg-t" x="150" y="248">señal</text>
+        <line x1="316" y1="190" x2="316" y2="230" stroke="#0E7C66" stroke-width="1.4" stroke-dasharray="4 3"/>
+        <text class="svg-t" x="288" y="248">recompensa</text>
+        <text class="svg-t a" x="194" y="168">el pico se adelanta</text>
+      </svg>
+      <figcaption>El ansia se instala en el desencadenante, no en el premio. Por eso el control del entorno vence al control de la fuerza de voluntad: elimina la señal y desactivas el pico antes de que exista una decisión que tomar.</figcaption>
+    </figure>
+  </section>
+
+  <!-- =========================================================
+       03
+       ========================================================= -->
+  <section class="sec" id="s3">
+    <span class="sec__no">Sección 03 — Mito y evidencia</span>
+    <h2>“El cerebro está diseñado para sobrevivir, no para ser feliz”</h2>
+    <p class="lead">Esta frase circula en cada charla de motivación y cada video de crecimiento personal. Es una de esas afirmaciones que son <strong>parcialmente ciertas por accidente</strong>: la conclusión práctica funciona, pero la biología que le atribuyen está mal.</p>
+
+    <h3>Lo que sí es verdad</h3>
+    <div class="grid two">
+      <div class="card ev-card">
+        <span class="card__tag">Evidencia sólida</span>
+        <p><strong>Sesgo de negatividad.</strong> Lo malo pesa más que lo bueno: se procesa más rápido, se recuerda mejor y domina la formación de impresiones. Un error del día opaca cinco aciertos. Está bien documentado en psicología experimental.</p>
+      </div>
+      <div class="card ev-card">
+        <span class="card__tag">Evidencia sólida</span>
+        <p><strong>Aversión a la pérdida.</strong> Perder algo duele aproximadamente el doble de lo que gratifica ganar lo equivalente (Kahneman y Tversky). Cambiar de hábito implica pérdida percibida inmediata contra ganancia futura abstracta: el partido empieza en contra.</p>
+      </div>
+      <div class="card ev-card">
+        <span class="card__tag">Evidencia sólida</span>
+        <p><strong>Descuento temporal.</strong> El valor de una recompensa cae abruptamente con la demora, y de forma hiperbólica: por eso la preferencia se invierte cuando lo inmediato está disponible. En frío eliges el gimnasio; a las 6 a.m. con la cama tibia, la fórmula cambia de resultado.</p>
+      </div>
+      <div class="card ev-card">
+        <span class="card__tag">Evidencia sólida</span>
+        <p><strong>Economía de energía.</strong> Todo lo automatizable se automatiza. El esfuerzo cognitivo se experimenta como costo y el cerebro lo evita cuando puede. Lo que se siente como pereza es, muchas veces, contabilidad metabólica.</p>
+      </div>
+    </div>
+    <p>Sumado: tienes un sistema calibrado por selección natural para <strong>evitar amenazas, conservar energía y priorizar lo inmediato</strong>. Tu bienestar a cinco años no era una variable relevante en ese proceso. Hasta ahí, la frase de motivación acierta.</p>
+
+    <svg class="divider" viewBox="0 0 1200 26" preserveAspectRatio="none" aria-hidden="true"><path d="M0,13 L400,13 L410,4 L420,22 L430,13 L800,13 L810,6 L820,20 L830,13 L1200,13"/></svg>
+
+    <h3>Lo que está mal en la formulación popular</h3>
+
+    <div class="card myth-card">
+      <span class="card__tag">Error 1 — El “diseño”</span>
+      <p>Nadie diseñó nada. La evolución no optimiza: selecciona lo que se reproduce y arrastra soluciones heredadas. Decir “diseñado para sobrevivir” sugiere una intención y un propósito que no existen, y lleva a la conclusión fatalista de que el sistema tiene un fin fijo al que no puedes oponerte. El mismo cerebro que teme también coopera, planifica a décadas, se aburre, hace arte y se sacrifica por ideas abstractas — nada de eso es supervivencia inmediata.</p>
+    </div>
+
+    <div class="card myth-card">
+      <span class="card__tag">Error 2 — El cerebro triuno</span>
+      <p>La versión popular casi siempre viene con el modelo de las tres capas: “cerebro reptiliano” (supervivencia), “límbico” (emoción) y “neocórtex” (razón), propuesto por Paul MacLean en los años 60. <strong>Está desacreditado en neurociencia comparada.</strong> La evolución no añadió capas sobre un cerebro de lagarto: los vertebrados comparten el mismo plan básico y las estructuras se reorganizaron y reescalaron. Los reptiles y las aves tienen homólogos de circuitos “corticales”. No llevas un lagarto dentro peleando contra tu corteza.</p>
+      <p><strong>Por qué importa:</strong> el modelo triuno instala la idea de que tienes dos yos en guerra y que la solución es que “el racional gane”. Eso hace que trates tus emociones como un enemigo interno — la estrategia peor documentada en la literatura de autorregulación.</p>
+    </div>
+
+    <div class="card myth-card">
+      <span class="card__tag">Error 3 — El “secuestro amigdalino”</span>
+      <p>La imagen de la amígdala tomando el control y desconectando la corteza es una simplificación popularizada en los años 90. La amígdala participa en detección de relevancia (incluida la positiva), opera en bucles bidireccionales con la corteza prefrontal y no “apaga” nada. Joseph LeDoux —quien mapeó los circuitos del miedo en ratas— pasó años corrigiendo su propia divulgación: existen <strong>circuitos de supervivencia defensivos</strong> no conscientes, y existe la <strong>experiencia consciente de miedo</strong>, y son cosas distintas construidas de forma distinta.</p>
+    </div>
+
+    <div class="card myth-card">
+      <span class="card__tag">Error 4 — Emoción contra razón</span>
+      <p>El dualismo “límbico impulsivo vs. prefrontal racional” no sobrevive a la evidencia clínica. António Damasio documentó pacientes con daño en la corteza prefrontal ventromedial que conservaban intacto el razonamiento lógico y el CI, y aun así tomaban decisiones vitales catastróficas: sin la señal emocional que marca opciones con valor, deliberaban infinitamente sin poder elegir. <strong>La emoción no estorba a la decisión: es parte del mecanismo de decisión.</strong></p>
+    </div>
+
+    <h3>La reformulación correcta</h3>
+    <div class="card mech-card">
+      <span class="card__tag">Versión precisa</span>
+      <p>No tienes un “modo supervivencia” que se enciende y apaga. Tienes un sistema único que <strong>asigna recursos limitados bajo incertidumbre, en función de predicciones aprendidas y del estado de tu cuerpo</strong>. Cuando ese sistema estima amenaza, deuda de sueño o déficit energético, reasigna presupuesto: menos simulación de futuro, más respuesta rápida y conocida. Eso se <em>siente</em> como “modo supervivencia”, pero es un cambio de política de asignación, no otro cerebro encendiéndose.</p>
+      <p><strong>La ventaja práctica de esta versión:</strong> si es asignación de recursos, entonces dormir, comer, moverte, bajar carga y reducir incertidumbre <em>no son cuidados blandos</em> — son intervenciones directas sobre tu capacidad de decisión. Y si es predicción aprendida, entonces se puede reentrenar con evidencia repetida.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       04
+       ========================================================= -->
+  <section class="sec" id="s4">
+    <span class="sec__no">Sección 04 — Higiene intelectual</span>
+    <h2>Neuromitos que debes poder detectar</h2>
+    <p class="lead">Si vas a construir tu sistema personal sobre neurociencia, necesitas un filtro. Estos son los que más contaminan el contenido de productividad y desarrollo personal. Despliega cada uno.</p>
+
+    <details class="myth">
+      <summary>Usamos solo el 10% del cerebro <span class="verdict">Falso</span></summary>
+      <div class="body">
+        <p>Sin origen científico conocido. Las imágenes funcionales muestran actividad en todo el cerebro a lo largo del día, y prácticamente no hay región cuyo daño sea silencioso. El cerebro es demasiado costoso metabólicamente como para mantener 90% de tejido inútil.</p>
+        <p class="fix">Lo útil que queda: no usas todo tu cerebro <em>a la vez</em> ni con la misma eficiencia. El margen de mejora está en entrenamiento y estado, no en “capacidad dormida”.</p>
+      </div>
+    </details>
+
+    <details class="myth">
+      <summary>Hemisferio izquierdo lógico / derecho creativo <span class="verdict">Falso</span></summary>
+      <div class="body">
+        <p>Hay lateralización real de funciones (lenguaje mayoritariamente izquierdo, atención espacial con sesgo derecho), pero no existen “personalidades hemisféricas”. Estudios de conectividad a gran escala no encuentran individuos con dominancia global de un hemisferio. Toda tarea compleja usa ambos, conectados por el cuerpo calloso.</p>
+        <p class="fix">Lo útil que queda: la creatividad depende del intercambio entre red por defecto y red ejecutiva, no de un hemisferio.</p>
+      </div>
+    </details>
+
+    <details class="myth">
+      <summary>Un hábito se forma en 21 días <span class="verdict">Falso</span></summary>
+      <div class="body">
+        <p>Viene de una observación del cirujano plástico Maxwell Maltz en 1960 sobre el tiempo que sus pacientes tardaban en acostumbrarse a su nueva apariencia. Nunca fue un estudio sobre hábitos.</p>
+        <p>El dato real: en el estudio de Lally y colegas (2010), la automaticidad tardó una <strong>mediana de 66 días</strong>, con un rango individual enorme, aproximadamente entre 18 y 254 días según la persona y la complejidad de la conducta.</p>
+        <p class="fix">Lo útil que queda: fallar un día aislado no arruinó el proceso — en ese mismo estudio, una omisión ocasional no comprometió la curva de automatización.</p>
+      </div>
+    </details>
+
+    <details class="myth">
+      <summary>Cada persona tiene un “estilo de aprendizaje” (visual, auditivo, kinestésico) <span class="verdict">Falso</span></summary>
+      <div class="body">
+        <p>Es una de las creencias más extendidas entre docentes y una de las peor sostenidas: las revisiones sistemáticas no encuentran beneficio en emparejar el método de enseñanza con el supuesto estilo del alumno. Lo que sí funciona es adaptar el formato <em>al contenido</em> (la geografía se aprende mejor con mapas para todos).</p>
+        <p class="fix">Lo que sí tiene evidencia fuerte: práctica de recuperación (autoevaluarte), repaso espaciado, intercalado y explicación elaborativa.</p>
+      </div>
+    </details>
+
+    <details class="myth">
+      <summary>La fuerza de voluntad es un músculo que se agota (agotamiento del yo) <span class="verdict">En disputa</span></summary>
+      <div class="body">
+        <p>La idea de Baumeister dominó la psicología durante dos décadas, pero replicaciones multi-laboratorio a gran escala no encontraron el efecto o lo encontraron cercano a cero. Existe evidencia de que la creencia del sujeto sobre si la voluntad es limitada influye en su rendimiento — lo cual invierte parte de la causalidad.</p>
+        <p class="fix">Lo útil que queda: la fatiga y la sobrecarga de decisiones son reales aunque el modelo del “tanque de glucosa” no lo sea. Reducir el número de decisiones sigue siendo buena ingeniería personal.</p>
+      </div>
+    </details>
+
+    <details class="myth">
+      <summary>Escuchar Mozart, hacer neurojuegos o tomar suplementos “nootrópicos” aumenta tu inteligencia <span class="verdict">Falso</span></summary>
+      <div class="body">
+        <p>El efecto Mozart original fue un aumento breve en una tarea espacial atribuible a activación y ánimo, no a inteligencia. En entrenamiento cerebral comercial, la mejora se limita casi siempre a la tarea entrenada: la transferencia lejana es débil o inexistente. La mayoría de suplementos “nootrópicos” carecen de ensayos clínicos de calidad.</p>
+        <p class="fix">Lo que sí mejora cognición de forma consistente: sueño suficiente, ejercicio aeróbico regular, control del estrés crónico, aprendizaje real y difícil de algo específico.</p>
+      </div>
+    </details>
+
+    <details class="myth">
+      <summary>Existen “personas de cerebro derecho”, tipos de aprendiz y perfiles neuro-comerciales <span class="verdict">Marketing</span></summary>
+      <div class="body">
+        <p>Regla práctica: si un producto te promete un “perfil neurológico” a partir de un cuestionario de 20 preguntas, o pone la palabra “cuántico” junto a “cerebro”, estás ante marketing. La neurociencia real hace afirmaciones estrechas, con condiciones y con márgenes de error.</p>
+        <p class="fix">Filtro de tres preguntas: ¿hay un estudio con humanos? ¿tiene grupo control? ¿se replicó fuera del laboratorio del autor?</p>
+      </div>
+    </details>
+
+    <div class="card warn-card">
+      <span class="card__tag">Regla general</span>
+      <p>Cuidado también con la <strong>seducción de la explicación neuro</strong>: se ha demostrado que añadir jerga neurocientífica irrelevante hace que la gente juzgue como más convincente una explicación mala. Que algo mencione dopamina, amígdala o neuroplasticidad no lo vuelve cierto. Muchas veces es la señal contraria.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       05
+       ========================================================= -->
+  <section class="sec" id="s5">
+    <span class="sec__no">Sección 05 — La tesis central</span>
+    <h2>“No negocies con tu cerebro”: qué significa realmente</h2>
+    <p class="lead">Es un eslogan, no un hallazgo de laboratorio. Pero detrás hay tres líneas de evidencia sólidas que lo convierten en una de las heurísticas más útiles que existen — siempre que entiendas exactamente <em>qué</em> es lo que no se negocia.</p>
+
+    <h3>De dónde viene</h3>
+    <p>Circula por dos vías muy distintas. Una es la cultura de disciplina (Jocko Willink, David Goggins, la regla de los 5 segundos de Mel Robbins). La otra es clínica y mucho más respetable: en <strong>terapia de exposición con prevención de respuesta</strong> —el tratamiento de referencia para TOC y trastornos de ansiedad— el principio terapéutico es literalmente no negociar con la ansiedad: no ejecutar la conducta de seguridad que ella pide. Ese es el linaje serio de la frase.</p>
+
+    <h3>Los tres mecanismos que lo respaldan</h3>
+
+    <div class="card mech-card">
+      <span class="card__tag">Mecanismo 1 — La ventana de deliberación</span>
+      <p>El descuento hiperbólico predice <strong>inversión de preferencias</strong>: mientras más tiempo pasas evaluando una opción con recompensa inmediata disponible, más probable es que el sistema de valoración termine prefiriéndola. Deliberar no es neutral, tiene sesgo. Cada segundo que dedicas a “¿voy o no voy?” juega a favor de quedarte. Actuar rápido no te vuelve más disciplinado: reduce el tiempo de exposición a un proceso sesgado en tu contra.</p>
+    </div>
+
+    <div class="card mech-card">
+      <span class="card__tag">Mecanismo 2 — Líneas brillantes y compromiso previo</span>
+      <p>George Ainslie describió la voluntad como un sistema de <strong>reglas personales</strong>: cada decisión particular se juega como precedente para todas las futuras. Una regla nítida (“no bebo entre semana”, “el celular no entra al cuarto”) es defendible; una regla difusa (“voy a moderarme”) obliga a renegociar en cada caso y siempre pierdes por desgaste. Por eso el <span class="term">compromiso previo</span> —eliminar la opción antes de que exista la tentación— funciona mejor que la resistencia en el momento.</p>
+    </div>
+
+    <div class="card mech-card">
+      <span class="card__tag">Mecanismo 3 — La evitación se refuerza sola</span>
+      <p>Cuando cedes al malestar y evitas, obtienes alivio inmediato. Ese alivio es <strong>refuerzo negativo</strong>: aumenta la probabilidad de evitar la próxima vez y confirma la predicción de que la situación era intolerable. La ansiedad no se reduce “esperando a estar listo”, se reduce acumulando experiencias donde la predicción catastrófica no se cumple. En ese sentido literal, negociar es empeorar el problema.</p>
+    </div>
+
+    <h3>Qué se negocia y qué no</h3>
+    <div class="grid two">
+      <div class="card ev-card">
+        <span class="card__tag">No negociable</span>
+        <ul>
+          <li>La <strong>ejecución</strong> de la acción comprometida.</li>
+          <li>Las <strong>líneas brillantes</strong> que definiste en frío.</li>
+          <li>El principio de <strong>nunca cero</strong>: si el plan no cabe hoy, cae a la versión mínima, no a la nada.</li>
+        </ul>
+      </div>
+      <div class="card ev-card">
+        <span class="card__tag">Sí negociable</span>
+        <ul>
+          <li>La <strong>escala</strong>: 10 minutos en vez de 60.</li>
+          <li>La <strong>intensidad</strong>: sesión de mantenimiento en vez de sesión dura.</li>
+          <li>El <strong>horario</strong>, si el compromiso se conserva el mismo día.</li>
+          <li>El <strong>plan completo</strong>, revisado en frío y por escrito — nunca en el momento de la tentación.</li>
+        </ul>
+      </div>
+    </div>
+
+    <svg class="divider" viewBox="0 0 1200 26" preserveAspectRatio="none" aria-hidden="true"><path d="M0,13 L400,13 L410,4 L420,22 L430,13 L800,13 L810,6 L820,20 L830,13 L1200,13"/></svg>
+
+    <h3>Dónde el eslogan se vuelve peligroso</h3>
+
+    <div class="card warn-card">
+      <span class="card__tag">Advertencia 1 — Señal legítima vs. resistencia</span>
+      <p>Un cuerpo que pide descanso a las 5 a.m. del cuarto día sin dormir bien no está “negociando”: está informando. Dolor agudo, fiebre, lesión, agotamiento sostenido, señales de burnout o de una crisis de salud mental son <strong>datos, no excusas</strong>. La heurística aplica a la resistencia por evitación de esfuerzo o de incomodidad ordinaria, no a las alarmas fisiológicas. Confundirlas es cómo la gente termina lesionada o quemada, no disciplinada.</p>
+    </div>
+
+    <div class="card warn-card">
+      <span class="card__tag">Advertencia 2 — Suprimir no es regular</span>
+      <p>La investigación de James Gross sobre regulación emocional es consistente: la <strong>supresión expresiva</strong> (aguantar por fuera sintiendo lo mismo por dentro) reduce la expresión pero mantiene o aumenta la activación fisiológica, empeora la memoria del episodio y deteriora las relaciones. La <strong>reevaluación cognitiva</strong> (cambiar el significado de la situación antes de que escale) funciona mucho mejor. “No negociar” debe significar no ceder en la conducta, no significa fingir que no sientes nada.</p>
+    </div>
+
+    <div class="card warn-card">
+      <span class="card__tag">Advertencia 3 — La autocrítica no es motor</span>
+      <p>La evidencia sobre autocompasión (Kristin Neff, y trabajos sobre procrastinación y autoperdón) apunta en dirección contraria a la intuición de la cultura de la dureza: quienes se tratan con dureza tras un fallo tienden a <strong>procrastinar más y abandonar antes</strong>, mientras que la autocompasión predice mayor persistencia y retorno más rápido a la conducta. La firmeza va en el estándar; la dureza gratuita contigo mismo solo añade una capa de evitación.</p>
+    </div>
+
+    <div class="card mech-card">
+      <span class="card__tag">Formulación final</span>
+      <p><strong>No negocias la acción. Negocias el tamaño. Y no debates jamás en el momento del impulso — solo en frío, por escrito, con el plan completo delante.</strong> Todo lo que puedas decidir hoy es una decisión que tu yo cansado de mañana no tendrá que ganar.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       06
+       ========================================================= -->
+  <section class="sec" id="s6">
+    <span class="sec__no">Sección 06 — Mecanismo</span>
+    <h2>Anatomía de un hábito</h2>
+    <p>Un hábito, técnicamente, es una <strong>asociación aprendida entre un contexto y una respuesta</strong>, tan consolidada que el contexto activa la respuesta sin pasar por la evaluación de la meta. Esa última parte es la definición operativa: el hábito ya no depende de si quieres el resultado.</p>
+
+    <h3>El bucle y su base neural</h3>
+    <figure>
+      <svg viewBox="0 0 720 210" role="img" aria-label="Diagrama del bucle del hábito: señal, respuesta, recompensa y ansia de retorno">
+        <rect x="30" y="70" width="130" height="66" rx="4" fill="#E2DEFB" stroke="#4B2FE0"/>
+        <text class="svg-t b" x="52" y="98">SEÑAL</text>
+        <text class="svg-t" x="42" y="116">contexto, hora,</text>
+        <text class="svg-t" x="42" y="128">lugar, emoción</text>
+
+        <rect x="220" y="70" width="130" height="66" rx="4" fill="#E2DEFB" stroke="#4B2FE0"/>
+        <text class="svg-t b" x="242" y="98">RESPUESTA</text>
+        <text class="svg-t" x="232" y="116">la conducta</text>
+        <text class="svg-t" x="232" y="128">automatizada</text>
+
+        <rect x="410" y="70" width="130" height="66" rx="4" fill="#D6EAE4" stroke="#0E7C66"/>
+        <text class="svg-t b" x="432" y="98">RECOMPENSA</text>
+        <text class="svg-t" x="422" y="116">alivio o placer</text>
+        <text class="svg-t" x="422" y="128">inmediato</text>
+
+        <rect x="595" y="70" width="100" height="66" rx="4" fill="#F1DEDC" stroke="#9E2B25"/>
+        <text class="svg-t b" x="617" y="98">ANSIA</text>
+        <text class="svg-t" x="607" y="116">predicción</text>
+        <text class="svg-t" x="607" y="128">aprendida</text>
+
+        <path d="M160,103 L214,103" stroke="#14161C" stroke-width="1.4" marker-end="url(#ar)"/>
+        <path d="M350,103 L404,103" stroke="#14161C" stroke-width="1.4" marker-end="url(#ar)"/>
+        <path d="M540,103 L589,103" stroke="#14161C" stroke-width="1.4" marker-end="url(#ar)"/>
+        <path d="M645,70 L645,36 L95,36 L95,64" fill="none" stroke="#9E2B25" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#ar2)"/>
+        <text class="svg-t" x="300" y="30">el ansia se ancla en la señal, no en la recompensa</text>
+        <text class="svg-t" x="30" y="178">GANGLIOS BASALES · ESTRIADO</text>
+        <text class="svg-t" x="30" y="192">agrupan la secuencia completa en una sola unidad ejecutable (chunking)</text>
+        <defs>
+          <marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,1 L7,4 L0,7" fill="#14161C"/></marker>
+          <marker id="ar2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,1 L7,4 L0,7" fill="#9E2B25"/></marker>
+        </defs>
+      </svg>
+      <figcaption>Ann Graybiel documentó el fenómeno de “chunking”: a medida que una secuencia se automatiza, la actividad del estriado se concentra en el inicio y el final de la secuencia, y el medio se ejecuta como un bloque. Por eso, una vez que empiezas, el hábito se completa solo — y por eso la intervención más eficaz ocurre <em>antes</em> del primer paso.</figcaption>
+    </figure>
+
+    <h3>Cinco hechos que cambian la estrategia</h3>
+    <ul>
+      <li><strong>Los hábitos no se borran, se sobreescriben.</strong> La extinción es aprendizaje nuevo que compite con el viejo, no un borrado. De ahí la recuperación espontánea (vuelve tras un tiempo) y la renovación (vuelve al volver al contexto original). Por eso la recaída típica ocurre en vacaciones, en la casa de tus papás, o en el bar de siempre.</li>
+      <li><strong>El contexto manda más que la intención.</strong> El trabajo de Wendy Wood muestra que buena parte de la conducta diaria se repite en el mismo entorno físico y a la misma hora. Cuando el contexto es estable, la intención predice muy poco: quien predice es el contexto.</li>
+      <li><strong>El cerebro aprende de recompensas inmediatas.</strong> La recompensa de un hábito bueno suele estar a meses de distancia; la de uno malo, a segundos. Si no construyes un refuerzo inmediato artificial, compites en desventaja estructural.</li>
+      <li><strong>La automatización se mide en semanas, no en días.</strong> Mediana de 66 días y variabilidad amplísima. La curva es <em>asintótica</em>: sube rápido al principio y luego se aplana.</li>
+      <li><strong>La discontinuidad abre ventanas.</strong> Mudanza, cambio de trabajo, nueva ciudad, cambio de horario: cuando el contexto se rompe, los hábitos pierden su desencadenante y son más fáciles de reemplazar. Es el mejor momento del año para cambiar algo, mucho más que el 1 de enero.</li>
+    </ul>
+
+    <figure>
+      <svg viewBox="0 0 720 250" role="img" aria-label="Curva de automatización de un hábito: crecimiento rápido inicial que se aplana hacia una meseta, con mediana de 66 días">
+        <line x1="70" y1="200" x2="690" y2="200" stroke="#14161C" stroke-width="1.2"/>
+        <line x1="70" y1="30" x2="70" y2="200" stroke="#14161C" stroke-width="1.2"/>
+        <path d="M70,200 C150,120 210,80 300,64 C400,48 520,42 690,40" fill="none" stroke="#4B2FE0" stroke-width="2.4"/>
+        <line x1="300" y1="64" x2="300" y2="200" stroke="#0E7C66" stroke-width="1.3" stroke-dasharray="5 4"/>
+        <circle cx="300" cy="64" r="4" fill="#0E7C66"/>
+        <text class="svg-t b" x="310" y="60">día 66 — mediana de automatización</text>
+        <path d="M150,200 L150,208" stroke="#C4C8BC"/><text class="svg-t" x="130" y="222">día 18</text>
+        <path d="M620,200 L620,208" stroke="#C4C8BC"/><text class="svg-t" x="596" y="222">día 254</text>
+        <text class="svg-t" x="90" y="240">rango individual observado</text>
+        <text class="svg-t b" x="70" y="22">AUTOMATICIDAD</text>
+        <text class="svg-t" x="360" y="140">la curva se aplana:</text>
+        <text class="svg-t" x="360" y="154">las primeras repeticiones</text>
+        <text class="svg-t" x="360" y="168">valen mucho más que las últimas</text>
+      </svg>
+      <figcaption>Consecuencia operativa: la frecuencia temprana importa más que la intensidad. Doce sesiones cortas en doce días construyen más automaticidad que tres sesiones heroicas.</figcaption>
+    </figure>
+  </section>
+
+  <!-- =========================================================
+       07
+       ========================================================= -->
+  <section class="sec" id="s7">
+    <span class="sec__no">Sección 07 — Protocolo</span>
+    <h2>Doce conceptos para instalar y desinstalar conductas</h2>
+    <p class="lead">Ordenados como secuencia de trabajo: del diseño previo a la gestión de la recaída. Cada uno con su base y su forma de ejecución.</p>
+
+    <ol class="steps">
+      <li>
+        <h4>Intenciones de implementación — “Si X, entonces Y”</h4>
+        <p>La herramienta con mejor relación evidencia/esfuerzo que existe. Peter Gollwitzer mostró que especificar <em>cuándo, dónde y cómo</em> transfiere el control de la conducta desde tu intención consciente hacia el desencadenante situacional. El metaanálisis con Sheeran reportó un tamaño de efecto medio-alto sobre el logro de metas.</p>
+        <p class="how">Mal: “voy a estudiar más”.<br>Bien: “Si son las 7:00 a.m. y ya me serví el café, entonces abro el editor y escribo la primera prueba.”</p>
+      </li>
+      <li>
+        <h4>Contraste mental y WOOP</h4>
+        <p>Gabriele Oettingen demostró que <em>solo</em> visualizar el éxito reduce la energía para conseguirlo: el cerebro consume anticipadamente parte de la recompensa. El contraste mental corrige esto obligando a enfrentar el obstáculo interno real.</p>
+        <p class="how">W — Wish (deseo) · O — Outcome (mejor resultado) · O — Obstacle (obstáculo <em>interno</em>, no externo) · P — Plan (si aparece el obstáculo, entonces esta acción).</p>
+      </li>
+      <li>
+        <h4>Diseño del entorno: la fricción como palanca</h4>
+        <p>El factor más subestimado y el de mayor retorno. Cada segundo de fricción entre tú y una conducta cambia radicalmente su frecuencia. La voluntad opera en el momento del impulso; el entorno opera todo el tiempo y no se cansa.</p>
+        <p class="how">Sumar fricción a lo malo: cerrar sesión, borrar la app, dejar el celular en otro cuarto, desenchufar.<br>Restar fricción a lo bueno: ropa lista la noche anterior, el proyecto abierto en la pantalla al iniciar sesión, el libro sobre la almohada.</p>
+      </li>
+      <li>
+        <h4>Versión mínima viable (regla de los dos minutos)</h4>
+        <p>Estás entrenando la <em>señal de inicio</em>, no el rendimiento. La automatización se construye con repeticiones, y una repetición pequeña cuenta como repetición. Además, iniciar suele bastar para que el chunk se complete solo.</p>
+        <p class="how">“Hacer ejercicio” → “ponerme los tenis y salir por la puerta”. Si después haces 40 minutos, bien; el compromiso sigue siendo salir por la puerta.</p>
+      </li>
+      <li>
+        <h4>Apilamiento sobre hábitos existentes</h4>
+        <p>No necesitas crear un desencadenante nuevo: engancha la conducta a una que ya está automatizada y tiene un contexto estable.</p>
+        <p class="how">“Después de servirme el café (hábito ancla), reviso mi lista de tres tareas del día (hábito nuevo).” El ancla debe ser algo que ya haces sin fallar, no algo que “normalmente” haces.</p>
+      </li>
+      <li>
+        <h4>Recompensa inmediata y celebración</h4>
+        <p>Como el aprendizaje se rige por error de predicción de recompensa, necesitas cerrar el bucle <em>hoy</em>. BJ Fogg insiste en un reconocimiento inmediato y deliberado al terminar; el registro visible del progreso también funciona como refuerzo.</p>
+        <p class="how">Marcar la casilla, la racha visible, treinta segundos de reconocimiento consciente. Suena ridículo; es exactamente el tipo de señal que el sistema de aprendizaje puede usar.</p>
+      </li>
+      <li>
+        <h4>Compromiso previo y líneas brillantes</h4>
+        <p>Decidir hoy para que tu yo cansado no tenga que decidir. Funciona porque elimina la deliberación, que es donde pierdes.</p>
+        <p class="how">Bloqueadores de sitios con contraseña que no controlas, pagar la clase por adelantado, entregar el compromiso a otra persona, no tener el alimento en casa, apagado programado del router.</p>
+      </li>
+      <li>
+        <h4>Sustitución, no supresión</h4>
+        <p>Un hábito satisface una necesidad real (regulación emocional, estimulación, pausa, conexión). Si eliminas la conducta sin cubrir la necesidad, el sistema busca un sustituto peor. Identifica primero <em>qué recompensa</em> te da el hábito que quieres quitar.</p>
+        <p class="how">Diagnóstico: ¿qué se siente 30 segundos después de hacerlo? ¿Alivio de ansiedad? ¿Corte del aburrimiento? ¿Evitar una tarea difícil? Reemplaza con algo que dé lo mismo con menos costo.</p>
+      </li>
+      <li>
+        <h4>Identidad antes que resultado</h4>
+        <p>Los objetivos terminan (corriste la maratón, ¿ahora qué?); la identidad se sostiene. Cada acción funciona como evidencia sobre quién eres, y el sistema tiende a mantener consistencia con esa autoimagen. Es también la base de la autoeficacia de Bandura: la creencia de capacidad se construye con experiencias de dominio, no con afirmaciones.</p>
+        <p class="how">“Quiero bajar 10 kilos” → “soy alguien que entrena tres veces por semana”. Cada sesión no es progreso hacia una meta: es un voto de identidad.</p>
+      </li>
+      <li>
+        <h4>Medición mínima y honesta</h4>
+        <p>Lo que no se mide se distorsiona en el recuerdo, y el sesgo de negatividad te hará recordar tres fallos y olvidar quince aciertos. El registro convierte la percepción en dato — y el dato en refuerzo.</p>
+        <p class="how">Una métrica binaria por hábito (hecho / no hecho) supera a cinco métricas detalladas que abandonarás en dos semanas.</p>
+      </li>
+      <li>
+        <h4>Protocolo de recaída — desactivar el “qué más da”</h4>
+        <p>Alan Marlatt documentó el <strong>efecto de violación de la abstinencia</strong>: tras un desliz, la interpretación catastrófica (“ya lo arruiné”) provoca el abandono total. El desliz cuesta poco; la interpretación cuesta el proyecto.</p>
+        <p class="how">Regla operativa: <strong>nunca fallar dos veces seguidas</strong>. Y escribe de antemano el guion del día siguiente a un fallo, para no improvisarlo con la cabeza caliente.</p>
+      </li>
+      <li>
+        <h4>Sustrato biológico: sueño, movimiento y estrés</h4>
+        <p>No es consejo genérico: la consolidación de lo aprendido ocurre durante el sueño, el ejercicio aeróbico aumenta factores de crecimiento asociados a plasticidad, y el estrés crónico desplaza el control conductual desde los sistemas dirigidos por metas hacia los sistemas habituales — es decir, bajo estrés sostenido caes por defecto en tus patrones antiguos.</p>
+        <p class="how">Si estás intentando instalar un hábito nuevo durmiendo cinco horas y con estrés crónico, no es un problema de carácter: estás entrenando con el mecanismo de aprendizaje apagado.</p>
+      </li>
+    </ol>
+
+    <div class="builder">
+      <p class="builder__hd"><span>Herramienta — constructor de intención de implementación</span><span>Gollwitzer</span></p>
+      <div class="field">
+        <label for="f1">Señal: cuándo y dónde exactamente</label>
+        <input id="f1" type="text" placeholder="son las 6:30 a.m. y sirvo el café">
+      </div>
+      <div class="field">
+        <label for="f2">Acción mínima innegociable</label>
+        <input id="f2" type="text" placeholder="abro el editor y escribo una línea de código">
+      </div>
+      <div class="field">
+        <label for="f3">Obstáculo interno más probable</label>
+        <input id="f3" type="text" placeholder="pienso que estoy muy cansado para concentrarme">
+      </div>
+      <div class="field">
+        <label for="f4">Respuesta al obstáculo (plan B, no cero)</label>
+        <input id="f4" type="text" placeholder="hago solo 10 minutos y luego decido">
+      </div>
+      <div class="out" id="out" aria-live="polite">Completa los campos para generar tu regla.</div>
+      <button class="btn" id="copy" type="button">Copiar la regla</button>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       08
+       ========================================================= -->
+  <section class="sec" id="s8">
+    <span class="sec__no">Sección 08 — Profundidad</span>
+    <h2>Patrones ya arraigados: cuando el hábito no es solo una conducta</h2>
+    <p class="lead">Levantarte 20 minutos antes es un problema de diseño. Postergar sistemáticamente todo lo que importa, sabotearte cuando algo va bien o reaccionar con rabia desproporcionada es otra categoría: son patrones con historia, con carga emocional y con una función que en algún momento fue protectora.</p>
+
+    <h3>Por qué son distintos</h3>
+    <ul>
+      <li><strong>Se aprendieron con carga emocional</strong>, y el aprendizaje emocional es más rápido, más resistente a la extinción y más generalizable que el neutro.</li>
+      <li><strong>Están sobreaprendidos</strong>: miles de repeticiones a lo largo de años, muchas veces desde la infancia, cuando la plasticidad era máxima.</li>
+      <li><strong>Cumplen una función</strong>: casi siempre reducen a corto plazo una amenaza percibida (rechazo, fracaso, humillación, pérdida de control). Por eso resisten: para el sistema, desmontarlos parece bajar la guardia.</li>
+      <li><strong>Se autoconfirman</strong>: el patrón genera consecuencias que confirman la predicción original. Quien predice rechazo se retrae, y la retracción produce distancia, que se lee como rechazo.</li>
+    </ul>
+
+    <h3>Enfoques con respaldo</h3>
+    <div class="grid two">
+      <div class="card ev-card">
+        <span class="card__tag">Exposición conductual</span>
+        <p>El motor real del cambio en patrones de evitación. La clave no es “aguantar la ansiedad” sino <strong>violar la predicción</strong>: exponerte de forma que descubras que el resultado temido no ocurre, o que era manejable. Sin conductas de seguridad, porque estas impiden que el aprendizaje se registre.</p>
+      </div>
+      <div class="card ev-card">
+        <span class="card__tag">Reestructuración cognitiva</span>
+        <p>Identificar el pensamiento automático, el sesgo que lo sostiene (catastrofización, lectura de mente, todo o nada) y contrastarlo con evidencia. Funciona mejor cuando se combina con experimentos conductuales que ponen la creencia a prueba en la vida real, no solo en el papel.</p>
+      </div>
+      <div class="card ev-card">
+        <span class="card__tag">Aceptación y valores (ACT)</span>
+        <p>En lugar de discutir con el pensamiento, cambiar la relación con él: <strong>defusión</strong> (“estoy teniendo el pensamiento de que no sirvo” en vez de “no sirvo”) y compromiso con la acción según valores, aunque el malestar siga presente. Especialmente útil cuando pelear con el contenido mental es justamente lo que lo alimenta.</p>
+      </div>
+      <div class="card ev-card">
+        <span class="card__tag">Trabajo con esquemas</span>
+        <p>Para patrones de larga data que se repiten en relaciones, trabajo y autoimagen. Identifica el esquema temprano (abandono, defectuosidad, exigencia implacable, autosacrificio) y las estrategias que se montaron sobre él. Es un trabajo lento y suele requerir acompañamiento profesional.</p>
+      </div>
+    </div>
+
+    <div class="card mech-card">
+      <span class="card__tag">Reconsolidación de la memoria</span>
+      <p>Hay una línea de investigación fascinante: al reactivarse, una memoria consolidada entra en un estado lábil durante una ventana de horas, en la que podría ser modificada antes de volver a fijarse. Sería un mecanismo para actualizar aprendizajes emocionales antiguos en lugar de solo suprimirlos. <strong>La evidencia en humanos es prometedora pero inconsistente</strong> y las condiciones para lograrlo son estrictas. Vale la pena conocerla; no vale la pena construir tu plan sobre ella todavía.</p>
+    </div>
+
+    <div class="card warn-card">
+      <span class="card__tag">Cuándo esto deja de ser un proyecto personal</span>
+      <p>Si el patrón involucra trauma, una conducta que no logras detener pese a consecuencias graves, ánimo persistentemente bajo, ansiedad incapacitante o pensamientos de hacerte daño, ninguna técnica de autogestión sustituye a un profesional. Buscar ayuda ahí no es lo contrario de la disciplina: es la decisión estratégicamente correcta, igual que no operarías tu propia rodilla.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       09
+       ========================================================= -->
+  <section class="sec" id="s9">
+    <span class="sec__no">Sección 09 — Biblioteca</span>
+    <h2>26 libros, ordenados por para qué sirven</h2>
+    <p class="lead">Marcados por función. Los que llevan etiqueta ámbar son influyentes y valiosos, pero han recibido críticas científicas concretas: léelos, con el filtro puesto.</p>
+
+    <h3>Fundamentos: cómo funciona el cerebro</h3>
+    <div class="books">
+      <div class="book"><span class="book__n">01</span><div><p class="book__t">Siete lecciones y media sobre el cerebro</p><p class="book__a">Lisa Feldman Barrett</p><p class="book__d">El mejor punto de partida absoluto. Corto, riguroso y demoledor con el mito del cerebro triuno. Introduce la idea del cerebro como órgano que administra un presupuesto corporal.</p><div class="book__tags"><span class="tag t-base">Empieza aquí</span><span class="tag">Breve</span></div></div></div>
+
+      <div class="book"><span class="book__n">02</span><div><p class="book__t">La vida secreta del cerebro</p><p class="book__a">Lisa Feldman Barrett</p><p class="book__d">La versión extendida de la teoría construida de la emoción. Cambia por completo cómo entiendes tus propias emociones y por qué “controlarlas” está mal planteado.</p><div class="book__tags"><span class="tag t-base">Fundamento</span><span class="tag">Denso</span></div></div></div>
+
+      <div class="book"><span class="book__n">03</span><div><p class="book__t">El error de Descartes</p><p class="book__a">António Damasio</p><p class="book__d">El clásico que destruyó el dualismo razón-emoción con casos clínicos. Si crees que la emoción estorba a la decisión, este libro te lo desmonta con pacientes reales.</p><div class="book__tags"><span class="tag t-base">Clásico</span></div></div></div>
+
+      <div class="book"><span class="book__n">04</span><div><p class="book__t">Compórtate</p><p class="book__a">Robert Sapolsky</p><p class="book__d">La obra más completa sobre por qué hacemos lo que hacemos, recorriendo desde el segundo previo a la conducta hasta la evolución de la especie. Extenso, exigente y probablemente el mejor libro de la lista.</p><div class="book__tags"><span class="tag t-base">Referencia</span><span class="tag">Largo</span></div></div></div>
+
+      <div class="book"><span class="book__n">05</span><div><p class="book__t">¿Por qué las cebras no tienen úlcera?</p><p class="book__a">Robert Sapolsky</p><p class="book__d">Todo sobre el estrés: qué hace el cortisol, por qué un sistema de emergencia excelente se vuelve tóxico cuando se activa a diario. Directamente aplicable a lo que llamas “modo supervivencia”.</p><div class="book__tags"><span class="tag t-base">Estrés</span></div></div></div>
+
+      <div class="book"><span class="book__n">06</span><div><p class="book__t">Incognito</p><p class="book__a">David Eagleman</p><p class="book__d">Sobre todo lo que tu cerebro decide sin consultarte. Entretenido y muy accesible; buena puerta de entrada si vienes de cero.</p><div class="book__tags"><span class="tag t-base">Divulgación</span></div></div></div>
+
+      <div class="book"><span class="book__n">07</span><div><p class="book__t">Ansioso</p><p class="book__a">Joseph LeDoux</p><p class="book__d">De quien mapeó los circuitos del miedo. Distingue con precisión los circuitos defensivos no conscientes de la experiencia consciente de miedo — el matiz que la divulgación popular perdió.</p><div class="book__tags"><span class="tag t-base">Miedo</span></div></div></div>
+
+      <div class="book"><span class="book__n">08</span><div><p class="book__t">En busca de la memoria</p><p class="book__a">Eric Kandel</p><p class="book__d">Autobiografía científica del Nobel que descubrió la base molecular del aprendizaje. Historia de la ciencia y neurociencia celular en el mismo libro.</p><div class="book__tags"><span class="tag t-base">Memoria</span></div></div></div>
+
+      <div class="book"><span class="book__n">09</span><div><p class="book__t">El hombre que confundió a su mujer con un sombrero</p><p class="book__a">Oliver Sacks</p><p class="book__d">Casos clínicos que muestran cómo se construye la mente al ver qué pasa cuando una pieza falla. Literatura además de neurología.</p><div class="book__tags"><span class="tag t-base">Clásico</span></div></div></div>
+
+      <div class="book"><span class="book__n">10</span><div><p class="book__t">Neurociencia del cuerpo</p><p class="book__a">Nazareth Castellanos</p><p class="book__d">Escrito originalmente en español, sobre la relación entre postura, respiración, microbiota y cerebro. Buen contrapeso a la idea de que el cerebro opera aislado del cuerpo.</p><div class="book__tags"><span class="tag t-base">En español</span></div></div></div>
+
+      <div class="book"><span class="book__n">11</span><div><p class="book__t">Determinado</p><p class="book__a">Robert Sapolsky</p><p class="book__d">Argumenta contra el libre albedrío desde la biología. Incómodo y discutible, pero es el mejor entrenamiento posible para pensar con precisión sobre responsabilidad y cambio personal.</p><div class="book__tags"><span class="tag t-base">Filosofía</span><span class="tag t-warn">Tesis polémica</span></div></div></div>
+
+      <div class="book"><span class="book__n">12</span><div><p class="book__t">El cerebro se cambia a sí mismo</p><p class="book__a">Norman Doidge</p><p class="book__d">El libro que popularizó la neuroplasticidad. Inspirador y bien narrado, pero construido sobre casos individuales espectaculares; tiende a exagerar el alcance de lo que la plasticidad permite.</p><div class="book__tags"><span class="tag t-warn">Léelo con filtro</span></div></div></div>
+
+      <div class="book"><span class="book__n">13</span><div><p class="book__t">Por qué dormimos</p><p class="book__a">Matthew Walker</p><p class="book__d">La mejor divulgación sobre sueño y memoria, y el sueño es una pieza real del cambio de hábitos. Ha sido criticado por sobreinterpretar y presentar algunos datos de forma alarmista; el mensaje central se sostiene, las cifras concretas no siempre.</p><div class="book__tags"><span class="tag t-warn">Cifras cuestionadas</span></div></div></div>
+
+      <div class="book"><span class="book__n">14</span><div><p class="book__t">El cuerpo lleva la cuenta</p><p class="book__a">Bessel van der Kolk</p><p class="book__d">Enormemente influyente sobre trauma y cuerpo. Muy útil como marco clínico, pero varias de las afirmaciones neurobiológicas y de eficacia de algunas terapias que propone son más débiles de lo que el texto sugiere.</p><div class="book__tags"><span class="tag t-warn">Léelo con filtro</span></div></div></div>
+
+      <div class="book"><span class="book__n">15</span><div><p class="book__t">Inteligencia emocional</p><p class="book__a">Daniel Goleman</p><p class="book__d">Histórico y responsable de que hoy hablemos de emociones en el trabajo. También es el origen del “secuestro amigdalino”, una simplificación que la neurociencia posterior no sostiene. Vale como documento cultural, no como manual neurocientífico.</p><div class="book__tags"><span class="tag t-warn">Neurobiología desactualizada</span></div></div></div>
+    </div>
+
+    <h3>Decisión, motivación y dopamina</h3>
+    <div class="books">
+      <div class="book"><span class="book__n">16</span><div><p class="book__t">Pensar rápido, pensar despacio</p><p class="book__a">Daniel Kahneman</p><p class="book__d">No es neurociencia, es psicología de la decisión, y es imprescindible: aversión a la pérdida, sesgos, esfuerzo cognitivo. Nota honesta: parte de los estudios de priming que cita quedaron en entredicho tras la crisis de replicación; el núcleo sobre heurísticas y prospect theory sigue firme.</p><div class="book__tags"><span class="tag t-base">Imprescindible</span><span class="tag t-warn">Capítulos afectados</span></div></div></div>
+
+      <div class="book"><span class="book__n">17</span><div><p class="book__t">Nación dopamina</p><p class="book__a">Anna Lembke</p><p class="book__d">Psiquiatra de adicciones sobre el equilibrio placer-dolor en un entorno de estímulos ilimitados. Lo más directamente aplicable si tu problema son pantallas, contenido infinito o consumo compulsivo.</p><div class="book__tags"><span class="tag t-hab">Aplicado</span></div></div></div>
+
+      <div class="book"><span class="book__n">18</span><div><p class="book__t">La molécula de más</p><p class="book__a">Daniel Lieberman y Michael Long</p><p class="book__d">Divulgación centrada en la dopamina como sistema de deseo y anticipación frente a los sistemas del presente. Simplifica bastante, pero comunica bien la distinción entre querer y disfrutar.</p><div class="book__tags"><span class="tag t-hab">Divulgación</span></div></div></div>
+    </div>
+
+    <h3>Hábitos, conducta y cambio</h3>
+    <div class="books">
+      <div class="book"><span class="book__n">19</span><div><p class="book__t">Buenos hábitos, malos hábitos</p><p class="book__a">Wendy Wood</p><p class="book__d">El libro de hábitos más riguroso que existe, escrito por la investigadora que definió el campo. Su tesis: la fuerza de voluntad está sobrevalorada y el contexto es el verdadero determinante. Si solo lees uno de esta categoría, que sea este.</p><div class="book__tags"><span class="tag t-hab">El más sólido</span></div></div></div>
+
+      <div class="book"><span class="book__n">20</span><div><p class="book__t">Hábitos atómicos</p><p class="book__a">James Clear</p><p class="book__d">El más práctico y mejor organizado. Sistema de cuatro leyes, cambio basado en identidad, mejora del 1%. No es investigación original y a veces cita evidencia con demasiada generosidad, pero como manual operativo es excelente.</p><div class="book__tags"><span class="tag t-hab">Manual práctico</span></div></div></div>
+
+      <div class="book"><span class="book__n">21</span><div><p class="book__t">Hábitos mínimos</p><p class="book__a">BJ Fogg</p><p class="book__d">El modelo Conducta = Motivación + Capacidad + Aviso, desde Stanford. Su aporte diferencial: hacer la conducta ridículamente pequeña y celebrar de inmediato para instalar la emoción positiva que consolida.</p><div class="book__tags"><span class="tag t-hab">Método</span></div></div></div>
+
+      <div class="book"><span class="book__n">22</span><div><p class="book__t">El poder de los hábitos</p><p class="book__a">Charles Duhigg</p><p class="book__d">El que popularizó el bucle señal-rutina-recompensa con buen periodismo narrativo. Empieza a envejecer y algunas historias son más ilustrativas que probatorias, pero el marco sigue siendo útil.</p><div class="book__tags"><span class="tag t-hab">Introducción</span></div></div></div>
+
+      <div class="book"><span class="book__n">23</span><div><p class="book__t">Repensar el pensamiento positivo</p><p class="book__a">Gabriele Oettingen</p><p class="book__d">Investigación de primera mano sobre por qué visualizar el éxito puede reducir el rendimiento y cómo el contraste mental (WOOP) corrige el problema. Un antídoto necesario contra el género motivacional.</p><div class="book__tags"><span class="tag t-hab">Contraintuitivo</span></div></div></div>
+
+      <div class="book"><span class="book__n">24</span><div><p class="book__t">La trampa de la felicidad</p><p class="book__a">Russ Harris</p><p class="book__d">La mejor entrada práctica a la terapia de aceptación y compromiso. Directamente relevante para el apartado de “no negociar”: enseña a actuar según valores <em>con</em> el malestar presente, en lugar de esperar a sentirte listo.</p><div class="book__tags"><span class="tag t-hab">ACT</span></div></div></div>
+
+      <div class="book"><span class="book__n">25</span><div><p class="book__t">Sé amable contigo mismo</p><p class="book__a">Kristin Neff</p><p class="book__d">El contrapeso empírico a la cultura de la autoexigencia brutal. Distingue autocompasión de autoindulgencia y muestra por qué la primera sostiene mejor la disciplina a largo plazo.</p><div class="book__tags"><span class="tag t-hab">Contrapeso</span></div></div></div>
+
+      <div class="book"><span class="book__n">26</span><div><p class="book__t">Fuerza de voluntad</p><p class="book__a">Roy Baumeister y John Tierney</p><p class="book__d">Inclúyelo por contexto histórico, no como guía: su tesis central del agotamiento del yo no sobrevivió bien a las replicaciones. Leerlo sabiendo esto es un ejercicio excelente de pensamiento crítico sobre la propia psicología.</p><div class="book__tags"><span class="tag t-warn">Tesis no replicada</span></div></div></div>
+    </div>
+
+    <div class="card mech-card">
+      <span class="card__tag">Ruta sugerida de lectura</span>
+      <p><strong>Si quieres entender:</strong> Barrett (7½ lecciones) → Sapolsky (Cebras) → Damasio → Sapolsky (Compórtate).<br>
+      <strong>Si quieres cambiar:</strong> Wood → Clear → Fogg → Oettingen → Harris.<br>
+      <strong>Si quieres las dos cosas y solo tienes dos libros:</strong> Barrett y Wood.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       10
+       ========================================================= -->
+  <section class="sec" id="s10">
+    <span class="sec__no">Sección 10 — Diagnóstico</span>
+    <h2>Los ocho errores que hacen fracasar un cambio</h2>
+    <ol>
+      <li><strong>Confiar en la motivación como recurso base.</strong> La motivación es el estado que te permite construir el sistema, no el sistema. Diseña asumiendo que la mayoría de los días no vas a querer.</li>
+      <li><strong>Empezar demasiado grande.</strong> Un plan que solo funciona en tu mejor semana no es un plan, es una apuesta. La versión mínima sostenida gana siempre a la versión ambiciosa abandonada.</li>
+      <li><strong>Cambiar varias cosas a la vez.</strong> Cada hábito nuevo compite por el mismo presupuesto atencional. Uno a la vez, hasta que se automatice.</li>
+      <li><strong>Ignorar el entorno y confiar en resistir.</strong> Si la señal sigue presente, el ansia sigue apareciendo. Cambiar el entorno es la intervención de mayor retorno y la que menos se hace.</li>
+      <li><strong>No definir el desencadenante.</strong> “Cuando pueda” y “más tarde” no son desencadenantes. Sin señal específica, no hay hábito posible.</li>
+      <li><strong>Tratar el desliz como fracaso total.</strong> El efecto “qué más da” causa más abandonos que la dificultad de la conducta. Un día perdido cuesta un día; la narrativa de fracaso cuesta el proyecto.</li>
+      <li><strong>Confundir dureza con eficacia.</strong> Firmeza en el estándar, sí. Autocastigo, no: añade una emoción negativa asociada a la conducta que estás intentando instalar, que es justo lo contrario del refuerzo que necesita.</li>
+      <li><strong>Descuidar sueño, comida y estrés mientras exiges rendimiento.</strong> Bajo privación crónica, el control conductual se desplaza hacia los hábitos antiguos. Estarías intentando aprender con el mecanismo de aprendizaje deteriorado.</li>
+    </ol>
+
+    <div class="closing">
+      <span class="sec__no">Cierre</span>
+      <h2>La versión de una sola página</h2>
+      <p>Tu cerebro no está diseñado para nada, porque no fue diseñado. Es un órgano caro que predice, que prefiere lo inmediato, que ahorra energía automatizando y que aprende de las consecuencias inmediatas — no de las prometidas.</p>
+      <p>Eso significa que la pelea no es contra un “lagarto interior”, sino contra <strong>predicciones bien entrenadas y contextos que las disparan</strong>. Y las predicciones no se derrotan discutiendo con ellas: se actualizan con evidencia repetida.</p>
+      <p>Por eso “no negocies con tu cerebro” funciona, pero solo con la letra chica: no negocias <em>la acción</em>, negocias el tamaño; no deliberas en caliente, decides en frío; no confundes la resistencia con la señal legítima de un cuerpo que necesita descanso. Y cuando falles —vas a fallar—, la única regla que realmente sostiene el sistema es no fallar dos veces seguidas.</p>
+    </div>
+  </section>
+
+  </main>
+</div>
+
+<footer>
+  <p>Documento de síntesis. Los conceptos provienen de trabajos de Lisa Feldman Barrett, António Damasio, Joseph LeDoux, Robert Sapolsky, Wolfram Schultz, Kent Berridge, Ann Graybiel, Wendy Wood, Peter Gollwitzer, Gabriele Oettingen, James Gross, Kristin Neff, Alan Marlatt, Phillippa Lally y BJ Fogg, entre otros.</p>
+  <p>La neurociencia avanza y varias afirmaciones populares de hace diez años ya no se sostienen: verifica antes de construir sobre cualquier idea, incluidas las de este documento. Nada de esto reemplaza evaluación o tratamiento profesional.</p>
+</footer>
+
+<script>
+(function(){
+  // Progreso de lectura
+  var bar = document.getElementById('bar');
+  function progress(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var p = max > 0 ? (h.scrollTop || document.body.scrollTop) / max : 0;
+    bar.style.width = (p * 100).toFixed(2) + '%';
+  }
+  window.addEventListener('scroll', progress, {passive:true});
+  window.addEventListener('resize', progress);
+  progress();
+
+  // Índice activo
+  var links = Array.prototype.slice.call(document.querySelectorAll('.index a'));
+  var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) {
+          var i = secs.indexOf(e.target);
+          links.forEach(function(l,j){ l.classList.toggle('on', j === i); });
+        }
+      });
+    }, {rootMargin:'-20% 0px -70% 0px'});
+    secs.forEach(function(s){ if (s) io.observe(s); });
+  }
+
+  // Constructor de intención de implementación
+  var ids = ['f1','f2','f3','f4'];
+  var out = document.getElementById('out');
+  function esc(s){ return s.replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }
+  function plain(){
+    var v = ids.map(function(id){ return document.getElementById(id).value.trim(); });
+    if (!v[0] || !v[1]) return null;
+    var t = 'Si ' + v[0] + ', entonces ' + v[1] + '.';
+    if (v[2] && v[3]) t += ' Y si ' + v[2] + ', entonces ' + v[3] + '.';
+    return t;
+  }
+  function render(){
+    var v = ids.map(function(id){ return document.getElementById(id).value.trim(); });
+    if (!v[0] || !v[1]) {
+      out.textContent = 'Completa al menos la señal y la acción para generar tu regla.';
+      return;
+    }
+    var html = '<b>Si</b> ' + esc(v[0]) + ', <b>entonces</b> ' + esc(v[1]) + '.';
+    if (v[2] && v[3]) html += '<br><b>Y si</b> ' + esc(v[2]) + ', <b>entonces</b> ' + esc(v[3]) + '.';
+    out.innerHTML = html;
+  }
+  ids.forEach(function(id){ document.getElementById(id).addEventListener('input', render); });
+
+  var btn = document.getElementById('copy');
+  btn.addEventListener('click', function(){
+    var t = plain();
+    if (!t) { btn.textContent = 'Falta completar los campos'; setTimeout(function(){ btn.textContent = 'Copiar la regla'; }, 1800); return; }
+    var done = function(){ btn.textContent = 'Regla copiada'; setTimeout(function(){ btn.textContent = 'Copiar la regla'; }, 1800); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(t).then(done, function(){ fallback(t, done); });
+    } else { fallback(t, done); }
+  });
+  function fallback(t, cb){
+    var ta = document.createElement('textarea');
+    ta.value = t; ta.setAttribute('readonly',''); ta.style.position='absolute'; ta.style.left='-9999px';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); cb(); } catch(e){ btn.textContent = 'Copia manual del texto'; }
+    document.body.removeChild(ta);
+  }
+})();
+</script>
+</body>
+</html>
