@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Guía interactiva sobre cerebro, neurociencia, estrés, modo supervivencia, hábitos y cambio de patrones." />
+  <title>Neurociencia práctica: cerebro, supervivencia y hábitos</title>
+  <style>
+    :root{
+      --bg:#f6f7fb;--surface:#ffffff;--surface-2:#eef1f8;--text:#172033;--muted:#5f6b7d;
+      --primary:#5b5bd6;--primary-2:#7c3aed;--accent:#0f9d7a;--warning:#d97706;--danger:#c2415d;
+      --border:#dfe3ec;--shadow:0 18px 45px rgba(25,32,56,.10);--radius:22px;
+    }
+    [data-theme="dark"]{
+      --bg:#0e1220;--surface:#171c2d;--surface-2:#20263a;--text:#f4f6fb;--muted:#aeb7c8;
+      --primary:#8b8cf5;--primary-2:#a879ff;--accent:#43d4ae;--warning:#f5b653;--danger:#ff8299;
+      --border:#30384f;--shadow:0 18px 50px rgba(0,0,0,.30);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.65}
+    a{color:var(--primary);text-decoration:none} a:hover{text-decoration:underline}
+    button,input,textarea,select{font:inherit}
+    .container{width:min(1180px,calc(100% - 32px));margin:auto}
+    .topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+    .topbar-inner{display:flex;align-items:center;justify-content:space-between;min-height:70px;gap:18px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:-.02em}
+    .brand-mark{width:39px;height:39px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,var(--primary),var(--primary-2));color:white;box-shadow:var(--shadow)}
+    .nav{display:flex;gap:8px;overflow:auto;white-space:nowrap;padding:8px 0}
+    .nav a{color:var(--muted);padding:8px 11px;border-radius:999px;font-size:.9rem;font-weight:700}
+    .nav a:hover{background:var(--surface-2);color:var(--text);text-decoration:none}
+    .icon-btn{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:12px;padding:9px 12px;cursor:pointer}
+    .hero{padding:72px 0 42px;position:relative;overflow:hidden}
+    .hero:before,.hero:after{content:"";position:absolute;border-radius:999px;filter:blur(12px);opacity:.18;pointer-events:none}
+    .hero:before{width:340px;height:340px;background:var(--primary);right:-70px;top:15px}
+    .hero:after{width:260px;height:260px;background:var(--accent);left:-100px;bottom:-100px}
+    .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:36px;align-items:center;position:relative}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:7px 12px;color:var(--primary);font-weight:800;font-size:.86rem}
+    h1{font-size:clamp(2.5rem,6vw,5.4rem);line-height:.98;letter-spacing:-.055em;margin:18px 0 22px}
+    h1 span{background:linear-gradient(135deg,var(--primary),var(--primary-2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .lead{font-size:1.14rem;color:var(--muted);max-width:750px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:0;border-radius:14px;padding:12px 17px;font-weight:800;cursor:pointer;transition:.2s}
+    .btn:hover{transform:translateY(-2px);text-decoration:none}.btn-primary{color:white;background:linear-gradient(135deg,var(--primary),var(--primary-2));box-shadow:0 12px 28px color-mix(in srgb,var(--primary) 28%,transparent)}
+    .btn-secondary{background:var(--surface);color:var(--text);border:1px solid var(--border)}
+    .brain-card{background:linear-gradient(160deg,var(--surface),var(--surface-2));border:1px solid var(--border);border-radius:32px;padding:22px;box-shadow:var(--shadow)}
+    .brain-svg{width:100%;height:auto;display:block}
+    .mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:17px}
+    .mini-stat{padding:13px;border-radius:15px;background:var(--surface);border:1px solid var(--border)}
+    .mini-stat strong{display:block;font-size:1.2rem}.mini-stat span{font-size:.78rem;color:var(--muted)}
+    section{padding:62px 0;scroll-margin-top:82px}
+    .section-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:25px}
+    .section-head h2{font-size:clamp(1.9rem,4vw,3.2rem);letter-spacing:-.04em;line-height:1.08;margin:0}
+    .section-head p{color:var(--muted);max-width:640px;margin:0}
+    .grid{display:grid;gap:18px}.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:0 8px 28px rgba(20,27,45,.05)}
+    .card h3{margin:0 0 8px;font-size:1.18rem}.card p{color:var(--muted);margin:0}
+    .card-icon{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;margin-bottom:16px;background:color-mix(in srgb,var(--primary) 14%,var(--surface));font-size:1.3rem}
+    .callout{border-left:5px solid var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--surface));border-radius:0 var(--radius) var(--radius) 0;padding:20px 22px;margin:22px 0}
+    .callout.warning{border-color:var(--warning);background:color-mix(in srgb,var(--warning) 9%,var(--surface))}.callout.danger{border-color:var(--danger);background:color-mix(in srgb,var(--danger) 8%,var(--surface))}
+    .callout strong{display:block;margin-bottom:4px}
+    .myth-table{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .myth,.reality{padding:20px;border-radius:18px;border:1px solid var(--border)}
+    .myth{background:color-mix(in srgb,var(--danger) 7%,var(--surface))}.reality{background:color-mix(in srgb,var(--accent) 8%,var(--surface))}
+    .tag{display:inline-flex;border-radius:999px;padding:5px 9px;font-size:.74rem;font-weight:900;margin-bottom:10px}.tag.bad{background:color-mix(in srgb,var(--danger) 18%,transparent);color:var(--danger)}.tag.good{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+    .timeline{position:relative;margin:25px 0}.timeline:before{content:"";position:absolute;left:21px;top:10px;bottom:10px;width:3px;background:var(--border)}
+    .step{position:relative;padding-left:66px;margin:0 0 25px}.step-num{position:absolute;left:0;top:0;width:45px;height:45px;border-radius:15px;display:grid;place-items:center;color:white;background:linear-gradient(135deg,var(--primary),var(--primary-2));font-weight:900;box-shadow:0 8px 18px color-mix(in srgb,var(--primary) 24%,transparent)}
+    .step h3{margin:0 0 5px}.step p{margin:0;color:var(--muted)}
+    .loop{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:stretch}.loop-item{position:relative;text-align:center;padding:18px 14px;background:var(--surface);border:1px solid var(--border);border-radius:18px}.loop-item:not(:last-child):after{content:"→";position:absolute;right:-13px;top:50%;transform:translateY(-50%);z-index:2;color:var(--primary);font-size:1.4rem;font-weight:900}.loop-item b{display:block;margin-bottom:4px}.loop-item small{color:var(--muted)}
+    .protocol{counter-reset:protocol}.protocol li{list-style:none;counter-increment:protocol;position:relative;padding:16px 18px 16px 58px;margin:10px 0;border-radius:17px;background:var(--surface);border:1px solid var(--border)}.protocol li:before{content:counter(protocol);position:absolute;left:14px;top:13px;width:31px;height:31px;border-radius:10px;display:grid;place-items:center;background:var(--surface-2);color:var(--primary);font-weight:900}
+    .accordion{border:1px solid var(--border);border-radius:18px;overflow:hidden;background:var(--surface)}
+    details{border-bottom:1px solid var(--border)}details:last-child{border-bottom:0}summary{cursor:pointer;padding:18px 20px;font-weight:850;list-style:none}summary::-webkit-details-marker{display:none}details p,details ul{margin:0;padding:0 20px 20px;color:var(--muted)}
+    .lab{background:linear-gradient(145deg,color-mix(in srgb,var(--primary) 7%,var(--surface)),var(--surface));border:1px solid var(--border);border-radius:30px;padding:28px;box-shadow:var(--shadow)}
+    .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:.87rem;font-weight:850}.field input,.field textarea,.field select{width:100%;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:13px;padding:12px 13px;outline:none}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--primary);box-shadow:0 0 0 4px color-mix(in srgb,var(--primary) 13%,transparent)}.field textarea{min-height:90px;resize:vertical}
+    .plan-output{margin-top:19px;padding:19px;border-radius:18px;background:var(--surface);border:1px dashed var(--primary)}.plan-output h3{margin:0 0 10px}.plan-output p{margin:6px 0;color:var(--muted)}
+    .tracker-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:28px 0 12px}.tracker{display:grid;grid-template-columns:repeat(11,1fr);gap:8px}.day{aspect-ratio:1;border:1px solid var(--border);background:var(--surface);color:var(--muted);border-radius:11px;cursor:pointer;font-size:.78rem;font-weight:850}.day.done{background:linear-gradient(135deg,var(--accent),#34c99b);color:#071c16;border-color:transparent;box-shadow:0 5px 14px color-mix(in srgb,var(--accent) 22%,transparent)}.progress-wrap{height:12px;background:var(--surface-2);border-radius:999px;overflow:hidden;margin-top:14px}.progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--accent));transition:.25s}.progress-text{font-size:.88rem;color:var(--muted);margin-top:7px}
+    .book{display:flex;flex-direction:column;min-height:100%}.book .rank{font-size:.75rem;font-weight:900;color:var(--primary);letter-spacing:.09em;text-transform:uppercase}.book h3{font-size:1.12rem;margin:8px 0 3px}.book .author{font-size:.88rem;color:var(--muted);margin-bottom:12px}.book .why{font-size:.92rem;color:var(--muted);flex:1}.level{display:inline-flex;align-self:flex-start;margin-top:14px;padding:5px 9px;border-radius:999px;background:var(--surface-2);font-size:.74rem;font-weight:800}
+    .matrix{overflow:auto;border:1px solid var(--border);border-radius:18px}.matrix table{border-collapse:collapse;width:100%;min-width:760px;background:var(--surface)}.matrix th,.matrix td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--border);vertical-align:top}.matrix th{background:var(--surface-2);font-size:.8rem;text-transform:uppercase;letter-spacing:.06em}.matrix td{color:var(--muted)}
+    .quiz-q{margin-bottom:18px}.quiz-q h3{font-size:1rem}.quiz-options{display:grid;gap:8px}.quiz-options label{padding:11px 13px;border:1px solid var(--border);border-radius:12px;cursor:pointer;background:var(--surface)}
+    .quiz-result{display:none;margin-top:17px;padding:17px;border-radius:15px;background:var(--surface-2);font-weight:800}
+    .source-list{display:grid;gap:11px}.source{padding:14px 16px;border:1px solid var(--border);border-radius:14px;background:var(--surface)}.source strong{display:block}.source small{color:var(--muted)}
+    .footer{padding:38px 0 55px;border-top:1px solid var(--border);color:var(--muted)}
+    .footer-grid{display:flex;justify-content:space-between;gap:30px;align-items:flex-start}.footer strong{color:var(--text)}
+    .print-only{display:none}
+    @media(max-width:950px){.hero-grid,.grid-4{grid-template-columns:1fr 1fr}.grid-3{grid-template-columns:1fr 1fr}.tracker{grid-template-columns:repeat(8,1fr)}.nav{display:none}}
+    @media(max-width:700px){.container{width:min(100% - 22px,1180px)}.hero{padding-top:48px}.hero-grid,.grid-2,.grid-3,.grid-4,.form-grid,.myth-table{grid-template-columns:1fr}.brain-card{order:-1}.mini-grid{grid-template-columns:1fr 1fr 1fr}.loop{grid-template-columns:1fr 1fr}.loop-item:nth-child(2):after{display:none}.tracker{grid-template-columns:repeat(6,1fr)}.section-head{display:block}.section-head p{margin-top:10px}.footer-grid{display:block}.topbar-inner{min-height:62px}h1{font-size:2.65rem}}
+    @media print{.topbar,.hero-actions,.icon-btn,.tracker-head .btn,.quiz-options,.quiz-result{display:none!important}body{background:white;color:#111}.card,.lab,.brain-card{box-shadow:none}.print-only{display:block}section{padding:28px 0}.container{width:100%}a{color:#111}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand"><span class="brand-mark">N</span><span>Neurociencia práctica</span></div>
+      <nav class="nav" aria-label="Navegación principal">
+        <a href="#cerebro">Cerebro</a><a href="#supervivencia">Supervivencia</a><a href="#no-negociar">No negociar</a><a href="#habitos">Hábitos</a><a href="#laboratorio">Laboratorio</a><a href="#libros">Libros</a><a href="#fuentes">Fuentes</a>
+      </nav>
+      <button class="icon-btn" id="themeBtn" aria-label="Cambiar tema">🌙</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">🧠 Ciencia clara · práctica diaria</span>
+          <h1>Entiende tu cerebro para <span>cambiar tus patrones</span></h1>
+          <p class="lead">Una guía completa para comprender cómo el cerebro percibe, predice, aprende, responde al estrés y automatiza conductas. Incluye estrategias realistas para construir hábitos sin depender de motivación constante.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#supervivencia">Separar mito y realidad</a>
+            <a class="btn btn-secondary" href="#laboratorio">Crear mi plan</a>
+            <button class="btn btn-secondary" onclick="window.print()">🖨️ Imprimir / guardar PDF</button>
+          </div>
+        </div>
+        <div class="brain-card" aria-label="Diagrama simplificado del cerebro">
+          <svg class="brain-svg" viewBox="0 0 520 390" role="img" aria-labelledby="brainTitle brainDesc">
+            <title id="brainTitle">Red cerebral simplificada</title><desc id="brainDesc">Ilustración conceptual de redes relacionadas con planificación, memoria, emoción y hábitos.</desc>
+            <defs><linearGradient id="g1" x1="0" x2="1"><stop stop-color="#5b5bd6"/><stop offset="1" stop-color="#7c3aed"/></linearGradient><filter id="sh"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-opacity=".18"/></filter></defs>
+            <path d="M102 204c-28-85 44-155 122-144 42-47 127-26 143 29 64 4 100 75 69 126 32 59-15 128-75 128-27 42-96 45-130 9-65 20-132-29-129-96-29-11-44-36-40-63 4-26 19-45 40-55z" fill="url(#g1)" opacity=".92" filter="url(#sh)"/>
+            <path d="M170 103c40 30 44 76 18 111m77-145c-33 38-23 86 6 112m88-74c-35 27-43 70-20 106M126 256c51-15 88 2 107 43m88-77c27 28 23 70 6 98" fill="none" stroke="rgba(255,255,255,.72)" stroke-width="9" stroke-linecap="round"/>
+            <circle cx="169" cy="126" r="12" fill="#43d4ae"/><circle cx="338" cy="125" r="12" fill="#f5b653"/><circle cx="220" cy="260" r="12" fill="#ff8299"/><circle cx="355" cy="269" r="12" fill="#fff"/>
+            <g font-family="system-ui" font-size="15" font-weight="700" fill="currentColor"><text x="20" y="72">Planificación</text><line x1="111" y1="76" x2="160" y2="118" stroke="currentColor"/><text x="391" y="75">Alerta</text><line x1="395" y1="82" x2="348" y2="117" stroke="currentColor"/><text x="30" y="336">Memoria</text><line x1="95" y1="329" x2="211" y2="270" stroke="currentColor"/><text x="400" y="337">Hábitos</text><line x1="399" y1="327" x2="363" y2="279" stroke="currentColor"/></g>
+          </svg>
+          <div class="mini-grid">
+            <div class="mini-stat"><strong>Redes</strong><span>No “cajones” aislados</span></div>
+            <div class="mini-stat"><strong>Predicción</strong><span>Anticipa y ajusta</span></div>
+            <div class="mini-stat"><strong>Plasticidad</strong><span>Cambia con experiencia</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cerebro">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">01 · Fundamentos</span><h2>¿Cómo funciona el cerebro?</h2></div><p>No existe una sola zona que “mande” sobre todo. El cerebro funciona mediante redes dinámicas que integran señales del cuerpo, recuerdos, contexto, emociones, metas y consecuencias esperadas.</p></div>
+        <div class="grid grid-4">
+          <article class="card"><div class="card-icon">⚡</div><h3>Detecta y transmite</h3><p>Las neuronas intercambian señales eléctricas y químicas. La actividad cerebral emerge de circuitos completos, no de una neurona aislada.</p></article>
+          <article class="card"><div class="card-icon">🔮</div><h3>Predice</h3><p>Usa experiencias anteriores para anticipar qué está pasando y qué acción puede ser útil. Después corrige el modelo con nueva información.</p></article>
+          <article class="card"><div class="card-icon">🎯</div><h3>Selecciona acciones</h3><p>Compara recompensas, costos, peligro, esfuerzo y objetivos. A veces decide deliberadamente; otras, ejecuta respuestas automatizadas.</p></article>
+          <article class="card"><div class="card-icon">🧩</div><h3>Se adapta</h3><p>La plasticidad modifica conexiones y patrones de actividad con práctica, aprendizaje, sueño, estrés y experiencia.</p></article>
+        </div>
+        <div class="callout"><strong>Una forma útil de entenderlo</strong>Tu cerebro no es un enemigo que debas vencer. Es un sistema de regulación que intenta ahorrar esfuerzo, reducir incertidumbre y mantener el organismo funcionando. A veces sus soluciones rápidas chocan con tus metas de largo plazo.</div>
+        <div class="matrix">
+          <table>
+            <thead><tr><th>Sistema o región</th><th>Funciones relacionadas</th><th>Error común</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Corteza prefrontal</strong></td><td>Planificación, memoria de trabajo, inhibición, flexibilidad y conducta orientada a metas.</td><td>No es un “jefe” todopoderoso; trabaja con otras redes y su rendimiento cambia con estrés, sueño y carga mental.</td></tr>
+              <tr><td><strong>Amígdala</strong></td><td>Aprendizaje emocional, detección de relevancia y procesamiento de amenazas, entre otras funciones.</td><td>No es simplemente “el centro del miedo”.</td></tr>
+              <tr><td><strong>Hipocampo</strong></td><td>Memoria episódica, contexto y navegación.</td><td>No almacena cada recuerdo como un archivo intacto; recordar también reconstruye.</td></tr>
+              <tr><td><strong>Ganglios basales / estriado</strong></td><td>Selección de acciones, aprendizaje por refuerzo, habilidades y automatización habitual.</td><td>No existe un interruptor único que convierta una conducta en hábito.</td></tr>
+              <tr><td><strong>Ínsula y redes interoceptivas</strong></td><td>Representación de señales corporales y relevancia subjetiva.</td><td>Sentir una señal corporal no siempre significa que la interpretación sea exacta.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="supervivencia">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">02 · Mito y realidad</span><h2>¿El cerebro está diseñado para “sobrevivir”?</h2></div><p>La frase contiene una parte de verdad evolutiva, pero se vuelve engañosa cuando se usa como explicación universal de toda pereza, miedo, procrastinación o resistencia.</p></div>
+        <div class="myth-table">
+          <div class="myth"><span class="tag bad">MITO</span><h3>“El cerebro solo quiere sobrevivir y evita cualquier cambio.”</h3><p>El cerebro también explora, juega, aprende, coopera, crea, busca recompensa, construye vínculos y persigue metas abstractas. No posee una sola intención.</p></div>
+          <div class="reality"><span class="tag good">REALIDAD</span><h3>“Existen sistemas de protección que priorizan respuestas rápidas ante amenaza.”</h3><p>Cuando una situación se interpreta como peligrosa, el organismo puede aumentar alerta, frecuencia cardiaca y disponibilidad de energía. Esto puede ser adaptativo a corto plazo.</p></div>
+          <div class="myth"><span class="tag bad">MITO</span><h3>“La amígdala secuestra completamente el cerebro racional.”</h3><p>La expresión es una metáfora popular. La regulación de amenaza implica redes distribuidas y comunicación bidireccional, no una batalla simple entre dos cerebros.</p></div>
+          <div class="reality"><span class="tag good">REALIDAD</span><h3>“El estrés intenso puede reducir temporalmente el control ejecutivo.”</h3><p>En condiciones de estrés, puede ser más difícil sostener atención, inhibir impulsos o pensar con flexibilidad, mientras respuestas emocionales o habituales ganan peso.</p></div>
+        </div>
+        <div class="callout warning"><strong>El “cerebro reptiliano” o cerebro triuno es una simplificación desactualizada</strong>Las estructuras cerebrales no se apilaron como tres cerebros independientes —reptil, mamífero emocional y humano racional— que compiten por el control. La evolución modifica redes existentes de forma integrada.</div>
+        <h3>Qué ocurre en una respuesta de estrés</h3>
+        <div class="timeline">
+          <div class="step"><span class="step-num">1</span><h3>Interpretación</h3><p>El cerebro integra señales externas, recuerdos, contexto y sensaciones corporales para estimar si algo requiere acción.</p></div>
+          <div class="step"><span class="step-num">2</span><h3>Movilización</h3><p>El sistema nervioso autónomo y el eje hormonal del estrés ajustan energía, vigilancia y prioridades corporales.</p></div>
+          <div class="step"><span class="step-num">3</span><h3>Conducta rápida</h3><p>Puedes luchar, huir, congelarte, evitar, buscar apoyo o actuar de otras maneras. No todas las personas responden igual.</p></div>
+          <div class="step"><span class="step-num">4</span><h3>Recuperación</h3><p>Cuando pasa el desafío, el organismo debería volver gradualmente a su equilibrio. El problema es la activación frecuente, intensa o sin recuperación.</p></div>
+        </div>
+        <div class="grid grid-3">
+          <div class="card"><h3>Estrés agudo útil</h3><p>Puede aumentar energía y enfoque durante un reto breve: una emergencia, competencia o presentación.</p></div>
+          <div class="card"><h3>Estrés crónico</h3><p>Puede deteriorar sueño, atención, memoria, regulación emocional y salud física, además de favorecer respuestas rígidas.</p></div>
+          <div class="card"><h3>Seguridad aprendida</h3><p>La recuperación, el apoyo social, la predictibilidad y experiencias de dominio ayudan al cerebro a actualizar sus estimaciones de amenaza.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="no-negociar">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">03 · Disciplina inteligente</span><h2>¿Qué significa “no negociar con el cerebro”?</h2></div><p>No es un término técnico de la neurociencia. Es una regla práctica: tomar la decisión importante con anticipación y reducir el debate interno cuando llegue la señal de actuar.</p></div>
+        <div class="callout"><strong>Traducción científica y conductual</strong>Usa planes “si-entonces”, prepara el ambiente, define una versión mínima y enlaza la conducta con una señal estable. Así dependes menos del estado de ánimo del momento.</div>
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>La versión poco saludable</h3>
+            <ul>
+              <li>Ignorar dolor, enfermedad, agotamiento extremo o señales de lesión.</li>
+              <li>Tratar cualquier emoción como debilidad.</li>
+              <li>Castigarte por un fallo o exigir perfección.</li>
+              <li>Aplicar fuerza de voluntad sin cambiar el entorno.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>La versión útil</h3>
+            <ul>
+              <li>Decidir antes: “A las 7:00, después del café, caminaré 10 minutos”.</li>
+              <li>Empezar con una acción tan pequeña que sea difícil rechazar.</li>
+              <li>Permitir incomodidad sin convertirla automáticamente en una orden.</li>
+              <li>Revisar el plan si hay dolor, riesgo o agotamiento real.</li>
+            </ul>
+          </div>
+        </div>
+        <h3>Protocolo de acción sin debate</h3>
+        <ol class="protocol">
+          <li><strong>Decide en frío.</strong> Elige qué harás, cuándo, dónde y por cuánto tiempo.</li>
+          <li><strong>Usa un disparador concreto.</strong> “Después de cepillarme los dientes” funciona mejor que “cuando tenga tiempo”.</li>
+          <li><strong>Define el mínimo no negociable.</strong> Una página, dos minutos, cinco sentadillas, abrir el documento.</li>
+          <li><strong>Cuenta regresivamente.</strong> Al aparecer la señal, inicia 5-4-3-2-1 y ejecuta el primer movimiento físico.</li>
+          <li><strong>Evita evaluar durante el inicio.</strong> Primero cumple el mínimo; después decide si continúas.</li>
+          <li><strong>Cierra el ciclo.</strong> Marca el cumplimiento y deja preparado el siguiente comienzo.</li>
+        </ol>
+        <div class="callout danger"><strong>No todo debe ser “no negociable”</strong>Ante dolor fuerte, dificultad respiratoria, mareo, síntomas neurológicos, crisis emocional, privación severa de sueño o sospecha de adicción/compulsión, prioriza seguridad y consulta profesional.</div>
+      </div>
+    </section>
+
+    <section id="habitos">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">04 · Automatización</span><h2>Cómo se forma un hábito</h2></div><p>Un hábito es una tendencia aprendida: ante un contexto o señal, una respuesta se vuelve más accesible y automática por repetición. No es una cadena rígida idéntica para todas las conductas.</p></div>
+        <div class="loop" aria-label="Bucle de hábito">
+          <div class="loop-item"><b>1. Señal</b><small>Lugar, hora, emoción, persona o acción previa</small></div>
+          <div class="loop-item"><b>2. Anticipación</b><small>El cerebro predice costo, alivio o recompensa</small></div>
+          <div class="loop-item"><b>3. Respuesta</b><small>La conducta que ejecutas</small></div>
+          <div class="loop-item"><b>4. Resultado</b><small>Alivio, placer, avance o consecuencia</small></div>
+        </div>
+        <div class="callout warning"><strong>No existe la regla científica de 21 días</strong>En un estudio clásico de hábitos cotidianos, el tiempo medio para acercarse a la automaticidad fue de 66 días, con variación aproximada de 18 a 254 días. La complejidad, la persona y el contexto importan.</div>
+        <div class="grid grid-3">
+          <article class="card"><div class="card-icon">📍</div><h3>Contexto estable</h3><p>Repetir una conducta después de la misma señal fortalece la asociación entre contexto y respuesta.</p></article>
+          <article class="card"><div class="card-icon">🪶</div><h3>Baja fricción</h3><p>Cuantos menos pasos haya entre la señal y la acción, menor carga ejecutiva necesitarás para comenzar.</p></article>
+          <article class="card"><div class="card-icon">✅</div><h3>Recompensa cercana</h3><p>Un resultado inmediato, aunque sea pequeño, facilita que el cerebro aprenda qué conducta vale la pena repetir.</p></article>
+          <article class="card"><div class="card-icon">🔁</div><h3>Repetición suficiente</h3><p>La consistencia importa más que una racha perfecta. Un fallo no borra todo el aprendizaje previo.</p></article>
+          <article class="card"><div class="card-icon">🌙</div><h3>Sueño y recuperación</h3><p>El sueño apoya procesos de aprendizaje, memoria y regulación; dormir mal aumenta la dificultad de controlar impulsos.</p></article>
+          <article class="card"><div class="card-icon">🏃</div><h3>Actividad física</h3><p>El ejercicio se asocia con factores neurotróficos, plasticidad y mejoras en distintas funciones cognitivas.</p></article>
+        </div>
+
+        <h3 style="margin-top:32px">Método para cambiar un patrón arraigado</h3>
+        <div class="timeline">
+          <div class="step"><span class="step-num">A</span><h3>Observa sin juzgar</h3><p>Durante 7 días registra: qué pasó antes, qué sentiste, qué hiciste y qué obtuviste inmediatamente.</p></div>
+          <div class="step"><span class="step-num">B</span><h3>Identifica la función</h3><p>Pregúntate qué resuelve el hábito: aburrimiento, ansiedad, recompensa, conexión, descanso, evitación o estimulación.</p></div>
+          <div class="step"><span class="step-num">C</span><h3>Sustituye, no solo suprimas</h3><p>Diseña otra respuesta que conserve parte de la función. Ejemplo: pausa breve y caminar en lugar de abrir redes por ansiedad.</p></div>
+          <div class="step"><span class="step-num">D</span><h3>Rediseña el entorno</h3><p>Aumenta pasos para el patrón viejo y reduce pasos para el nuevo: bloqueos, ubicación de objetos, horarios y preparación previa.</p></div>
+          <div class="step"><span class="step-num">E</span><h3>Practica en el momento real</h3><p>El conocimiento no reemplaza la repetición contextual. Ensaya la nueva respuesta cuando aparece la señal habitual.</p></div>
+          <div class="step"><span class="step-num">F</span><h3>Analiza recaídas</h3><p>No preguntes “¿por qué soy así?”, sino “¿qué señal, fricción o necesidad no contempló mi sistema?”. Ajusta una variable.</p></div>
+        </div>
+
+        <div class="accordion">
+          <details open><summary>¿La dopamina es la molécula del placer?</summary><p>Es una simplificación. La dopamina participa en aprendizaje, motivación, vigor de la acción y actualización de predicciones de recompensa, entre otras funciones. “Más dopamina” no equivale automáticamente a “más felicidad”.</p></details>
+          <details><summary>¿La fuerza de voluntad es un músculo que se agota?</summary><p>La autorregulación sí cambia con fatiga, estrés, sueño, expectativas y contexto, pero la metáfora de un depósito fijo y universal es demasiado simple. Conviene diseñar sistemas que reduzcan decisiones repetidas.</p></details>
+          <details><summary>¿Repetir afirmaciones cambia el cerebro?</summary><p>Repetir palabras, por sí solo, no garantiza cambio. Puede ayudar si orienta atención y conducta, pero el aprendizaje profundo requiere experiencia, acciones, retroalimentación y repetición contextual.</p></details>
+          <details><summary>¿Puedo borrar un hábito?</summary><p>Es más realista debilitar su probabilidad, cambiar señales y fortalecer una respuesta alternativa. En contextos antiguos, el patrón anterior puede reaparecer, especialmente bajo estrés.</p></details>
+          <details><summary>¿Perder un día destruye el hábito?</summary><p>No. Un episodio aislado suele importar menos que abandonar el sistema. Retoma en la siguiente oportunidad y revisa qué produjo el fallo.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section id="laboratorio">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">05 · Herramienta interactiva</span><h2>Laboratorio personal de hábitos</h2></div><p>Completa el formulario. El plan y el seguimiento se guardan solamente en este navegador mediante almacenamiento local.</p></div>
+        <div class="lab">
+          <form id="habitForm" class="form-grid">
+            <div class="field"><label for="oldPattern">Patrón que deseas cambiar</label><input id="oldPattern" placeholder="Ej.: revisar redes al sentir ansiedad" /></div>
+            <div class="field"><label for="newHabit">Nueva conducta</label><input id="newHabit" placeholder="Ej.: respirar y caminar 5 minutos" /></div>
+            <div class="field"><label for="cue">Señal concreta</label><input id="cue" placeholder="Ej.: al terminar de almorzar" /></div>
+            <div class="field"><label for="place">Lugar</label><input id="place" placeholder="Ej.: pasillo de la oficina" /></div>
+            <div class="field"><label for="minimum">Versión mínima</label><input id="minimum" placeholder="Ej.: caminar 2 minutos" /></div>
+            <div class="field"><label for="reward">Recompensa inmediata sana</label><input id="reward" placeholder="Ej.: marcar ✓ y tomar agua fría" /></div>
+            <div class="field full"><label for="obstacle">Obstáculo más probable</label><textarea id="obstacle" placeholder="Ej.: estar cansado, tener el celular en la mano o pensar que 2 minutos no sirven"></textarea></div>
+            <div class="field full"><label for="response">Respuesta preparada al obstáculo</label><textarea id="response" placeholder="Ej.: dejaré el celular en el cajón y cumpliré únicamente la versión mínima"></textarea></div>
+            <div class="field"><label for="frequency">Frecuencia</label><select id="frequency"><option>Todos los días</option><option>5 días por semana</option><option>3 días por semana</option><option>Días específicos</option></select></div>
+            <div class="field"><label for="startDate">Fecha de inicio</label><input id="startDate" type="date" /></div>
+            <div class="field full"><button class="btn btn-primary" type="submit">Generar y guardar mi plan</button></div>
+          </form>
+          <div id="planOutput" class="plan-output" aria-live="polite">
+            <h3>Tu fórmula aparecerá aquí</h3><p><strong>Si</strong> ocurre la señal, <strong>entonces</strong> realizarás la versión mínima de tu nueva conducta.</p>
+          </div>
+
+          <div class="tracker-head"><div><h3 style="margin:0">Seguimiento de 66 días</h3><span style="color:var(--muted)">Haz clic en cada día cumplido. No necesitas perfección.</span></div><div><button class="btn btn-secondary" id="exportBtn" type="button">Exportar progreso</button> <button class="btn btn-secondary" id="resetBtn" type="button">Reiniciar</button></div></div>
+          <div id="tracker" class="tracker" aria-label="Seguimiento de 66 días"></div>
+          <div class="progress-wrap"><div id="progressBar" class="progress-bar"></div></div><div id="progressText" class="progress-text">0 de 66 días marcados</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="plan-8-semanas">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">06 · Aplicación</span><h2>Plan de cambio en 8 semanas</h2></div><p>No promete “reprogramar” tu cerebro en una fecha exacta. Organiza el aprendizaje por etapas y permite ajustar según tus datos.</p></div>
+        <div class="grid grid-4">
+          <div class="card"><span class="tag good">Semana 1</span><h3>Mapa del patrón</h3><p>Registra señales, emociones, lugar, conducta y resultado. No intentes cambiar diez cosas a la vez.</p></div>
+          <div class="card"><span class="tag good">Semana 2</span><h3>Diseño del ambiente</h3><p>Elimina una fricción del hábito nuevo y añade una fricción al patrón viejo.</p></div>
+          <div class="card"><span class="tag good">Semana 3</span><h3>Versión mínima</h3><p>Practica el comienzo pequeño en el mismo contexto. Prioriza aparecer sobre rendir al máximo.</p></div>
+          <div class="card"><span class="tag good">Semana 4</span><h3>Recompensa y registro</h3><p>Añade una señal clara de cierre y revisa semanalmente el porcentaje de cumplimiento.</p></div>
+          <div class="card"><span class="tag good">Semana 5</span><h3>Subir dificultad</h3><p>Aumenta duración o intensidad solo si el comienzo ya es estable.</p></div>
+          <div class="card"><span class="tag good">Semana 6</span><h3>Plan para estrés</h3><p>Diseña una versión de emergencia para días difíciles: más pequeña, no inexistente.</p></div>
+          <div class="card"><span class="tag good">Semana 7</span><h3>Generalización</h3><p>Ensaya en un segundo contexto sin abandonar la señal principal.</p></div>
+          <div class="card"><span class="tag good">Semana 8</span><h3>Mantenimiento</h3><p>Decide qué conservar, qué automatizar y qué modificar según tus datos reales.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="libros">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">07 · Biblioteca</span><h2>Top de libros de neurociencia y hábitos</h2></div><p>La lista combina divulgación accesible, profundidad y aplicación. Algunos libros presentan debates científicos; léelos como modelos útiles, no como verdades finales.</p></div>
+        <div class="grid grid-3">
+          <article class="card book"><span class="rank">01 · Mejor inicio</span><h3>Siete lecciones y media sobre el cerebro</h3><div class="author">Lisa Feldman Barrett</div><p class="why">Breve, moderno y útil para desmontar ideas como el cerebro triuno y comprender el cerebro como una red predictiva y reguladora.</p><span class="level">Nivel: inicial</span></article>
+          <article class="card book"><span class="rank">02 · Plasticidad</span><h3>Livewired</h3><div class="author">David Eagleman</div><p class="why">Explica cómo el cerebro reorganiza sus recursos ante experiencia, pérdida sensorial, aprendizaje y tecnología.</p><span class="level">Nivel: inicial–medio</span></article>
+          <article class="card book"><span class="rank">03 · Conducta humana</span><h3>Behave</h3><div class="author">Robert M. Sapolsky</div><p class="why">Recorre segundos, hormonas, desarrollo, cultura y evolución para explicar por qué actuamos como actuamos. Extenso, pero muy completo.</p><span class="level">Nivel: medio–avanzado</span></article>
+          <article class="card book"><span class="rank">04 · Estrés</span><h3>Why Zebras Don’t Get Ulcers</h3><div class="author">Robert M. Sapolsky</div><p class="why">Una introducción clásica a la fisiología del estrés agudo y los costos del estrés prolongado.</p><span class="level">Nivel: medio</span></article>
+          <article class="card book"><span class="rank">05 · Emociones</span><h3>How Emotions Are Made</h3><div class="author">Lisa Feldman Barrett</div><p class="why">Presenta una teoría influyente —y debatida— sobre cómo el cerebro construye experiencias emocionales mediante predicción, conceptos y señales corporales.</p><span class="level">Nivel: medio</span></article>
+          <article class="card book"><span class="rank">06 · Hábitos</span><h3>Good Habits, Bad Habits</h3><div class="author">Wendy Wood</div><p class="why">Conecta décadas de investigación sobre hábitos con estrategias prácticas: contexto, repetición, fricción y recompensa.</p><span class="level">Nivel: inicial–medio</span></article>
+          <article class="card book"><span class="rank">07 · Diferencias individuales</span><h3>The Neuroscience of You</h3><div class="author">Chantel Prat</div><p class="why">Explica por qué los cerebros difieren y cómo esas diferencias influyen en comunicación, aprendizaje y percepción.</p><span class="level">Nivel: inicial</span></article>
+          <article class="card book"><span class="rank">08 · Atención y organización</span><h3>The Organized Mind</h3><div class="author">Daniel J. Levitin</div><p class="why">Une neurociencia cognitiva, memoria y carga de información con principios para organizar decisiones y atención.</p><span class="level">Nivel: inicial–medio</span></article>
+          <article class="card book"><span class="rank">09 · Procesos inconscientes</span><h3>Incognito</h3><div class="author">David Eagleman</div><p class="why">Introducción entretenida a los procesos cerebrales que influyen en conducta sin entrar plenamente en conciencia.</p><span class="level">Nivel: inicial</span></article>
+          <article class="card book"><span class="rank">10 · Manual académico</span><h3>Principles of Neural Science</h3><div class="author">Kandel y colaboradores</div><p class="why">Texto universitario de referencia para estudiar neurociencia con profundidad. No es lectura ligera ni un manual de autoayuda.</p><span class="level">Nivel: avanzado</span></article>
+        </div>
+        <div class="callout"><strong>Ruta sugerida</strong>Empieza con <em>Siete lecciones y media</em>, continúa con <em>Livewired</em> y <em>Good Habits, Bad Habits</em>; después entra a <em>Behave</em>. Usa <em>Principles of Neural Science</em> solo cuando quieras formación académica.</div>
+      </div>
+    </section>
+
+    <section id="quiz">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">08 · Autoevaluación</span><h2>Comprueba lo aprendido</h2></div><p>Cinco preguntas rápidas. El resultado se calcula en tu navegador.</p></div>
+        <div class="card">
+          <form id="quizForm">
+            <div class="quiz-q"><h3>1. ¿Cuál afirmación es más correcta?</h3><div class="quiz-options"><label><input type="radio" name="q1" value="0"> El cerebro está dividido en tres cerebros independientes.</label><label><input type="radio" name="q1" value="1"> El cerebro funciona mediante redes integradas y dinámicas.</label></div></div>
+            <div class="quiz-q"><h3>2. El estrés agudo:</h3><div class="quiz-options"><label><input type="radio" name="q2" value="1"> Puede ser adaptativo durante retos breves.</label><label><input type="radio" name="q2" value="0"> Siempre es dañino.</label></div></div>
+            <div class="quiz-q"><h3>3. Un buen plan “si-entonces” sería:</h3><div class="quiz-options"><label><input type="radio" name="q3" value="0"> “Voy a ejercitarme más algún día”.</label><label><input type="radio" name="q3" value="1"> “Después del café de las 7, caminaré 10 minutos”.</label></div></div>
+            <div class="quiz-q"><h3>4. Para cambiar un hábito arraigado conviene:</h3><div class="quiz-options"><label><input type="radio" name="q4" value="1"> Identificar su señal y función, y practicar una respuesta alternativa.</label><label><input type="radio" name="q4" value="0"> Confiar únicamente en motivación intensa.</label></div></div>
+            <div class="quiz-q"><h3>5. Sobre los 66 días:</h3><div class="quiz-options"><label><input type="radio" name="q5" value="1"> Es un promedio de un estudio, no una fecha universal.</label><label><input type="radio" name="q5" value="0"> Todo hábito queda fijado exactamente ese día.</label></div></div>
+            <button class="btn btn-primary" type="submit">Ver resultado</button>
+          </form><div id="quizResult" class="quiz-result"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="fuentes">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">09 · Evidencia</span><h2>Fuentes y lecturas científicas</h2></div><p>Selección de revisiones, artículos y páginas institucionales empleadas para elaborar esta guía. Los enlaces se abren en una pestaña nueva.</p></div>
+        <div class="source-list">
+          <a class="source" target="_blank" rel="noopener" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2864527/"><strong>McEwen, B. S. — Central role of the brain in stress and adaptation</strong><small>Redes cerebrales de estrés, adaptación y recuperación.</small></a>
+          <a class="source" target="_blank" rel="noopener" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4244027/"><strong>Arnsten, A. F. T. — The effects of stress exposure on prefrontal cortex</strong><small>Cómo el estrés altera el control ejecutivo y favorece respuestas emocionales o habituales.</small></a>
+          <a class="source" target="_blank" rel="noopener" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4826769/"><strong>Smith & Graybiel — Habit formation</strong><small>Revisión de los cambios neurales distribuidos implicados en formación de hábitos.</small></a>
+          <a class="source" target="_blank" rel="noopener" href="https://www.nature.com/articles/s42003-023-04500-2"><strong>Yamada et al. — Habit formation viewed as structural change</strong><small>Marco moderno sobre conducta dirigida a metas y automatización habitual.</small></a>
+          <a class="source" target="_blank" rel="noopener" href="https://www.ucl.ac.uk/news/2009/aug/how-long-does-it-take-form-habit"><strong>University College London — How long does it take to form a habit?</strong><small>Resumen institucional del estudio de Lally y colaboradores sobre automaticidad.</small></a>
+          <a class="source" target="_blank" rel="noopener" href="https://discovery.ucl.ac.uk/id/eprint/10160769/1/Lally_British%20J%20Health%20Psychol%20-%202022-%20Diefenbacher-%20Habit%20formation%20in%20context.pdf"><strong>Diefenbacher et al. — Habit formation in context</strong><small>Variabilidad temporal y relevancia del contexto en la formación de hábitos.</small></a>
+          <a class="source" target="_blank" rel="noopener" href="https://www.nature.com/articles/s41598-017-10832-x"><strong>De Pretto et al. — Implementation intentions and inhibitory control</strong><small>Planes si-entonces y automatización de respuestas preparadas.</small></a>
+          <a class="source" target="_blank" rel="noopener" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9090458/"><strong>Pickersgill et al. — Exercise, diet, sleep and neuroplasticity</strong><small>Revisión de moduladores de plasticidad cerebral relacionados con estilo de vida.</small></a>
+          <a class="source" target="_blank" rel="noopener" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7752270/"><strong>de Sousa Fernandes et al. — Exercise and neuroplasticity</strong><small>Actividad física, factores neurotróficos y función cerebral.</small></a>
+          <a class="source" target="_blank" rel="noopener" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8617299/"><strong>Kredlow et al. — Prefrontal cortex, amygdala and threat processing</strong><small>Interacción entre redes prefrontales y procesamiento del miedo o amenaza.</small></a>
+        </div>
+        <div class="callout warning"><strong>Alcance y cuidado</strong>Esta guía es educativa. No diagnostica ni reemplaza psicoterapia, psiquiatría, neurología o medicina. Los hábitos asociados a trauma, trastorno obsesivo-compulsivo, adicciones, trastornos alimentarios, depresión o ansiedad incapacitante pueden requerir tratamiento profesional específico.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="container footer-grid"><div><strong>Neurociencia práctica</strong><br>Comprender → diseñar → repetir → revisar.</div><div>El cambio duradero no consiste en pelear contra tu cerebro, sino en enseñarle —mediante contexto y práctica— una respuesta nueva.</div></div></footer>
+
+  <script>
+    const STORAGE_KEY='neuro_habit_lab_v1';
+    const $=s=>document.querySelector(s);
+    const fields=['oldPattern','newHabit','cue','place','minimum','reward','obstacle','response','frequency','startDate'];
+    const themeBtn=$('#themeBtn');
+    const savedTheme=localStorage.getItem('neuro_theme')||'light';
+    document.documentElement.dataset.theme=savedTheme; themeBtn.textContent=savedTheme==='dark'?'☀️':'🌙';
+    themeBtn.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;localStorage.setItem('neuro_theme',next);themeBtn.textContent=next==='dark'?'☀️':'🌙';});
+
+    let state={plan:{},days:Array(66).fill(false)};
+    try{const parsed=JSON.parse(localStorage.getItem(STORAGE_KEY));if(parsed){state.plan=parsed.plan||{};state.days=Array.isArray(parsed.days)?[...parsed.days.slice(0,66),...Array(66).fill(false)].slice(0,66):Array(66).fill(false);}}catch(e){}
+    function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
+    function esc(v=''){return String(v).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+    function renderPlan(){const p=state.plan; fields.forEach(id=>{if(p[id]!==undefined)$('#'+id).value=p[id];});
+      if(!p.newHabit){$('#planOutput').innerHTML='<h3>Tu fórmula aparecerá aquí</h3><p><strong>Si</strong> ocurre la señal, <strong>entonces</strong> realizarás la versión mínima de tu nueva conducta.</p>';return;}
+      $('#planOutput').innerHTML=`<h3>Mi protocolo personal</h3>
+      <p><strong>Patrón anterior:</strong> ${esc(p.oldPattern||'No definido')}</p>
+      <p><strong>Plan si-entonces:</strong> Si <em>${esc(p.cue||'aparece mi señal')}</em>${p.place?' en '+esc(p.place):''}, entonces haré <em>${esc(p.minimum||p.newHabit)}</em>.</p>
+      <p><strong>Conducta completa:</strong> ${esc(p.newHabit)}</p>
+      <p><strong>Cuando aparezca el obstáculo:</strong> ${esc(p.obstacle||'lo identificaré sin juzgar')} → ${esc(p.response||'cumpliré la versión mínima')}.</p>
+      <p><strong>Cierre:</strong> ${esc(p.reward||'marcaré el cumplimiento')} · ${esc(p.frequency||'Frecuencia no definida')}.</p>`;
+    }
+    function renderTracker(){const t=$('#tracker');t.innerHTML='';state.days.forEach((done,i)=>{const b=document.createElement('button');b.type='button';b.className='day'+(done?' done':'');b.textContent=i+1;b.setAttribute('aria-label','Día '+(i+1)+(done?' cumplido':' pendiente'));b.addEventListener('click',()=>{state.days[i]=!state.days[i];save();renderTracker();});t.appendChild(b);});const count=state.days.filter(Boolean).length;$('#progressBar').style.width=(count/66*100)+'%';$('#progressText').textContent=`${count} de 66 días marcados · ${Math.round(count/66*100)}%`;}
+    $('#habitForm').addEventListener('submit',e=>{e.preventDefault();state.plan={};fields.forEach(id=>state.plan[id]=$('#'+id).value.trim());save();renderPlan();});
+    $('#resetBtn').addEventListener('click',()=>{if(confirm('¿Deseas borrar el plan y todo el seguimiento?')){state={plan:{},days:Array(66).fill(false)};save();fields.forEach(id=>$('#'+id).value='');renderPlan();renderTracker();}});
+    $('#exportBtn').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({exportado:new Date().toISOString(),...state},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mi_plan_neuro_habitos.json';a.click();URL.revokeObjectURL(a.href);});
+    $('#quizForm').addEventListener('submit',e=>{e.preventDefault();let score=0;for(let i=1;i<=5;i++){const x=document.querySelector(`input[name=q${i}]:checked`);if(x)score+=Number(x.value);}const r=$('#quizResult');r.style.display='block';r.textContent=score===5?'5/5 — Excelente. Comprendiste los principios centrales.':score>=3?`${score}/5 — Buen resultado. Revisa las respuestas que te generaron duda.`:`${score}/5 — Vuelve a las secciones de mito, estrés y hábitos; luego inténtalo otra vez.`;});
+    if(!$('#startDate').value && !state.plan.startDate)$('#startDate').value=new Date().toISOString().slice(0,10);
+    renderPlan();renderTracker();
+  </script>
+</body>
+</html>
