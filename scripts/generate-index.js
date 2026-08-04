@@ -158,7 +158,10 @@ if (process.argv.includes('--watch')) {
 
   fs.watch(rootDir, { persistent: true }, (eventType, fileName) => {
     if (!fileName) return;
-    if (!fileName.toLowerCase().endsWith('.html') && fileName.toLowerCase() !== 'index.html') return;
+
+    const normalizedName = fileName.toLowerCase();
+    if (normalizedName === 'index.html') return;
+    if (!normalizedName.endsWith('.html')) return;
 
     clearTimeout(timer);
     timer = setTimeout(() => {
