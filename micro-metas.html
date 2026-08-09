@@ -58,10 +58,11 @@
     .strategy-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.strategy-block{padding:22px;border:1px solid var(--line);border-radius:19px;background:var(--surface)}.strategy-block h3{margin:0;font-family:var(--serif);font-size:25px;font-weight:500}.strategy-block>p{margin:8px 0 17px;color:var(--muted);font-size:12px;line-height:1.55}.scope-list{display:grid;grid-template-columns:1fr 1fr;gap:9px}.scope-item{padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}.scope-item span{display:block;color:var(--faint);font-size:8px;font-weight:850;text-transform:uppercase;letter-spacing:.07em}.scope-item strong{display:block;margin-top:5px;font-size:11px;line-height:1.45}.scope-item.out{border-color:color-mix(in srgb,var(--danger) 25%,var(--line));background:var(--danger-soft)}
     .mobile-nav{display:none}
     dialog{width:min(760px,calc(100% - 28px));max-height:calc(100vh - 32px);padding:0;border:1px solid var(--line);border-radius:22px;background:var(--surface);color:var(--ink);box-shadow:0 40px 120px rgba(0,0,0,.3);overflow:auto}dialog::backdrop{background:rgba(4,15,10,.62);backdrop-filter:blur(8px)}.dialog-head{position:sticky;top:0;z-index:2;padding:21px 22px;display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(15px)}.dialog-head h2{margin:4px 0 0;font-family:var(--serif);font-size:30px;font-weight:500}.close{width:42px;height:42px;border:1px solid var(--line);border-radius:11px;background:var(--surface);color:var(--ink);font-size:19px}.entity-form{padding:22px;display:grid;gap:15px}.dialog-foot{position:sticky;bottom:0;padding:14px 22px;display:flex;justify-content:flex-end;gap:8px;border-top:1px solid var(--line);background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(15px)}
+    .restore-file{padding:15px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2)}.restore-file strong{display:block;font-size:13px;overflow-wrap:anywhere}.restore-file small{display:block;margin-top:5px;color:var(--muted);font-size:10px}.restore-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.restore-stat{padding:13px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}.restore-stat span{display:block;color:var(--faint);font-size:9px;font-weight:800;text-transform:uppercase}.restore-stat strong{display:block;margin-top:5px;font-family:var(--serif);font-size:24px;font-weight:500}.restore-warning{padding:14px;border:1px solid color-mix(in srgb,var(--warning) 28%,var(--line));border-radius:13px;background:var(--warning-soft);color:var(--ink);font-size:11px;line-height:1.55}.restore-warning strong{display:block;margin-bottom:4px}.restore-warnings{margin:0;padding:12px 12px 12px 30px;border-radius:12px;background:var(--surface-2);color:var(--muted);font-size:10px;line-height:1.5}.restore-option{padding:13px;display:flex;align-items:flex-start;gap:10px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}.restore-option input{width:18px;height:18px;margin:1px 0 0;accent-color:var(--brand)}.restore-option strong{display:block;font-size:11px}.restore-option small{display:block;margin-top:3px;color:var(--muted);font-size:10px;line-height:1.45}
     .toast{position:fixed;right:22px;bottom:22px;z-index:100;max-width:min(390px,calc(100vw - 32px));padding:11px 14px;display:none;align-items:center;gap:10px;border:1px solid var(--line);border-radius:13px;background:var(--ink);color:var(--surface);box-shadow:var(--shadow);font-size:12px}.toast.show{display:flex;animation:toast .28s ease}@keyframes toast{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}.toast i{width:30px;height:30px;display:grid;place-items:center;border-radius:50%;background:var(--brand);color:white;font-style:normal}
     @media(max-width:1180px){.shell{grid-template-columns:230px minmax(0,1fr)}.sidebar{padding-inline:12px}.content{padding-inline:24px}.kpi-grid{grid-template-columns:repeat(3,1fr)}.hero{grid-template-columns:1fr}.hero-panel{max-width:650px}.task-row{grid-template-columns:auto minmax(0,1fr) auto auto}.task-owner{display:none}.kanban{grid-template-columns:repeat(4,260px)}}
     @media(max-width:900px){.shell{display:block}.sidebar{position:fixed;left:0;top:0;width:280px;transform:translateX(-105%);transition:.22s;box-shadow:var(--shadow);z-index:60}.sidebar.open{transform:none}.mobile-menu{display:grid}.topbar{padding-inline:18px}.content{padding:24px 18px 86px}.grid-2,.grid-3,.strategy-grid,.review-layout{grid-template-columns:1fr}.review-history{position:static}.goal-grid,.risk-grid{grid-template-columns:1fr}.phase-deliverables{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr 1fr}.search{grid-column:1/-1}.mobile-nav{position:fixed;left:10px;right:10px;bottom:9px;z-index:40;min-height:61px;padding:6px;display:grid;grid-template-columns:repeat(5,1fr);gap:3px;border:1px solid var(--line);border-radius:17px;background:color-mix(in srgb,var(--surface) 94%,transparent);box-shadow:var(--shadow);backdrop-filter:blur(18px)}.mobile-nav .nav-btn{min-height:48px;padding:4px;display:grid;place-items:center;gap:1px;font-size:9px;text-align:center}.mobile-nav .nav-icon{font-size:17px}.mobile-nav .nav-btn small{display:none}}
-    @media(max-width:640px){.topbar{height:67px}.breadcrumb small{display:none}.breadcrumb strong{font-size:12px}.top-actions .secondary{display:none}.content{padding-inline:12px}.hero{padding:25px 20px;border-radius:21px}.hero h1,.page-head h1{font-size:clamp(39px,12vw,54px)}.hero-actions .btn{width:100%}.kpi-grid{grid-template-columns:repeat(2,1fr);gap:9px}.kpi{min-height:105px;padding:14px}.kpi strong{font-size:29px}.section-head,.page-head{display:grid;align-items:start}.section-actions,.page-actions{width:100%}.section-actions .btn,.page-actions .btn{flex:1}.grid-2,.grid-3{gap:12px}.panel{padding:18px}.scope-list{grid-template-columns:1fr}.phase-head{grid-template-columns:auto 1fr auto;padding:15px}.phase-stats{display:none}.phase-body{padding:0 14px 14px}.task-row{grid-template-columns:auto 1fr auto}.task-date{display:none}.task-actions .mini:first-child{display:none}.goal-card,.risk-card{padding:16px}.risk-meta{grid-template-columns:1fr}.review-form,.review-history{padding:17px}.form-grid.two{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr}.toolbar>*{grid-column:1/-1}.decision-table{display:block;overflow-x:auto}.dialog-foot{flex-wrap:wrap}.dialog-foot .danger{width:100%}.toast{left:14px;right:14px;bottom:82px;max-width:none}}
+    @media(max-width:640px){.topbar{height:67px}.breadcrumb small{display:none}.breadcrumb strong{font-size:12px}.top-actions .secondary{display:none}.content{padding-inline:12px}.hero{padding:25px 20px;border-radius:21px}.hero h1,.page-head h1{font-size:clamp(39px,12vw,54px)}.hero-actions .btn{width:100%}.kpi-grid{grid-template-columns:repeat(2,1fr);gap:9px}.kpi{min-height:105px;padding:14px}.kpi strong{font-size:29px}.section-head,.page-head{display:grid;align-items:start}.section-actions,.page-actions{width:100%}.section-actions .btn,.page-actions .btn{flex:1}.grid-2,.grid-3{gap:12px}.panel{padding:18px}.scope-list{grid-template-columns:1fr}.phase-head{grid-template-columns:auto 1fr auto;padding:15px}.phase-stats{display:none}.phase-body{padding:0 14px 14px}.task-row{grid-template-columns:auto 1fr auto}.task-date{display:none}.task-actions .mini:first-child{display:none}.goal-card,.risk-card{padding:16px}.risk-meta{grid-template-columns:1fr}.review-form,.review-history{padding:17px}.form-grid.two{grid-template-columns:1fr}.restore-grid{grid-template-columns:repeat(2,1fr)}.toolbar{grid-template-columns:1fr}.toolbar>*{grid-column:1/-1}.decision-table{display:block;overflow-x:auto}.dialog-foot{flex-wrap:wrap}.dialog-foot .danger{width:100%}.toast{left:14px;right:14px;bottom:82px;max-width:none}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
   </style>
 </head>
@@ -108,22 +109,43 @@
     <form id="entityForm"><div class="entity-form" id="entityFields"></div><div class="dialog-foot"><button class="btn danger" type="button" id="deleteEntity" hidden>Eliminar</button><button class="btn secondary" type="button" data-action="close">Cancelar</button><button class="btn primary" type="submit" id="saveEntity">Guardar</button></div></form>
   </dialog>
 
-  <input class="sr-only" id="importInput" type="file" accept="application/json">
-  <div class="toast" id="toast" role="status"><i>✓</i><span></span></div>
+  <dialog id="importDialog" aria-labelledby="importDialogTitle">
+    <div class="dialog-head"><div><span class="eyebrow">Restauración segura</span><h2 id="importDialogTitle">Revisar respaldo</h2></div><button class="close" type="button" data-action="cancel-import" aria-label="Cerrar">×</button></div>
+    <div class="entity-form">
+      <div class="restore-file"><strong id="importFileName">respaldo.json</strong><small id="importFileMeta">Archivo pendiente de validación</small></div>
+      <div class="restore-grid" id="importStats"></div>
+      <div class="restore-warning"><strong>Antes de continuar</strong>La restauración reemplazará los datos actuales de NIDO OS. El sistema conservará una copia local de recuperación para poder volver al estado anterior si ocurre un error.</div>
+      <ul class="restore-warnings" id="importWarnings" hidden></ul>
+      <label class="restore-option"><input id="downloadBeforeImport" type="checkbox" checked><span><strong>Descargar también una copia del estado actual</strong><small>Obtendrás un JSON adicional antes de aplicar el respaldo seleccionado.</small></span></label>
+    </div>
+    <div class="dialog-foot"><button class="btn secondary" type="button" data-action="cancel-import">Cancelar</button><button class="btn primary" type="button" data-action="confirm-import">Restaurar respaldo</button></div>
+  </dialog>
+
+  <input class="sr-only" id="importInput" type="file" accept=".json,application/json">
+  <div class="toast" id="toast" role="status" aria-live="polite"><i>✓</i><span></span></div>
 
   <script>
   (()=>{
-    'use strict';
+   'use strict';
     const KEY='nido-ceo-os-v1';
+    const RECOVERY_KEY='nido-ceo-os-v1-before-import';
+    const APP_ID='NIDO_CEO_OS';
+    const SCHEMA_VERSION=2;
+    const MAX_BACKUP_BYTES=5*1024*1024;
     const today=()=>new Date().toISOString().slice(0,10);
     const now=()=>new Date().toISOString();
     const uid=()=>crypto?.randomUUID?.()||Date.now().toString(36)+Math.random().toString(16).slice(2);
     const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
     const clamp=(v,min,max)=>Math.min(Math.max(Number(v)||0,min),max);
+    const isObject=v=>Boolean(v)&&typeof v==='object'&&!Array.isArray(v);
+    const cleanText=(v,fallback='',max=5000)=>typeof v==='string'?v.trim().slice(0,max):fallback;
+    const clone=v=>globalThis.structuredClone?structuredClone(v):JSON.parse(JSON.stringify(v));
+    const safeDate=(v,fallback='')=>typeof v==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v)&&!Number.isNaN(new Date(v+'T12:00:00').getTime())?v:fallback;
+    const safeISO=(v,fallback=now())=>{const d=new Date(v);return Number.isNaN(d.getTime())?fallback:d.toISOString()};
     const fmtDate=v=>v?new Intl.DateTimeFormat('es-CO',{day:'numeric',month:'short',year:'numeric'}).format(new Date(v+'T12:00:00')):'Sin fecha';
     const fmtFull=v=>new Intl.DateTimeFormat('es-CO',{dateStyle:'medium',timeStyle:'short'}).format(new Date(v));
     const addDays=n=>{const d=new Date();d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)};
-    const app=document.getElementById('app'),dialog=document.getElementById('entityDialog');
+    const app=document.getElementById('app'),dialog=document.getElementById('entityDialog'),importDialog=document.getElementById('importDialog'),importInput=document.getElementById('importInput');
 
     const phaseDefinitions=[
       {id:'p0',order:0,name:'Dirección estratégica',duration:'Semana 1',objective:'Definir con precisión qué problema resuelve NIDO, para quién y cómo se medirá el éxito.',deliverable:'Documento de visión, alcance MVP, modelo de negocio y tablero de métricas.',gate:'No iniciar desarrollo nuevo hasta aprobar visión, usuario objetivo, alcance y métricas.',tasks:[
@@ -235,6 +257,152 @@
       reviews:[],activity:[]
     });
 
+    function unpackBackup(raw){
+      if(!isObject(raw))throw new Error('El contenido principal del JSON debe ser un objeto.');
+      if(isObject(raw.data)){
+        if(raw.app&&raw.app!==APP_ID)throw new Error('El archivo pertenece a otra aplicación.');
+        const version=Number(raw.schemaVersion)||1;
+        if(version>SCHEMA_VERSION)throw new Error('El respaldo fue creado por una versión más nueva de NIDO OS.');
+        return{data:raw.data,version,exportedAt:raw.exportedAt||null,legacy:false};
+      }
+      return{data:raw,version:1,exportedAt:null,legacy:true};
+    }
+
+    function normalizeBackup(raw,file){
+      const unpacked=unpackBackup(raw),data=unpacked.data,defaults=baseState(),warnings=[];
+      if(!isObject(data))throw new Error('El respaldo no contiene datos utilizables.');
+      if(!Array.isArray(data.tasks)||!Array.isArray(data.phases))throw new Error('Faltan las colecciones obligatorias de tareas o fases.');
+      if(data.tasks.length>10000)throw new Error('El respaldo supera el límite de 10.000 tareas.');
+
+      const allowedPhaseIds=new Set(phaseDefinitions.map(p=>p.id));
+      const importedPhases=new Map(data.phases.filter(isObject).map(p=>[p.id,p]));
+      const phases=defaults.phases.map(p=>{
+        const incoming=importedPhases.get(p.id);
+        return{...p,approved:Boolean(incoming?.approved),open:Boolean(incoming?.open)};
+      });
+
+      const seenTaskIds=new Set();let skippedTasks=0,renewedTaskIds=0;
+      const tasks=data.tasks.reduce((list,t)=>{
+        if(!isObject(t)||!cleanText(t.title)||!allowedPhaseIds.has(t.phaseId)){skippedTasks++;return list}
+        let id=cleanText(t.id,uid(),120);
+        if(seenTaskIds.has(id)){id=uid();renewedTaskIds++}
+        seenTaskIds.add(id);
+        list.push({
+          id,
+          phaseId:t.phaseId,
+          title:cleanText(t.title,'Tarea sin título',300),
+          owner:cleanText(t.owner,'CEO',160),
+          priority:['critical','high','medium','low'].includes(t.priority)?t.priority:'high',
+          description:cleanText(t.description,'',3000),
+          status:['pending','doing','blocked','done'].includes(t.status)?t.status:'pending',
+          dueDate:safeDate(t.dueDate),
+          createdAt:safeISO(t.createdAt),
+          updatedAt:safeISO(t.updatedAt)
+        });
+        return list;
+      },[]);
+      if(data.tasks.length&&tasks.length===0)throw new Error('Ninguna tarea del respaldo tiene una estructura válida.');
+      if(skippedTasks)warnings.push(`${skippedTasks} tarea(s) inválida(s) fueron ignoradas.`);
+      if(renewedTaskIds)warnings.push(`${renewedTaskIds} identificador(es) duplicado(s) fueron corregidos.`);
+
+      const normalizeKrs=krs=>Array.isArray(krs)?krs.filter(isObject).map(k=>({
+        id:cleanText(k.id,uid(),120),
+        title:cleanText(k.title,'Resultado sin título',300),
+        progress:clamp(k.progress,0,100)
+      })).filter(k=>k.title):[];
+
+      const goals=Array.isArray(data.goals)?data.goals.filter(isObject).map(g=>({
+        id:cleanText(g.id,uid(),120),
+        title:cleanText(g.title,'Objetivo sin título',300),
+        period:cleanText(g.period,'Sin periodo',100),
+        why:cleanText(g.why,'',1000),
+        krs:normalizeKrs(g.krs)
+      })).filter(g=>g.title):clone(defaults.goals);
+      if(!Array.isArray(data.goals))warnings.push('No había objetivos; se conservaron los objetivos base.');
+
+      const risks=Array.isArray(data.risks)?data.risks.filter(isObject).map(r=>({
+        id:cleanText(r.id,uid(),120),
+        title:cleanText(r.title,'Riesgo sin título',300),
+        category:cleanText(r.category,'Producto',100),
+        probability:clamp(r.probability,1,5),
+        impact:clamp(r.impact,1,5),
+        owner:cleanText(r.owner,'CEO',160),
+        mitigation:cleanText(r.mitigation,'',3000),
+        status:['open','watching','mitigated','closed'].includes(r.status)?r.status:'open'
+      })).filter(r=>r.title):clone(defaults.risks);
+      if(!Array.isArray(data.risks))warnings.push('No había riesgos; se conservaron los riesgos base.');
+
+      const decisions=Array.isArray(data.decisions)?data.decisions.filter(isObject).map(d=>({
+        id:cleanText(d.id,uid(),120),
+        date:safeDate(d.date,today()),
+        decision:cleanText(d.decision,'Decisión sin título',1000),
+        reason:cleanText(d.reason,'',3000),
+        owner:cleanText(d.owner,'CEO',160),
+        status:['active','superseded','reversed'].includes(d.status)?d.status:'active'
+      })).filter(d=>d.decision):clone(defaults.decisions);
+      if(!Array.isArray(data.decisions))warnings.push('No había decisiones; se conservaron las decisiones base.');
+
+      const reviews=Array.isArray(data.reviews)?data.reviews.filter(isObject).map(r=>({
+        id:cleanText(r.id,uid(),120),
+        date:safeISO(r.date),
+        wins:cleanText(r.wins,'',3000),
+        blocks:cleanText(r.blocks,'',3000),
+        learning:cleanText(r.learning,'',3000),
+        focus:cleanText(r.focus,'',3000),
+        decision:cleanText(r.decision,'',3000),
+        rating:clamp(r.rating||4,1,5)
+      })).filter(r=>r.wins||r.learning||r.focus):[];
+
+      const activity=Array.isArray(data.activity)?data.activity.filter(isObject).map(a=>({
+        id:cleanText(a.id,uid(),120),
+        date:safeISO(a.date),
+        text:cleanText(a.text,'',1000),
+        type:cleanText(a.type,'update',40)
+      })).filter(a=>a.text).slice(0,80):[];
+
+      const sourceCompany=isObject(data.company)?data.company:{};
+      const company={
+        vision:cleanText(sourceCompany.vision,defaults.company.vision,2000),
+        pilotCity:cleanText(sourceCompany.pilotCity,defaults.company.pilotCity,160),
+        segment:cleanText(sourceCompany.segment,defaults.company.segment,500),
+        northStar:cleanText(sourceCompany.northStar,defaults.company.northStar,1000),
+        commission:cleanText(sourceCompany.commission,defaults.company.commission,1000)
+      };
+
+      const normalized={
+        ...defaults,
+        theme:data.theme==='dark'?'dark':'light',
+        view:'dashboard',
+        search:'',
+        statusFilter:'all',
+        phaseFilter:'all',
+        editing:null,
+        rating:clamp(data.rating||4,1,5),
+        company,phases,tasks,goals,risks,decisions,reviews,activity
+      };
+
+      if(unpacked.legacy)warnings.push('Respaldo antiguo detectado: se actualizó automáticamente al formato actual.');
+      return{
+        state:normalized,
+        warnings,
+        meta:{
+          fileName:file.name,
+          size:file.size,
+          schemaVersion:unpacked.version,
+          exportedAt:unpacked.exportedAt,
+          legacy:unpacked.legacy
+        },
+        summary:{
+          tasks:tasks.length,
+          completed:tasks.filter(t=>t.status==='done').length,
+          goals:goals.length,
+          risks:risks.length,
+          decisions:decisions.length,
+          reviews:reviews.length
+        }
+      };
+    }
+
     let state=baseState();
     try{const saved=JSON.parse(localStorage.getItem(KEY));if(saved&&Array.isArray(saved.tasks))state={...state,...saved,view:'dashboard',editing:null}}catch(e){}
     document.documentElement.dataset.theme=state.theme;
@@ -251,7 +419,7 @@
     const priorityLabels={critical:'Crítica',high:'Alta',medium:'Media',low:'Baja'};
     const riskStatusLabels={open:'Abierto',watching:'Monitoreo',mitigated:'Mitigado',closed:'Cerrado'};
     const log=(text,type='update')=>{state.activity.unshift({id:uid(),date:now(),text,type});state.activity=state.activity.slice(0,80)};
-    let toastTimer;const toast=msg=>{clearTimeout(toastTimer);document.querySelector('#toast span').textContent=msg;document.getElementById('toast').classList.add('show');toastTimer=setTimeout(()=>document.getElementById('toast').classList.remove('show'),2900)};
+    let toastTimer;const toast=(msg,type='success')=>{clearTimeout(toastTimer);const node=document.getElementById('toast'),icon=node.querySelector('i');node.querySelector('span').textContent=msg;icon.textContent=type==='error'?'!':'✓';icon.style.background=type==='error'?'var(--danger)':'var(--brand)';node.classList.add('show');toastTimer=setTimeout(()=>node.classList.remove('show'),type==='error'?4800:3200)};
 
     function metrics(){
       const active=state.tasks.filter(t=>t.status==='doing').length,blocked=state.tasks.filter(t=>t.status==='blocked').length,done=state.tasks.filter(t=>t.status==='done').length,openRisks=state.risks.filter(r=>!['closed','mitigated'].includes(r.status)).length;
@@ -329,7 +497,99 @@
     function setTaskStatus(id,status){const t=state.tasks.find(x=>x.id===id);if(!t)return;t.status=status;t.updatedAt=now();log(`Tarea “${t.title}” cambió a ${statusLabels[t.status]}.`);persist();render()}
     function updateKR(goalId,krId,delta){const g=state.goals.find(x=>x.id===goalId),k=g?.krs.find(x=>x.id===krId);if(!k)return;k.progress=clamp(k.progress+delta,0,100);log(`Key result “${k.title}” actualizado a ${k.progress}%.`);persist();render();toast('Resultado actualizado')}
     function approvePhase(id){const ps=phaseState(id),tasks=phaseTasks(id),allDone=tasks.every(t=>t.status==='done');if(!ps.approved&&!allDone){toast('Aún hay entregables pendientes. No se puede aprobar la fase.');return}ps.approved=!ps.approved;log(`${phaseData(id).name}: fase ${ps.approved?'aprobada':'reabierta'}.`,'phase');persist();render();toast(ps.approved?'Fase aprobada con registro.':'Fase reabierta.')}
-    function exportData(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='NIDO-CEO-OS-'+today()+'.json';a.click();URL.revokeObjectURL(a.href);toast('Respaldo de NIDO descargado.')}
+    const backupEnvelope=data=>({
+      app:APP_ID,
+      appName:'NIDO CEO OS',
+      schemaVersion:SCHEMA_VERSION,
+      exportedAt:now(),
+      data:{...clone(data),view:'dashboard',search:'',editing:null}
+    });
+
+    function downloadBackup(data,fileName){
+      const blob=new Blob([JSON.stringify(backupEnvelope(data),null,2)],{type:'application/json;charset=utf-8'});
+      const url=URL.createObjectURL(blob),a=document.createElement('a');
+      a.href=url;a.download=fileName;document.body.appendChild(a);a.click();a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),1000);
+    }
+
+    function exportData(){
+      downloadBackup(state,`NIDO-CEO-OS-${today()}.json`);
+      toast('Respaldo de NIDO descargado.');
+    }
+
+    const fileSizeLabel=bytes=>bytes<1024?`${bytes} B`:bytes<1024*1024?`${(bytes/1024).toFixed(1)} KB`:`${(bytes/1024/1024).toFixed(1)} MB`;
+    let pendingImport=null;
+
+    async function readBackupFile(file){
+      if(!file.name.toLowerCase().endsWith('.json'))throw new Error('Selecciona un archivo con extensión .json.');
+      if(file.size===0)throw new Error('El archivo seleccionado está vacío.');
+      if(file.size>MAX_BACKUP_BYTES)throw new Error('El respaldo supera el tamaño máximo permitido de 5 MB.');
+      let content;
+      try{content=(await file.text()).replace(/^\uFEFF/,'').trim()}catch(error){throw new Error('No fue posible leer el archivo seleccionado.')}
+      if(!content)throw new Error('El archivo seleccionado no contiene información.');
+      let parsed;
+      try{parsed=JSON.parse(content)}catch(error){throw new Error('El archivo no contiene un JSON válido. Revisa que no esté cortado o dañado.')}
+      return normalizeBackup(parsed,file);
+    }
+
+    function showImportPreview(candidate){
+      pendingImport=candidate;
+      document.getElementById('importFileName').textContent=candidate.meta.fileName;
+      const exportDate=candidate.meta.exportedAt&&!Number.isNaN(new Date(candidate.meta.exportedAt).getTime())?fmtFull(candidate.meta.exportedAt):'Fecha de creación no disponible';
+      document.getElementById('importFileMeta').textContent=`${fileSizeLabel(candidate.meta.size)} · Formato v${candidate.meta.schemaVersion} · ${exportDate}`;
+      const stats=[
+        ['Tareas',candidate.summary.tasks],
+        ['Terminadas',candidate.summary.completed],
+        ['Objetivos',candidate.summary.goals],
+        ['Riesgos',candidate.summary.risks],
+        ['Decisiones',candidate.summary.decisions],
+        ['Revisiones',candidate.summary.reviews]
+      ];
+      document.getElementById('importStats').innerHTML=stats.map(([label,value])=>`<div class="restore-stat"><span>${esc(label)}</span><strong>${value}</strong></div>`).join('');
+      const warningList=document.getElementById('importWarnings');
+      warningList.hidden=!candidate.warnings.length;
+      warningList.innerHTML=candidate.warnings.map(w=>`<li>${esc(w)}</li>`).join('');
+      document.getElementById('downloadBeforeImport').checked=true;
+      importDialog.showModal();
+    }
+
+    function cancelImport(){
+      pendingImport=null;
+      if(importDialog.open)importDialog.close();
+    }
+
+    function confirmImport(){
+      if(!pendingImport)return;
+      const button=document.querySelector('[data-action="confirm-import"]');
+      const previousState=clone(state),previousSerialized=localStorage.getItem(KEY);
+      button.disabled=true;button.textContent='Restaurando…';
+      try{
+        const recovery=JSON.stringify(backupEnvelope(previousState));
+        localStorage.setItem(RECOVERY_KEY,recovery);
+        if(document.getElementById('downloadBeforeImport').checked){
+          downloadBackup(previousState,`NIDO-CEO-OS-antes-de-restaurar-${today()}.json`);
+        }
+        const next=clone(pendingImport.state);
+        next.activity.unshift({id:uid(),date:now(),text:`Respaldo “${pendingImport.meta.fileName}” restaurado correctamente.`,type:'restore'});
+        next.activity=next.activity.slice(0,80);
+        const serialized=JSON.stringify({...next,editing:null});
+        localStorage.setItem(KEY,serialized);
+        const check=JSON.parse(localStorage.getItem(KEY));
+        if(!Array.isArray(check.tasks)||!Array.isArray(check.phases)||check.tasks.length!==next.tasks.length)throw new Error('La verificación posterior no coincidió con el respaldo.');
+        state=next;
+        document.documentElement.dataset.theme=state.theme;
+        document.getElementById('themeButton').textContent=state.theme==='light'?'◐':'○';
+        cancelImport();render();scrollTo({top:0,behavior:'smooth'});
+        toast('Respaldo restaurado y verificado correctamente.');
+      }catch(error){
+        try{previousSerialized===null?localStorage.removeItem(KEY):localStorage.setItem(KEY,previousSerialized)}catch(rollbackError){}
+        state=previousState;
+        toast('No se restauró el respaldo. Tus datos anteriores permanecen intactos.','error');
+        console.error('Error al restaurar respaldo:',error);
+      }finally{
+        button.disabled=false;button.textContent='Restaurar respaldo';
+      }
+    }
 
     function companyFields(){return `<div class="form-grid two"><label class="field"><span>Ciudad piloto</span><input id="ePilot" value="${esc(state.company.pilotCity)}" required></label><label class="field"><span>Segmento inicial</span><input id="eSegment" value="${esc(state.company.segment)}" required></label></div><label class="field"><span>Visión</span><textarea id="eVision" rows="3" required>${esc(state.company.vision)}</textarea></label><label class="field"><span>North Star Metric</span><input id="eNorth" value="${esc(state.company.northStar)}" required></label><label class="field"><span>Modelo de ingresos / supuesto</span><input id="eCommission" value="${esc(state.company.commission)}" required></label>`}
     function taskFields(t={}){return `<label class="field"><span>Título de la tarea</span><input id="eTitle" value="${esc(t.title||'')}" required></label><label class="field"><span>Descripción / evidencia esperada</span><textarea id="eDescription" rows="3" required>${esc(t.description||'')}</textarea></label><div class="form-grid two"><label class="field"><span>Fase</span><select id="ePhase">${phaseDefinitions.map(p=>`<option value="${p.id}" ${p.id===(t.phaseId||currentPhase().id)?'selected':''}>${p.order}. ${esc(p.name)}</option>`).join('')}</select></label><label class="field"><span>Responsable</span><input id="eOwner" value="${esc(t.owner||'CEO')}" required></label></div><div class="form-grid two"><label class="field"><span>Prioridad</span><select id="ePriority">${Object.entries(priorityLabels).map(([k,v])=>`<option value="${k}" ${k===(t.priority||'high')?'selected':''}>${v}</option>`).join('')}</select></label><label class="field"><span>Estado</span><select id="eStatus">${Object.entries(statusLabels).map(([k,v])=>`<option value="${k}" ${k===(t.status||'pending')?'selected':''}>${v}</option>`).join('')}</select></label></div><label class="field"><span>Fecha objetivo</span><input type="date" id="eDue" value="${esc(t.dueDate||'')}"></label>`}
@@ -365,7 +625,9 @@
       if(action==='edit-company')openEntity('company');
       if(action==='close')dialog.close();
       if(action==='export')exportData();
-      if(action==='import')document.getElementById('importInput').click();
+      if(action==='import')importInput.click();
+      if(action==='cancel-import')cancelImport();
+      if(action==='confirm-import')confirmImport();
       if(action==='toggle-phase'){const ps=phaseState(b.dataset.id);ps.open=!ps.open;persist();render()}
       if(action==='cycle-status'){const t=state.tasks.find(x=>x.id===b.dataset.id);if(t)cycleTask(t)}
       if(action==='approve-phase')approvePhase(b.dataset.id);
@@ -384,9 +646,23 @@
     document.getElementById('deleteEntity').addEventListener('click',deleteEntity);
     document.getElementById('themeButton').addEventListener('click',()=>{state.theme=state.theme==='light'?'dark':'light';document.documentElement.dataset.theme=state.theme;document.getElementById('themeButton').textContent=state.theme==='light'?'◐':'○';persist()});document.getElementById('themeButton').textContent=state.theme==='light'?'◐':'○';
     document.getElementById('menuButton').addEventListener('click',()=>document.getElementById('sidebar').classList.toggle('open'));
-    document.getElementById('importInput').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{const d=JSON.parse(await file.text());if(!Array.isArray(d.tasks)||!Array.isArray(d.phases))throw Error();state={...baseState(),...d,view:'dashboard',editing:null};persist();render();toast('Respaldo restaurado correctamente.')}catch(err){toast('El archivo no contiene un respaldo válido de NIDO OS.')}e.target.value=''});
+    importInput.addEventListener('change',async e=>{
+      const file=e.target.files?.[0];
+      e.target.value='';
+      if(!file)return;
+      try{
+        const candidate=await readBackupFile(file);
+        showImportPreview(candidate);
+      }catch(error){
+        pendingImport=null;
+        toast(error.message||'El archivo no contiene un respaldo válido de NIDO OS.','error');
+        console.error('Respaldo rechazado:',error);
+      }
+    });
     app.addEventListener('submit',e=>{if(e.target.id!=='reviewForm')return;e.preventDefault();const wins=document.getElementById('rWins').value.trim(),blocks=document.getElementById('rBlocks').value.trim(),learning=document.getElementById('rLearn').value.trim(),focus=document.getElementById('rFocus').value.trim(),decision=document.getElementById('rDecision').value.trim();if(!wins||!learning||!focus){toast('Completa resultado, aprendizaje y próxima prioridad.');return}state.reviews.unshift({id:uid(),date:now(),wins,blocks,learning,focus,decision,rating:state.rating});log(`Revisión CEO guardada. Próximo foco: ${focus}`,'review');persist();render();toast('Revisión ejecutiva guardada.')});
     dialog.addEventListener('click',e=>{const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close()});
+    importDialog.addEventListener('click',e=>{const r=importDialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)cancelImport()});
+    importDialog.addEventListener('close',()=>{pendingImport=null});
     document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openEntity('task')}});
     render();
   })();
