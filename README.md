@@ -1,28 +1,36 @@
 # MAESTRO-SEGUIMIENTOS
 
-Repositorio con cinco sistemas HTML independientes, configurados para abrirse correctamente con **Live Server** en VS Code y GitHub Codespaces.
+Repositorio personal de seguimiento organizado alrededor de **cuatro sistemas principales**, cada uno con una responsabilidad clara. La estructura fue consolidada para reducir duplicidad y mantener información más útil para el seguimiento.
 
-## Archivos disponibles
+## Sistemas principales
 
-| Sistema | Archivo |
-| --- | --- |
-| Centro Maestro de Crecimiento | `maestro.html` |
-| Proyecto Carácter y Cultura | `cultura.html` |
-| Micro Metas | `micro-metas.html` |
-| Camino Bíblico | `estudio-biblico.html` |
-| Raíces · Estudio Bíblico | `estudio-biblico-2.html` |
+| Sistema | Archivo | Propósito |
+| --- | --- | --- |
+| Centro Maestro de Crecimiento | `maestro.html` | Visión general, aprendizaje, hábitos, finanzas, proyectos y seguimiento personal. |
+| Micro Metas | `micro-metas.html` | Ciclos cortos, acciones medibles, historial y avance sostenido. |
+| Carácter y Cultura | `cultura.html` | Hábitos, lectura, compromisos, notas y desarrollo cultural. |
+| Camino Bíblico Unificado | `estudio-biblico-unificado.html` | Diario, estudios, reflexiones, versículos, oraciones, progreso y respaldo. |
+
+`index.html` funciona como centro de acceso a los cuatro sistemas.
+
+## Consolidación del estudio bíblico
+
+Los antiguos `estudio-biblico.html` y `estudio-biblico-2.html` fueron reemplazados por `estudio-biblico-unificado.html`.
+
+La versión unificada conserva el progreso mediante migración desde las claves de almacenamiento anteriores:
+
+- `camino_biblico_rvr1960_v1`
+- `raices-estudio-biblico-v1`
+
+La aplicación crea una nueva fuente consolidada (`maestro_biblia_unificada_v1`) y **no elimina las claves antiguas del navegador**, de modo que siguen funcionando como respaldo de recuperación. También permite exportar e importar respaldos JSON.
 
 ## Abrir con Live Server
 
-1. Abre el repositorio con **Code → Codespaces → Open in Codespace**.
-2. Espera a que VS Code termine de cargar.
-3. En **Extensions**, confirma que **Live Server** está instalado.
-4. En el explorador, haz clic derecho sobre cualquiera de los archivos `.html`.
-5. Selecciona **Open with Live Server**.
-6. El puerto configurado es el **5500**.
+1. Abre el repositorio en VS Code o GitHub Codespaces.
+2. Confirma que **Live Server** esté instalado.
+3. Abre `index.html` con **Open with Live Server**.
+4. Selecciona desde el centro el sistema que quieras utilizar.
 
-También puedes abrir `index.html` con Live Server y seleccionar visualmente cualquiera de los cinco sistemas.
+El puerto configurado es el **5500**.
 
-## Si el Codespace ya estaba abierto antes de esta configuración
-
-Ejecuta **Developer: Reload Window** desde la paleta de comandos. Si Live Server aún no aparece, instala la extensión recomendada o reconstruye el contenedor mediante **Codespaces: Rebuild Container**.
+> Recomendación: usa `index.html` como punto de entrada habitual para evitar trabajar accidentalmente sobre rutas antiguas o archivos de historial.
