@@ -8,8 +8,9 @@ La modernización es incremental: los HTML legados y sus datos permanecen intact
 
 - **Fase 0 — Auditoría:** completada y documentada.
 - **Fase 1 — Fundación:** monorepo, aplicaciones base y dominio compartido en construcción.
-- **Datos actuales:** siguen viviendo en `localStorage`; todavía no se envían a un backend.
-- **Supabase:** arquitectura propuesta, aún no provisionada ni conectada.
+- **Datos legados:** siguen intactos en `localStorage`; todavía no se migran automáticamente.
+- **Supabase:** proyecto MAESTRO independiente provisionado, con esquema inicial, RLS y clientes tipados.
+- **Vercel:** proyecto MAESTRO independiente con vista previa verificada; producción aún no promovida.
 
 Consulta antes de migrar datos:
 
@@ -17,6 +18,7 @@ Consulta antes de migrar datos:
 - [Inventario de datos](./DATA_INVENTORY.md)
 - [Plan de migración](./MIGRATION_PLAN.md)
 - [Plan de arquitectura](./ARCHITECTURE_PLAN.md)
+- [Despliegue y recursos separados](./DEPLOYMENT.md)
 
 ## Arquitectura
 
@@ -61,7 +63,7 @@ pnpm build
 
 ## Configuración
 
-Copia `.env.example` a `.env.local` sólo cuando exista un proyecto Supabase configurado. Las claves públicas nunca reemplazan RLS y una clave `service_role` no debe entrar en clientes web o móvil.
+Copia los archivos `.env.example` de cada aplicación a `.env.local`. Las claves públicas nunca reemplazan RLS y una clave `service_role` no debe entrar en clientes web o móvil.
 
 ## Legado y privacidad
 
