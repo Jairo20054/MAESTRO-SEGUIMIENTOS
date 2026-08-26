@@ -1,9 +1,11 @@
+export type { Database, Json, Tables, TablesInsert, TablesUpdate } from "./database.types";
+
 export interface DatabaseHealth {
   configured: boolean;
   provider: "supabase";
 }
 
 export const databaseHealth: DatabaseHealth = {
-  configured: false,
+  configured: true,
   provider: "supabase",
 };
