@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { signOut } from "@/app/auth/actions";
 
 const links = [
   ["/", "◈", "Inicio"],
@@ -9,7 +8,7 @@ const links = [
   ["/camino-biblico", "✦", "Camino Bíblico"],
 ] as const;
 
-export function AppShell({ children, email }: { children: React.ReactNode; email: string }) {
+export function AppShell({ children, label }: { children: React.ReactNode; label: string }) {
   return (
     <div className="app-shell">
       <aside className="sidebar">
@@ -36,10 +35,8 @@ export function AppShell({ children, email }: { children: React.ReactNode; email
           </Link>
         </nav>
         <div className="sidebar-user">
-          <small title={email}>{email}</small>
-          <form action={signOut}>
-            <button type="submit">Cerrar sesión</button>
-          </form>
+          <small title={label}>{label}</small>
+          <span>Sesión automática protegida</span>
         </div>
       </aside>
       <main className="app-main">{children}</main>

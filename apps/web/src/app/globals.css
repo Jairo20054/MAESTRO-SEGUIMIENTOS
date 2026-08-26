@@ -130,6 +130,11 @@ a {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.sidebar-user span {
+  color: #708078;
+  font-size: 9px;
+  line-height: 1.4;
+}
 .sidebar-user button {
   border: 0;
   padding: 0;
@@ -715,6 +720,26 @@ h3 {
 }
 .auth-form button.text-button {
   border: 0;
+}
+.single-action {
+  grid-template-columns: 1fr;
+}
+.auth-action-link {
+  display: grid;
+  place-items: center;
+  min-height: 46px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  color: #07100d;
+  background: var(--gold);
+  font-size: 12px;
+  font-weight: 800;
+  text-align: center;
+}
+.auth-action-link.secondary {
+  color: var(--green);
+  background: transparent;
+  border: 1px solid var(--line);
 }
 .auth-message {
   margin: 18px 0;

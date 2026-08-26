@@ -1,5 +1,4 @@
 import { updateProfile } from "@/app/actions";
-import { signOut } from "@/app/auth/actions";
 import { PageHeader } from "@/components/page-header";
 import { requireUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
@@ -40,8 +39,14 @@ export default async function SettingsPage() {
             />
           </label>
           <label>
-            Correo
-            <input value={user.email ?? ""} disabled aria-label="Correo de la cuenta" />
+            Tipo de acceso
+            <input
+              value={
+                user.is_anonymous ? "Automático · sin cuenta" : (user.email ?? "Cuenta Maestro")
+              }
+              disabled
+              aria-label="Tipo de acceso"
+            />
           </label>
           <label>
             Zona horaria
@@ -60,15 +65,13 @@ export default async function SettingsPage() {
       </section>
       <section className="panel danger-zone">
         <div>
-          <p className="eyebrow">Sesión</p>
-          <h2>Cerrar sesión</h2>
-          <p>Los datos permanecen en Supabase y volverán a aparecer al iniciar sesión.</p>
+          <p className="eyebrow">Importante</p>
+          <h2>Conserva este navegador</h2>
+          <p>
+            En el acceso automático, borrar las cookies o usar otro dispositivo crea un espacio
+            nuevo. Exporta un respaldo antes de limpiar los datos del navegador.
+          </p>
         </div>
-        <form action={signOut}>
-          <button className="danger-button" type="submit">
-            Cerrar sesión
-          </button>
-        </form>
       </section>
     </div>
   );
