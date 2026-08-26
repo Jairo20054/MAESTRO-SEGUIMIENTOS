@@ -1,0 +1,12 @@
+.git
+.github
+.turbo
+.vercel
+node_modules
+**/node_modules
+**/.next
+**/dist
+**/.expo
+apps/mobile
+*.html
+coverage
