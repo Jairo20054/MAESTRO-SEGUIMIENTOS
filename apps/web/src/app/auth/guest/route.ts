@@ -15,5 +15,10 @@ export async function GET(request: Request) {
     return NextResponse.redirect(new URL(`/sin-acceso?reason=${reason}`, request.url));
   }
 
+  // Auth and PostgREST can briefly disagree about the current second just after
+  // issuing an anonymous JWT. Let the token become valid before the dashboard
+  // starts its first authenticated database queries.
+  await new Promise((resolve) => setTimeout(resolve, 3_000));
+
   return NextResponse.redirect(new URL("/", request.url));
 }
