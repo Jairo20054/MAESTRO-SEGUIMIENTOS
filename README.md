@@ -1,36 +1,68 @@
-# MAESTRO-SEGUIMIENTOS
+# Maestro Seguimientos
 
-Repositorio personal de seguimiento organizado alrededor de **cuatro sistemas principales**, cada uno con una responsabilidad clara. La estructura fue consolidada para reducir duplicidad y mantener información más útil para el seguimiento.
+Maestro es la evolución del conjunto original de seguimientos personales hacia una plataforma web y móvil unificada, local-first, explicable y preparada para sincronización segura.
 
-## Sistemas principales
+La modernización es incremental: los HTML legados y sus datos permanecen intactos mientras cada dominio se migra con respaldo, validación e idempotencia.
 
-| Sistema | Archivo | Propósito |
-| --- | --- | --- |
-| Centro Maestro de Crecimiento | `maestro.html` | Visión general, aprendizaje, hábitos, finanzas, proyectos y seguimiento personal. |
-| Micro Metas | `micro-metas.html` | Ciclos cortos, acciones medibles, historial y avance sostenido. |
-| Carácter y Cultura | `cultura.html` | Hábitos, lectura, compromisos, notas y desarrollo cultural. |
-| Camino Bíblico Unificado | `estudio-biblico-unificado.html` | Diario, estudios, reflexiones, versículos, oraciones, progreso y respaldo. |
+## Estado del proyecto
 
-`index.html` funciona como centro de acceso a los cuatro sistemas.
+- **Fase 0 — Auditoría:** completada y documentada.
+- **Fase 1 — Fundación:** monorepo, aplicaciones base y dominio compartido en construcción.
+- **Datos actuales:** siguen viviendo en `localStorage`; todavía no se envían a un backend.
+- **Supabase:** arquitectura propuesta, aún no provisionada ni conectada.
 
-## Consolidación del estudio bíblico
+Consulta antes de migrar datos:
 
-Los antiguos `estudio-biblico.html` y `estudio-biblico-2.html` fueron reemplazados por `estudio-biblico-unificado.html`.
+- [Estado actual](./CURRENT_STATE.md)
+- [Inventario de datos](./DATA_INVENTORY.md)
+- [Plan de migración](./MIGRATION_PLAN.md)
+- [Plan de arquitectura](./ARCHITECTURE_PLAN.md)
 
-La versión unificada conserva el progreso mediante migración desde las claves de almacenamiento anteriores:
+## Arquitectura
 
-- `camino_biblico_rvr1960_v1`
-- `raices-estudio-biblico-v1`
+```text
+apps/
+  web/          Next.js App Router + PWA
+  mobile/       Expo + React Native + Expo Router
+packages/
+  core/         reglas de progreso, rachas y Maestro Score
+  types/        contratos compartidos
+  validation/   validación de respaldos y límites de confianza
+  database/     frontera de persistencia
+  sync/         operaciones idempotentes de sincronización
+*.html          sistemas legados conservados durante la migración
+```
 
-La aplicación crea una nueva fuente consolidada (`maestro_biblia_unificada_v1`) y **no elimina las claves antiguas del navegador**, de modo que siguen funcionando como respaldo de recuperación. También permite exportar e importar respaldos JSON.
+## Desarrollo
 
-## Abrir con Live Server
+Requisitos: Node.js 22.13 o superior y Corepack habilitado.
 
-1. Abre el repositorio en VS Code o GitHub Codespaces.
-2. Confirma que **Live Server** esté instalado.
-3. Abre `index.html` con **Open with Live Server**.
-4. Selecciona desde el centro el sistema que quieras utilizar.
+```bash
+corepack enable
+pnpm install
+pnpm dev:web
+```
 
-El puerto configurado es el **5500**.
+Para abrir Expo:
 
-> Recomendación: usa `index.html` como punto de entrada habitual para evitar trabajar accidentalmente sobre rutas antiguas o archivos de historial.
+```bash
+pnpm dev:mobile
+```
+
+Validación completa:
+
+```bash
+pnpm format:check
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm build
+```
+
+## Configuración
+
+Copia `.env.example` a `.env.local` sólo cuando exista un proyecto Supabase configurado. Las claves públicas nunca reemplazan RLS y una clave `service_role` no debe entrar en clientes web o móvil.
+
+## Legado y privacidad
+
+El punto de entrada histórico sigue siendo `index.html` y puede ejecutarse con Live Server en el puerto 5500. No borres claves antiguas del navegador: primero exporta un respaldo, migra sobre una copia y verifica conteos y hashes. La auditoría también identificó contenido personal incrustado en un snapshot público; debe respaldarse de forma privada antes de retirarlo del historial activo.

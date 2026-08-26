@@ -112,23 +112,23 @@ El esquema se confirmará con fixtures antes de generar SQL. Esta propuesta prio
 
 ### Identidad y configuración
 
-| Tabla | Campos esenciales |
-| --- | --- |
-| `profiles` | `id`, `display_name`, `timezone`, `locale`, timestamps. |
-| `user_settings` | `user_id`, `namespace`, `value jsonb`, `revision`, timestamps. |
-| `systems` | catálogo estable: maestro, micro_goals, character, bible, finance, learning, nido. |
-| `user_systems` | `id`, `user_id`, `system_id`, `enabled`, `position`, configuración. |
+| Tabla           | Campos esenciales                                                                  |
+| --------------- | ---------------------------------------------------------------------------------- |
+| `profiles`      | `id`, `display_name`, `timezone`, `locale`, timestamps.                            |
+| `user_settings` | `user_id`, `namespace`, `value jsonb`, `revision`, timestamps.                     |
+| `systems`       | catálogo estable: maestro, micro_goals, character, bible, finance, learning, nido. |
+| `user_systems`  | `id`, `user_id`, `system_id`, `enabled`, `position`, configuración.                |
 
 ### Hábitos y ejecución diaria
 
-| Tabla | Campos esenciales |
-| --- | --- |
-| `habits` | `id`, `user_id`, `system_id`, nombre, descripción, categoría, unidad, objetivo, prioridad, color, icono, fechas, activo. |
-| `habit_schedules` | `id`, `habit_id`, tipo de frecuencia, días, veces/semana, hora y timezone. |
-| `habit_logs` | `id`, `user_id`, `habit_id`, `occurred_on`, estado, valor, unidad, justificación, nota, `operation_id`. |
-| `daily_priorities` | `id`, `user_id`, `occurred_on`, texto, estado y referencia opcional. |
-| `focus_sessions` | `id`, `user_id`, `system_id`, tipo, inicio/fin, duración, estado, referencia y precisión temporal. |
-| `commitments` | `id`, `user_id`, `system_id`, texto, persona, vencimiento, estado, completado_en. |
+| Tabla              | Campos esenciales                                                                                                        |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `habits`           | `id`, `user_id`, `system_id`, nombre, descripción, categoría, unidad, objetivo, prioridad, color, icono, fechas, activo. |
+| `habit_schedules`  | `id`, `habit_id`, tipo de frecuencia, días, veces/semana, hora y timezone.                                               |
+| `habit_logs`       | `id`, `user_id`, `habit_id`, `occurred_on`, estado, valor, unidad, justificación, nota, `operation_id`.                  |
+| `daily_priorities` | `id`, `user_id`, `occurred_on`, texto, estado y referencia opcional.                                                     |
+| `focus_sessions`   | `id`, `user_id`, `system_id`, tipo, inicio/fin, duración, estado, referencia y precisión temporal.                       |
+| `commitments`      | `id`, `user_id`, `system_id`, texto, persona, vencimiento, estado, completado_en.                                        |
 
 Restricción clave: un log por `(user_id, habit_id, occurred_on)` salvo que una frecuencia requiera múltiples ocurrencias; en ese caso se usa `occurrence_index`.
 
@@ -144,78 +144,78 @@ La ausencia de fila significa `unknown`, no `missed`.
 
 ### Metas, micro metas y proyectos
 
-| Tabla | Campos esenciales |
-| --- | --- |
-| `goals` | `id`, `user_id`, `system_id`, título, descripción, estado, prioridad, fechas, métrica, objetivo y progreso manual opcional. |
-| `goal_steps` | `id`, `goal_id`, título, estado, posición, vencimiento, valor objetivo/actual. |
-| `micro_goal_cycles` | `id`, `user_id`, título, objetivo, fechas, estado y retrospectiva. |
-| `micro_goals` | `id`, `cycle_id`, título, dificultad, prioridad, estado, porcentaje, resultado y notas. |
-| `micro_goal_actions` | `id`, `micro_goal_id`, acción, fecha, estado, posición. |
-| `projects` | `id`, `user_id`, `system_id`, título, descripción, estado, prioridad y fechas. |
-| `project_tasks` | `id`, `project_id`, fase, título, descripción, responsable textual, prioridad, estado, fechas y posición. |
-| `project_risks` | `id`, `project_id`, título, categoría, probabilidad, impacto, mitigación, estado. |
-| `project_decisions` | `id`, `project_id`, fecha, decisión, razón, responsable textual y estado. |
-| `project_phases` | `id`, `project_id`, título, orden, objetivo, entregable, gate y aprobado. |
+| Tabla                | Campos esenciales                                                                                                           |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `goals`              | `id`, `user_id`, `system_id`, título, descripción, estado, prioridad, fechas, métrica, objetivo y progreso manual opcional. |
+| `goal_steps`         | `id`, `goal_id`, título, estado, posición, vencimiento, valor objetivo/actual.                                              |
+| `micro_goal_cycles`  | `id`, `user_id`, título, objetivo, fechas, estado y retrospectiva.                                                          |
+| `micro_goals`        | `id`, `cycle_id`, título, dificultad, prioridad, estado, porcentaje, resultado y notas.                                     |
+| `micro_goal_actions` | `id`, `micro_goal_id`, acción, fecha, estado, posición.                                                                     |
+| `projects`           | `id`, `user_id`, `system_id`, título, descripción, estado, prioridad y fechas.                                              |
+| `project_tasks`      | `id`, `project_id`, fase, título, descripción, responsable textual, prioridad, estado, fechas y posición.                   |
+| `project_risks`      | `id`, `project_id`, título, categoría, probabilidad, impacto, mitigación, estado.                                           |
+| `project_decisions`  | `id`, `project_id`, fecha, decisión, razón, responsable textual y estado.                                                   |
+| `project_phases`     | `id`, `project_id`, título, orden, objetivo, entregable, gate y aprobado.                                                   |
 
 Estas extensiones de proyecto son necesarias para conservar NIDO CEO sin deformar el modelo de Micro Metas.
 
 ### Aprendizaje, lectura y diario
 
-| Tabla | Campos esenciales |
-| --- | --- |
-| `learning_tracks` | catálogo o track del usuario, sistema, título, versión. |
-| `learning_units` | `track_id`, clave estable, título, posición y metadatos de contenido. |
-| `learning_progress` | `user_id`, `unit_id`, estado, porcentaje, completado_en. |
-| `learning_sessions` | extensión/referencia a `focus_sessions`, track/unidad, métricas específicas. |
-| `learning_notes` | `id`, `user_id`, track/unidad opcional, subtipo, título y contenido. |
-| `books` | `id`, `user_id`, título, autor, total, estado. |
-| `reading_entries` | `id`, `book_id`, fecha, página inicial/final, minutos y nota. |
-| `journal_entries` | `id`, `user_id`, `system_id`, fecha, tipo, título, contenido, estado de ánimo y metadatos. |
+| Tabla               | Campos esenciales                                                                          |
+| ------------------- | ------------------------------------------------------------------------------------------ |
+| `learning_tracks`   | catálogo o track del usuario, sistema, título, versión.                                    |
+| `learning_units`    | `track_id`, clave estable, título, posición y metadatos de contenido.                      |
+| `learning_progress` | `user_id`, `unit_id`, estado, porcentaje, completado_en.                                   |
+| `learning_sessions` | extensión/referencia a `focus_sessions`, track/unidad, métricas específicas.               |
+| `learning_notes`    | `id`, `user_id`, track/unidad opcional, subtipo, título y contenido.                       |
+| `books`             | `id`, `user_id`, título, autor, total, estado.                                             |
+| `reading_entries`   | `id`, `book_id`, fecha, página inicial/final, minutos y nota.                              |
+| `journal_entries`   | `id`, `user_id`, `system_id`, fecha, tipo, título, contenido, estado de ánimo y metadatos. |
 
 El contenido editorial vive en `packages/content`; solo catálogos que necesiten consulta relacional se sincronizan a `learning_tracks/units`.
 
 ### Camino Bíblico
 
-| Tabla | Campos esenciales |
-| --- | --- |
+| Tabla                 | Campos esenciales                                                                                                                      |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | `bible_daily_entries` | `id`, `user_id`, fecha, pasaje, minutos, mood, resumen, observación, interpretación, aplicación, oración, gratitud, palabras y checks. |
-| `bible_studies` | `id`, `user_id`, título, pasaje, contenido, estado, fuente y fechas. |
-| `bible_reflections` | `id`, `user_id`, fecha, título, contenido, referencia. |
-| `bible_verses` | `id`, `user_id`, referencia, texto/notas, estado de memorización. |
-| `bible_prayers` | `id`, `user_id`, texto, fecha, respondida y fecha de respuesta. |
-| `bible_plan_progress` | `id`, `user_id`, plan_key, unit_key, estado y completado_en. |
+| `bible_studies`       | `id`, `user_id`, título, pasaje, contenido, estado, fuente y fechas.                                                                   |
+| `bible_reflections`   | `id`, `user_id`, fecha, título, contenido, referencia.                                                                                 |
+| `bible_verses`        | `id`, `user_id`, referencia, texto/notas, estado de memorización.                                                                      |
+| `bible_prayers`       | `id`, `user_id`, texto, fecha, respondida y fecha de respuesta.                                                                        |
+| `bible_plan_progress` | `id`, `user_id`, plan_key, unit_key, estado y completado_en.                                                                           |
 
 No se almacenará texto bíblico con restricciones de licencia sin revisar la fuente; referencias y contenido escrito por el usuario sí se preservan.
 
 ### Finanzas
 
-| Tabla | Campos esenciales |
-| --- | --- |
-| `finance_entries` | `id`, `user_id`, fecha, tipo, categoría, monto, moneda, descripción y origen. |
-| `finance_snapshots` | `id`, `user_id`, fecha, métricas del diagnóstico y metadatos. |
+| Tabla               | Campos esenciales                                                             |
+| ------------------- | ----------------------------------------------------------------------------- |
+| `finance_entries`   | `id`, `user_id`, fecha, tipo, categoría, monto, moneda, descripción y origen. |
+| `finance_snapshots` | `id`, `user_id`, fecha, métricas del diagnóstico y metadatos.                 |
 
 Se empieza con lo que realmente existe. No se crea un sistema contable complejo hasta que haya requisitos y datos que lo justifiquen.
 
 ### Revisiones, score e insights
 
-| Tabla | Campos esenciales |
-| --- | --- |
-| `reviews` | `id`, `user_id`, tipo diario/semanal/mensual, inicio/fin, respuestas y métricas snapshot. |
-| `score_configs` | `id`, `user_id`, versión, pesos y reglas visibles. |
-| `score_snapshots` | `id`, `user_id`, fecha/rango, versión de fórmula, componentes y total. |
-| `insights` | opcional en fase avanzada; tipo, periodo, evidencia, severidad y leído. |
+| Tabla             | Campos esenciales                                                                         |
+| ----------------- | ----------------------------------------------------------------------------------------- |
+| `reviews`         | `id`, `user_id`, tipo diario/semanal/mensual, inicio/fin, respuestas y métricas snapshot. |
+| `score_configs`   | `id`, `user_id`, versión, pesos y reglas visibles.                                        |
+| `score_snapshots` | `id`, `user_id`, fecha/rango, versión de fórmula, componentes y total.                    |
+| `insights`        | opcional en fase avanzada; tipo, periodo, evidencia, severidad y leído.                   |
 
 Los insights iniciales se calculan determinísticamente. Persistirlos es opcional; primero pueden generarse bajo demanda.
 
 ### Tags y migración
 
-| Tabla | Campos esenciales |
-| --- | --- |
-| `tags` | `id`, `user_id`, nombre, color; único por usuario/nombre normalizado. |
-| `tag_assignments` | `id`, `user_id`, `tag_id`, `entity_type`, `entity_id`; validación de tipos permitidos. |
-| `legacy_migration_runs` | `id`, `user_id`, estado, fuentes, conteos, hashes, timestamps y reporte. |
+| Tabla                    | Campos esenciales                                                                                       |
+| ------------------------ | ------------------------------------------------------------------------------------------------------- |
+| `tags`                   | `id`, `user_id`, nombre, color; único por usuario/nombre normalizado.                                   |
+| `tag_assignments`        | `id`, `user_id`, `tag_id`, `entity_type`, `entity_id`; validación de tipos permitidos.                  |
+| `legacy_migration_runs`  | `id`, `user_id`, estado, fuentes, conteos, hashes, timestamps y reporte.                                |
 | `legacy_migration_items` | `run_id`, `user_id`, fuente, clave heredada, huella, `operation_id`, destino, estado y error redactado. |
-| `sync_operations` | `user_id`, `operation_id`, dispositivo, tipo, entidad y aplicado_en. |
+| `sync_operations`        | `user_id`, `operation_id`, dispositivo, tipo, entidad y aplicado_en.                                    |
 
 ## Convenciones de base de datos
 

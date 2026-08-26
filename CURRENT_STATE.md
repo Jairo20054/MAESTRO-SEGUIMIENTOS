@@ -25,16 +25,16 @@ La transformación debe ser incremental. El sistema heredado debe permanecer eje
 
 ## Archivos actuales
 
-| Archivo | Tamaño aproximado | Responsabilidad actual |
-| --- | ---: | --- |
-| `index.html` | 4.7 KB | Centro de acceso a cuatro sistemas. |
-| `maestro.html` | 649 KB | Dashboard, sesiones, metas rápidas y ocho aplicaciones embebidas. |
-| `micro-metas.html` | 90 KB | NIDO CEO OS; no es un gestor genérico de micro metas personales. |
-| `cultura.html` | 73 KB | Proyecto Carácter: hábitos, lectura, presencia, pantalla, compromisos y revisiones. |
-| `estudio-biblico-unificado.html` | 30 KB | Camino Bíblico consolidado y migración desde dos sistemas anteriores. |
-| `README.md` | 2 KB | Descripción y apertura mediante Live Server. |
-| `.vscode/*` | 2 archivos | Configuración exclusiva para Live Server en puerto 5500. |
-| `.devcontainer/devcontainer.json` | 1 archivo | Reenvío del puerto 5500 y extensión Live Server. |
+| Archivo                           | Tamaño aproximado | Responsabilidad actual                                                              |
+| --------------------------------- | ----------------: | ----------------------------------------------------------------------------------- |
+| `index.html`                      |            4.7 KB | Centro de acceso a cuatro sistemas.                                                 |
+| `maestro.html`                    |            649 KB | Dashboard, sesiones, metas rápidas y ocho aplicaciones embebidas.                   |
+| `micro-metas.html`                |             90 KB | NIDO CEO OS; no es un gestor genérico de micro metas personales.                    |
+| `cultura.html`                    |             73 KB | Proyecto Carácter: hábitos, lectura, presencia, pantalla, compromisos y revisiones. |
+| `estudio-biblico-unificado.html`  |             30 KB | Camino Bíblico consolidado y migración desde dos sistemas anteriores.               |
+| `README.md`                       |              2 KB | Descripción y apertura mediante Live Server.                                        |
+| `.vscode/*`                       |        2 archivos | Configuración exclusiva para Live Server en puerto 5500.                            |
+| `.devcontainer/devcontainer.json` |         1 archivo | Reenvío del puerto 5500 y extensión Live Server.                                    |
 
 No existen `package.json`, gestor de workspaces, TypeScript, lint, tests, CI, `.gitignore`, PWA actual, Supabase, Vercel o Expo en la rama principal.
 
@@ -152,16 +152,16 @@ No hay una definición común para “racha”, “día cumplido” o “porcent
 
 ## Duplicidades y conflictos de concepto
 
-| Capacidad | Implementaciones actuales | Decisión |
-| --- | --- | --- |
-| Hábitos | Plan Maestro, Cultura, VANN, Raíz histórica, Inglés/Portugués y checklists NIDO | Un motor compartido; los sistemas aportan categorías, plantillas y contexto. |
-| Sesiones/temporizadores | Centro Maestro, Inglés, Plan Maestro, Cultura, Camino Bíblico | Un servicio de sesiones con tipo, duración y referencia opcional. |
-| Metas | Centro Maestro, Plan Maestro, NIDO CEO, Finanzas | Modelo común de metas; proyectos y micro metas conservan extensiones propias. |
-| Notas/reflexiones | Centro, Plan Maestro, Cultura, Camino Bíblico, Raíz | Diario/notas común con enlaces al sistema y entidad de origen. |
-| Progreso | Porcentaje manual, checks, días, KRs, semanas y planes | Métricas específicas sobre eventos canónicos; no forzar una única semántica. |
-| Backup | Varias formas JSON, CSV y HTML | Importadores por formato y exportación canónica versionada. |
-| NIDO | `micro-metas.html` y módulo NIDO Launch | Un proyecto NIDO con estrategia, ejecución y lanzamiento; no confundir con Micro Metas. |
-| Biblia | Camino, Raíces y unificado | Mantener el unificado como referencia, completar la migración y conservar fuentes. |
+| Capacidad               | Implementaciones actuales                                                       | Decisión                                                                                |
+| ----------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Hábitos                 | Plan Maestro, Cultura, VANN, Raíz histórica, Inglés/Portugués y checklists NIDO | Un motor compartido; los sistemas aportan categorías, plantillas y contexto.            |
+| Sesiones/temporizadores | Centro Maestro, Inglés, Plan Maestro, Cultura, Camino Bíblico                   | Un servicio de sesiones con tipo, duración y referencia opcional.                       |
+| Metas                   | Centro Maestro, Plan Maestro, NIDO CEO, Finanzas                                | Modelo común de metas; proyectos y micro metas conservan extensiones propias.           |
+| Notas/reflexiones       | Centro, Plan Maestro, Cultura, Camino Bíblico, Raíz                             | Diario/notas común con enlaces al sistema y entidad de origen.                          |
+| Progreso                | Porcentaje manual, checks, días, KRs, semanas y planes                          | Métricas específicas sobre eventos canónicos; no forzar una única semántica.            |
+| Backup                  | Varias formas JSON, CSV y HTML                                                  | Importadores por formato y exportación canónica versionada.                             |
+| NIDO                    | `micro-metas.html` y módulo NIDO Launch                                         | Un proyecto NIDO con estrategia, ejecución y lanzamiento; no confundir con Micro Metas. |
+| Biblia                  | Camino, Raíces y unificado                                                      | Mantener el unificado como referencia, completar la migración y conservar fuentes.      |
 
 ## Problemas técnicos y de seguridad
 

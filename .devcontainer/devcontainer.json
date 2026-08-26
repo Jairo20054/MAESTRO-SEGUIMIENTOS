@@ -1,8 +1,13 @@
 {
   "name": "MAESTRO-SEGUIMIENTOS",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:24-bookworm",
   "customizations": {
     "vscode": {
       "extensions": [
+        "bradlc.vscode-tailwindcss",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "expo.vscode-expo-tools",
         "ritwickdey.LiveServer"
       ],
       "settings": {
@@ -12,13 +17,22 @@
       }
     }
   },
-  "forwardPorts": [
-    5500
-  ],
+  "postCreateCommand": "corepack enable && pnpm install",
+  "forwardPorts": [3000, 5500, 8081],
   "portsAttributes": {
+    "3000": {
+      "label": "Maestro Web",
+      "onAutoForward": "openBrowser",
+      "protocol": "http"
+    },
     "5500": {
       "label": "Live Server",
       "onAutoForward": "openBrowser",
+      "protocol": "http"
+    },
+    "8081": {
+      "label": "Expo Metro",
+      "onAutoForward": "notify",
       "protocol": "http"
     }
   }

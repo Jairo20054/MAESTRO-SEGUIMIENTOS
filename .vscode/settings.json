@@ -1,4 +1,10 @@
 {
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "eslint.workingDirectories": [
+    { "directory": "apps/web", "changeProcessCWD": true },
+    { "directory": "apps/mobile", "changeProcessCWD": true }
+  ],
   "files.associations": {
     "*.html": "html",
     "*.HTML": "html"
@@ -11,8 +17,6 @@
   "liveServer.settings.NoBrowser": false,
   "liveServer.settings.fullReload": true,
   "liveServer.settings.wait": 100,
-  "liveServer.settings.ignoreFiles": [
-    ".vscode/**",
-    ".git/**"
-  ]
+  "liveServer.settings.ignoreFiles": [".vscode/**", ".git/**", "apps/**", "packages/**"],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

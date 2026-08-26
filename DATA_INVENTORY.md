@@ -17,11 +17,11 @@ Este documento describe fuentes de datos, formatos y reglas de conservación. No
 
 ### Centro Maestro
 
-| Clave | Forma | Contenido |
-| --- | --- | --- |
-| `centro_maestro_unificado_v2_con_datos` | objeto | Tema, meta semanal, nota, orden de módulos, progreso manual por módulo, sesiones y metas rápidas. |
-| `centro_maestro_unificado_v1` | objeto legado | Mismo dominio; el shell v2 lo usa como fallback. |
-| `centro_maestro_timer_v1` | objeto | `running`, `startedAt`, `elapsed`, `moduleId`. |
+| Clave                                   | Forma         | Contenido                                                                                         |
+| --------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------- |
+| `centro_maestro_unificado_v2_con_datos` | objeto        | Tema, meta semanal, nota, orden de módulos, progreso manual por módulo, sesiones y metas rápidas. |
+| `centro_maestro_unificado_v1`           | objeto legado | Mismo dominio; el shell v2 lo usa como fallback.                                                  |
+| `centro_maestro_timer_v1`               | objeto        | `running`, `startedAt`, `elapsed`, `moduleId`.                                                    |
 
 Forma canónica aproximada del estado v2:
 
@@ -38,8 +38,8 @@ goals[] = { id, text, done, createdAt? }
 
 ### Micro Metas / NIDO CEO OS
 
-| Clave | Forma | Contenido |
-| --- | --- | --- |
+| Clave            | Forma  | Contenido                                                                           |
+| ---------------- | ------ | ----------------------------------------------------------------------------------- |
 | `nido-ceo-os-v1` | objeto | Empresa, fases, tareas, objetivos/KRs, riesgos, decisiones, revisiones y actividad. |
 
 ```text
@@ -57,8 +57,8 @@ Esta fuente se migra a un proyecto NIDO, no al módulo genérico de Micro Metas.
 
 ### Carácter y Cultura
 
-| Clave | Forma | Contenido |
-| --- | --- | --- |
+| Clave                           | Forma  | Contenido                                                                         |
+| ------------------------------- | ------ | --------------------------------------------------------------------------------- |
 | `proyecto_caracter_integral_v1` | objeto | Días, hábitos, libros, promesas, checklists, configuración, notas y última vista. |
 
 ```text
@@ -82,11 +82,11 @@ Hábitos actuales: Biblia y oración, leer 10 páginas, estudio profundo, explic
 
 ### Camino Bíblico
 
-| Clave | Estado | Contenido |
-| --- | --- | --- |
-| `maestro_biblia_unificada_v1` | canónica actual | Perfil, diario, biblioteca, plan, copias legacy e historial de migración. |
-| `camino_biblico_rvr1960_v1` | legado; no borrar | Diario SOIA, estudios, reflexiones, versículos, plan y temporizador. |
-| `raices-estudio-biblico-v1` | legado; no borrar | Perfil, preferencias, logs, plan, estudios y oraciones. |
+| Clave                         | Estado            | Contenido                                                                 |
+| ----------------------------- | ----------------- | ------------------------------------------------------------------------- |
+| `maestro_biblia_unificada_v1` | canónica actual   | Perfil, diario, biblioteca, plan, copias legacy e historial de migración. |
+| `camino_biblico_rvr1960_v1`   | legado; no borrar | Diario SOIA, estudios, reflexiones, versículos, plan y temporizador.      |
+| `raices-estudio-biblico-v1`   | legado; no borrar | Perfil, preferencias, logs, plan, estudios y oraciones.                   |
 
 Estado unificado:
 
@@ -114,53 +114,53 @@ Diferencias que requieren tratamiento explícito:
 
 #### VANN CASTILLO
 
-| Clave | Forma |
-| --- | --- |
+| Clave                      | Forma                                  |
+| -------------------------- | -------------------------------------- |
 | `vann-castillo-YYYY-MM-DD` | familia diaria con checks y `mission`. |
 
 El detector debe enumerar únicamente claves que cumplan el patrón estricto y validar la fecha.
 
 #### Español
 
-| Clave | Forma |
-| --- | --- |
+| Clave                      | Forma                           |
+| -------------------------- | ------------------------------- |
 | `guia-espanol-progreso-v1` | mapa de 15 secciones a boolean. |
 
 #### Inglés
 
-| Clave | Forma |
-| --- | --- |
-| `englishSpeakingTrackerV1` | arreglo de prácticas diarias. |
-| `englishSpeakingGoalsV1` | metas/configuración del plan. |
-| `englishSpeakingWeeksV1` | progreso de 26 semanas. |
-| `englishSpeakingRitualV1` | respuestas del cierre semanal. |
+| Clave                      | Forma                          |
+| -------------------------- | ------------------------------ |
+| `englishSpeakingTrackerV1` | arreglo de prácticas diarias.  |
+| `englishSpeakingGoalsV1`   | metas/configuración del plan.  |
+| `englishSpeakingWeeksV1`   | progreso de 26 semanas.        |
+| `englishSpeakingRitualV1`  | respuestas del cierre semanal. |
 
 Una práctica puede contener fecha, minutos, tema, palabras, escucha, fluidez, pronunciación, confianza, vocabulario, gramática, frase y notas.
 
 #### Portugués
 
-| Clave | Forma |
-| --- | --- |
+| Clave        | Forma                                    |
+| ------------ | ---------------------------------------- |
 | `pt_records` | registros diarios por habilidad y score. |
-| `pt_weeks` | mapa de semanas completadas. |
-| `pt_theme` | preferencia de tema. |
+| `pt_weeks`   | mapa de semanas completadas.             |
+| `pt_theme`   | preferencia de tema.                     |
 
 Los registros incluyen minutos de vocabulario, gramática, escucha, speaking y escritura; palabras, verbos, autoevaluaciones, checklist y nota.
 
 #### Matemáticas
 
-| Clave | Forma |
-| --- | --- |
+| Clave              | Forma                                      |
+| ------------------ | ------------------------------------------ |
 | `mathCorrectCount` | contador numérico de respuestas correctas. |
 
 #### Plan Maestro 6 Meses
 
-| Clave | Estado |
-| --- | --- |
-| `plan_maestro_habitos_6_meses_v4` | canónica del módulo. |
-| `dashboard_habitos_90_dias_v3_definitivo` | legado. |
-| `dashboard_habitos_90_dias_v2` | legado. |
-| `dashboard_habitos_90_dias_v1` | legado. |
+| Clave                                     | Estado               |
+| ----------------------------------------- | -------------------- |
+| `plan_maestro_habitos_6_meses_v4`         | canónica del módulo. |
+| `dashboard_habitos_90_dias_v3_definitivo` | legado.              |
+| `dashboard_habitos_90_dias_v2`            | legado.              |
+| `dashboard_habitos_90_dias_v1`            | legado.              |
 
 ```text
 version, startDate, selectedDate, reviewTime, theme, lastSavedAt
@@ -178,23 +178,23 @@ El HTML contiene un snapshot embebido con cuatro fechas históricas. Se debe ext
 
 #### NIDO Launch OS
 
-| Claves | Forma |
-| --- | --- |
+| Claves                               | Forma                                        |
+| ------------------------------------ | -------------------------------------------- |
 | `nido-launch-c1` … `nido-launch-c10` | diez strings booleanos (`"true"`/`"false"`). |
 
 #### Educación financiera
 
 Todas usan el prefijo `fin_`:
 
-| Clave | Contenido |
-| --- | --- |
-| `fin_theme` | tema. |
-| `fin_progress` | secciones completadas. |
-| `fin_health` | diagnóstico financiero. |
-| `fin_risk` | checklist/perfil de riesgo. |
-| `fin_habits` | reto de 30 días. |
-| `fin_goal30`, `fin_goal60`, `fin_goal90` | metas escritas. |
-| `fin_moneyContract` | contrato personal con el dinero. |
+| Clave                                    | Contenido                        |
+| ---------------------------------------- | -------------------------------- |
+| `fin_theme`                              | tema.                            |
+| `fin_progress`                           | secciones completadas.           |
+| `fin_health`                             | diagnóstico financiero.          |
+| `fin_risk`                               | checklist/perfil de riesgo.      |
+| `fin_habits`                             | reto de 30 días.                 |
+| `fin_goal30`, `fin_goal60`, `fin_goal90` | metas escritas.                  |
+| `fin_moneyContract`                      | contrato personal con el dinero. |
 
 Los valores introducidos en varias calculadoras no se persisten actualmente y, por tanto, no son migrables desde `localStorage`.
 
@@ -202,11 +202,11 @@ Los valores introducidos en varias calculadoras no se persisten actualmente y, p
 
 Estas claves no son leídas por la rama principal, pero pueden existir en navegadores que usaron versiones anteriores:
 
-| Clave | Fuente histórica | Contenido |
-| --- | --- | --- |
-| `raiz_mobile_v1` | PR #1 / PWA Raíz | Hábitos configurables, checks por fecha, estudios bíblicos y diario. |
-| `neuro_habit_lab_v1` | Neurociencia práctica | Plan y progreso de 66 días. |
-| `neuro_theme` | Neurociencia práctica | Tema visual. |
+| Clave                | Fuente histórica      | Contenido                                                            |
+| -------------------- | --------------------- | -------------------------------------------------------------------- |
+| `raiz_mobile_v1`     | PR #1 / PWA Raíz      | Hábitos configurables, checks por fecha, estudios bíblicos y diario. |
+| `neuro_habit_lab_v1` | Neurociencia práctica | Plan y progreso de 66 días.                                          |
+| `neuro_theme`        | Neurociencia práctica | Tema visual.                                                         |
 
 El migrador debe detectarlas como “fuentes históricas opcionales”, mostrar conteos y pedir confirmación antes de integrarlas.
 
@@ -220,16 +220,16 @@ No todo lo existente pertenece a la base de datos:
 
 ## Formatos de exportación existentes
 
-| Origen | Formato |
-| --- | --- |
-| Centro Maestro | `{ app, version, exportedAt, state }`. |
-| Cultura | `{ app, exportedAt, data }` y HTML con `embeddedState`. |
+| Origen         | Formato                                                                         |
+| -------------- | ------------------------------------------------------------------------------- |
+| Centro Maestro | `{ app, version, exportedAt, state }`.                                          |
+| Cultura        | `{ app, exportedAt, data }` y HTML con `embeddedState`.                         |
 | Camino Bíblico | `{ app, version, exportedAt, state }`; también acepta payloads Camino o Raíces. |
-| Plan Maestro | `{ exportedAt, app, data }` y HTML con `embeddedProgress`. |
-| Inglés | JSON propio que reúne varias claves. |
-| Portugués | CSV de registros; no representa toda la configuración. |
-| NIDO CEO | objeto de estado directo. |
-| Raíz histórica | objeto de estado directo. |
+| Plan Maestro   | `{ exportedAt, app, data }` y HTML con `embeddedProgress`.                      |
+| Inglés         | JSON propio que reúne varias claves.                                            |
+| Portugués      | CSV de registros; no representa toda la configuración.                          |
+| NIDO CEO       | objeto de estado directo.                                                       |
+| Raíz histórica | objeto de estado directo.                                                       |
 
 La nueva exportación de cuenta usará un sobre versionado, sin invalidar estos importadores:
 
