@@ -1,6 +1,7 @@
 import { Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text } from "react-native";
+import { AuthProvider } from "@/providers/auth-provider";
 
 const icons: Record<string, string> = {
   index: "●",
@@ -16,7 +17,7 @@ function TabIcon({ name, focused }: { name: string; focused: boolean }) {
 
 export default function RootLayout() {
   return (
-    <>
+    <AuthProvider>
       <StatusBar style="dark" />
       <Tabs
         screenOptions={({ route }) => ({
@@ -34,7 +35,7 @@ export default function RootLayout() {
         <Tabs.Screen name="goals" options={{ title: "Metas" }} />
         <Tabs.Screen name="profile" options={{ title: "Perfil" }} />
       </Tabs>
-    </>
+    </AuthProvider>
   );
 }
 
