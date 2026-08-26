@@ -1,0 +1,10 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+minimumReleaseAgeExclude:
+  - next@16.3.3
+
+allowBuilds:
+  sharp: true
+  unrs-resolver: true

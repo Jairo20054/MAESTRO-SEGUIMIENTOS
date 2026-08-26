@@ -1,0 +1,13 @@
+node_modules
+.next
+.turbo
+coverage
+dist
+build
+legacy
+maestro.html
+micro-metas.html
+cultura.html
+estudio-biblico-unificado.html
+index.html
+pnpm-lock.yaml

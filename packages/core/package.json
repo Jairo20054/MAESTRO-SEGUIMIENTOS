@@ -1,0 +1,27 @@
+{
+  "name": "@maestro/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "lint": "tsc --noEmit",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@maestro/types": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "vitest": "^4.0.0"
+  }
+}
