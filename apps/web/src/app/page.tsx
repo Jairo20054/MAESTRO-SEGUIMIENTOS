@@ -6,6 +6,51 @@ const todayItems = [
   { time: "14:30", title: "Bloque de creación", meta: "NIDO · 90 min", state: "Después" },
 ] as const;
 
+const systems = [
+  {
+    title: "Centro Maestro",
+    description: "Tu punto de partida para revisar prioridades, ritmo y enfoque.",
+    href: "/sistemas/maestro.html",
+    icon: "M",
+    tone: "green",
+  },
+  {
+    title: "Proyecto Carácter y Cultura",
+    description: "Decisiones diarias para vivir tus valores con intención.",
+    href: "/sistemas/cultura.html",
+    icon: "C",
+    tone: "amber",
+  },
+  {
+    title: "Micro Metas",
+    description: "Pequeños pasos claros que convierten tus metas en acción.",
+    href: "/sistemas/micro-metas.html",
+    icon: "µ",
+    tone: "blue",
+  },
+  {
+    title: "Camino Bíblico",
+    description: "Lectura, reflexión y aplicación para caminar con propósito.",
+    href: "/sistemas/camino-biblico.html",
+    icon: "✦",
+    tone: "green",
+  },
+  {
+    title: "Neurociencia práctica",
+    description: "Herramientas sencillas para enfocar, aprender y descansar mejor.",
+    href: "/sistemas/neurociencia.html",
+    icon: "N",
+    tone: "purple",
+  },
+  {
+    title: "Neurociencia 2",
+    description: "Profundiza en hábitos, emoción y toma de decisiones.",
+    href: "/sistemas/neurociencia-2.html",
+    icon: "N2",
+    tone: "rose",
+  },
+] as const;
+
 const score = calculateMaestroScore(
   [
     { key: "habits", label: "Hábitos", score: 82 },
@@ -103,6 +148,30 @@ export default function Home() {
           </article>
         </section>
 
+        <section id="sistemas" className="systems-section" aria-labelledby="systems-heading">
+          <div className="section-title">
+            <div>
+              <p className="eyebrow">Centro de sistemas</p>
+              <h2 id="systems-heading">Tus sistemas</h2>
+            </div>
+            <span>6 espacios para avanzar</span>
+          </div>
+          <div className="systems-grid">
+            {systems.map((system) => (
+              <a className="system-tab" href={system.href} key={system.href}>
+                <span className={`system-tab-icon ${system.tone}`} aria-hidden="true">
+                  {system.icon}
+                </span>
+                <span>
+                  <strong>{system.title}</strong>
+                  <small>{system.description}</small>
+                </span>
+                <span className="system-tab-arrow" aria-hidden="true">→</span>
+              </a>
+            ))}
+          </div>
+        </section>
+
         <section className="content-grid">
           <div>
             <div className="section-title">
@@ -132,7 +201,7 @@ export default function Home() {
             </div>
           </div>
 
-          <aside id="sistemas" className="side-panel" aria-label="Sistemas activos">
+          <aside className="side-panel" aria-label="Sistemas activos">
             <div className="section-title">
               <div>
                 <p className="eyebrow">Vista rápida</p>
