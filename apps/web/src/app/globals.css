@@ -649,3 +649,45 @@ footer {
   color: #225445;
   background: #e3f0e8;
 }
+
+
+/* Compact native-feeling shell for the Maestro home screen on phones. */
+@media (max-width: 740px) {
+  .app-frame { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); background: #f5f7f4; min-height: 100dvh; }
+  .workspace { width:100%; padding: 24px 16px 24px; }
+  .topbar { margin-bottom:18px; align-items:center; }
+  .topbar h1 { font-size:clamp(29px,8vw,36px); line-height:1.08; }
+  .topbar .eyebrow { font-size:10px; }
+  .hero-grid { display:grid; grid-template-columns: 1fr; gap:12px; }
+  .focus-card,.score-card,.side-panel { border-radius:19px; background-color:#fff; box-shadow:0 4px 14px rgba(30,70,40,.025); }
+  .focus-card { padding:22px 20px; }
+  .focus-copy { margin:15px 0; font-size:13px; line-height:1.6; }
+  .focus-card h2 { font-size:24px; }
+  .day-chip { font-size:11px; padding:6px 9px; white-space:nowrap; }
+  .score-card { padding:18px; gap:16px; }
+  .score-ring { flex:0 0 75px; width:75px; height:75px; padding:7px; }
+  .score-ring strong { font-size:25px; }
+  .score-card h2 { font-size:21px; }
+  .systems-section { margin-top:30px; }
+  .section-title { margin-bottom:14px; gap:10px; }
+  .section-title h2 { font-size:23px; }
+  .section-title > span { font-size:10px; }
+  .systems-grid { grid-template-columns:1fr; gap:9px; }
+  .system-tab { min-height:78px; padding:14px; gap:12px; grid-template-columns:42px minmax(0,1fr) auto; border-radius:16px; background:#fff; box-shadow:none; }
+  .system-tab-icon { width:42px;height:42px;border-radius:13px;font-size:16px; }
+  .system-tab strong { font-family:var(--font-geist),Arial,sans-serif; font-size:14px; font-weight:700; }
+  .system-tab small { font-size:11px; line-height:1.45; }
+  .system-tab-arrow { align-self:center; font-size:17px; }
+  .content-grid { margin-top:30px; gap:20px; grid-template-columns:1fr; }
+  .timeline-item { min-height:79px; grid-template-columns:44px 18px 1fr; gap:9px; }
+  .timeline-card { padding:13px 12px; gap:9px; border-radius:12px; }
+  .timeline-card h3 { font-size:12px; }
+  .timeline-card p,.timeline-card > span { font-size:10px; }
+  .side-panel { padding:20px; }
+  .rail { z-index:30; width:100%; height:auto; min-height:66px; padding:7px 10px calc(7px + env(safe-area-inset-bottom,0px)); position:fixed; bottom:0; left:0; top:auto; border-top:1px solid #e1e8e0; background:rgba(255,255,255,.97); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); box-shadow:0 -8px 24px rgba(28,66,41,.07); }
+  .rail-nav { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); width:100%; gap:4px; margin:0; }
+  .rail-link { min-height:50px; font-size:10px; color:#74867b; border-radius:12px; }
+  .rail-link span:first-child { font-size:21px; }
+  .rail-link.active { color:#246746; background:#e6f2e8; }
+  .workspace footer { margin-top:30px; }
+}
