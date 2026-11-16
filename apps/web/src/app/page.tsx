@@ -22,10 +22,10 @@ const systems = [
     tone: "amber",
   },
   {
-    title: "Micro Metas",
-    description: "Pequeños pasos claros que convierten tus metas en acción.",
-    href: "/sistemas/micro-metas.html",
-    icon: "µ",
+    title: "Plan de carrera · Ingeniería",
+    description: "Sistemas y Software o Electrónica: semestres, temas, estudio diario y avances.",
+    href: "/carrera",
+    icon: "🎓",
     tone: "blue",
   },
   {
