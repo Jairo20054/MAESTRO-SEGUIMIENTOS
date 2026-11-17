@@ -46,6 +46,7 @@ export default function CareerClient() {
   const [subjectId,setSubjectId] = useState("");
   const [status,setStatus] = useState("");
   const [permission,setPermission] = useState("default");
+  const [activeTab,setActiveTab] = useState<"inicio"|"plan"|"hoy"|"mas">("inicio");
 
   const career = careers.find((x)=>x.id===careerId)!;
   const semester = career.semesters[semesterNumber-1];
@@ -135,20 +136,25 @@ export default function CareerClient() {
     else setStatus("Debes permitir notificaciones desde la configuración de tu navegador.");
   }
   const careerChange=(id:CareerId)=>{setCareerId(id);setSemesterNumber(1);setStatus("");};
-  return <main className="study-wrap">
-    <div className="study-top"><a href="/" className="study-back">← Centro Maestro</a><span className="study-pill">Plan académico · 2026</span></div>
+  return <main className="study-wrap" id="study-home">
+    <div className="study-top"><a href="/" className="study-back"><span className="study-back-chevron" aria-hidden="true">‹</span> Maestro</a><span className="study-pill">Plan de carrera</span></div>
     <header className="study-header"><p className="study-kicker">MAESTRO / FORMACIÓN</p><h1>Tu carrera, tema a tema.</h1><p>Dos planes independientes. Marca lo que realmente estudias, registra las horas y conserva las evidencias. El progreso no se aprueba automáticamente por marcar casillas.</p></header>
     <nav className="study-careers" aria-label="Elegir carrera">
       {careers.map(c=><button key={c.id} className={careerId===c.id?"chosen":""} onClick={()=>careerChange(c.id)} aria-pressed={careerId===c.id}><span>{c.id==="sistemas"?"⌘":"⚡"}</span>{c.name}</button>)}
     </nav>
-    <section className="study-overview" aria-label="Tu avance">
+    <section className="study-mobile-spotlight" aria-label="Accesos rápidos de estudio">
+      <div className="study-spotlight-top"><span className="study-spotlight-symbol" aria-hidden="true">{careerId==="sistemas"?"⌘":"⚡"}</span><span>CONTINÚA TU FORMACIÓN</span></div>
+      <strong>Semestre {semesterNumber}</strong><p>{semester.name}</p>
+      <div className="study-spotlight-actions"><a href="#study-plan" onClick={()=>setActiveTab("plan")}>Ver materias <span aria-hidden="true">↗</span></a><a href="#study-register" onClick={()=>setActiveTab("hoy")}>Registrar hoy</a></div>
+    </section>
+    <section className="study-overview" id="study-overview" aria-label="Tu avance">
       <div><p>Avance del plan</p><strong>{loaded?percent:"—"}%</strong><small>{doneTotal} de {totalTopics(career)} temas marcados</small></div>
       <div><p>Semestre {semesterNumber}</p><strong>{semesterDone}<span>/{semesterKeys.length}</span></strong><small>Temas del semestre completados</small></div>
       <div><p>Estudio registrado hoy</p><strong>{todayMinutes}<span> min</span></strong><small>{todaysChecks.length} temas marcados hoy</small></div>
       <div><p>Tiempo acumulado</p><strong>{Math.round(totalMinutes/60*10)/10}<span> h</span></strong><small>Solo sesiones registradas aquí</small></div>
     </section>
     <div className="study-layout">
-      <section>
+      <section id="study-plan" className="study-plan-panel">
         <div className="study-section-heading"><div><p>Ruta de aprendizaje</p><h2>{career.name}</h2><small>{career.subtitle}</small></div></div>
         <div className="study-semesters" role="group" aria-label="Semestre">{career.semesters.map(se=><button key={se.number} className={semesterNumber===se.number?"active":""} onClick={()=>setSemesterNumber(se.number)}>S{se.number}</button>)}</div>
         <h3 className="study-sem-title">Semestre {semesterNumber} · {semester.name}</h3>
@@ -168,7 +174,7 @@ export default function CareerClient() {
         })}</div>
       </section>
       <aside className="study-sidebar">
-        <section className="study-panel"><p className="study-panel-label">Registro diario</p><h2>¿Qué estudiaste hoy?</h2>
+        <section className="study-panel" id="study-register"><p className="study-panel-label">Registro diario</p><h2>¿Qué estudiaste hoy?</h2>
           <form onSubmit={recordSession} className="study-form">
             <label>Materia<select value={selectedSubject.id} onChange={e=>setSubjectId(e.target.value)}>{subjects.map(s=><option key={s.id} value={s.id}>{s.title}</option>)}</select></label>
             <label>Minutos dedicados<input type="number" min="1" max="720" value={minutes} onChange={e=>setMinutes(e.target.value)} required/></label>
@@ -180,7 +186,7 @@ export default function CareerClient() {
             {todaysChecks.length>0&&<p>✓ {todaysChecks.length} tema(s) marcados hoy</p>}
           </>}</div>
         </section>
-        <section className="study-panel"><p className="study-panel-label">Avisos del teléfono</p><h2>Recordatorio de estudio</h2>
+        <section className="study-panel" id="study-settings"><p className="study-panel-label">Avisos del teléfono</p><h2>Recordatorio de estudio</h2>
           <p className="study-muted">Se puede activar un aviso a una hora elegida mientras la aplicación esté abierta. Los avisos garantizados con la aplicación cerrada requieren Web Push y servidor.</p>
           <label className="study-time-label">Hora local <input type="time" value={store.reminders.time} onChange={e=>setStore(prev=>({...prev,reminders:{...prev.reminders,time:e.target.value}}))}/></label>
           {permission==="granted" ? <label className="study-toggle"><input type="checkbox" checked={store.reminders.enabled} onChange={e=>setStore(prev=>({...prev,reminders:{...prev.reminders,enabled:e.target.checked}}))}/> Recordatorios activados</label>: <button className="study-secondary" onClick={enableNotifications}>Activar notificaciones</button>}
@@ -196,6 +202,12 @@ export default function CareerClient() {
         </section>
       </aside>
     </div>
+    <nav className="study-mobile-dock" aria-label="Navegación inferior del plan de carrera">
+      <a href="#study-home" className={activeTab==="inicio"?"active":""} onClick={()=>setActiveTab("inicio")} aria-label="Ir al inicio"><span aria-hidden="true">⌂</span><small>Inicio</small></a>
+      <a href="#study-plan" className={activeTab==="plan"?"active":""} onClick={()=>setActiveTab("plan")} aria-label="Ver las materias"><span aria-hidden="true">▦</span><small>Materias</small></a>
+      <a href="#study-register" className={activeTab==="hoy"?"active":""} onClick={()=>setActiveTab("hoy")} aria-label="Registrar estudio de hoy"><span aria-hidden="true">◷</span><small>Hoy</small></a>
+      <a href="#study-settings" className={activeTab==="mas"?"active":""} onClick={()=>setActiveTab("mas")} aria-label="Ir a los ajustes y notificaciones"><span aria-hidden="true">⚙</span><small>Ajustes</small></a>
+    </nav>
     {status&&<div className="study-toast" role="status">{status}<button onClick={()=>setStatus("")} aria-label="Cerrar mensaje">×</button></div>}
     <footer className="study-footer">MAESTRO · Progreso independiente por carrera · Actualización no destructiva · Los tiempos son orientativos, no acreditaciones universitarias.</footer>
   </main>;
